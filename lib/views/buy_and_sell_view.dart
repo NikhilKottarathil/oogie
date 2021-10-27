@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/used_phones/used_phones_list.dart';
 
 class BuyAndSellView extends StatefulWidget {
@@ -30,11 +29,11 @@ class _BuyAndSellViewState extends State<BuyAndSellView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Buy & Sell',style: AppStyles.displayMedium,),
+                  Text('Buy & Sell',style: TextStyles.displayMedium,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Used phones with us',style: AppStyles.largeRegular,),
+                      Text('Used phones with us',style: TextStyles.largeRegular,),
                       SizedBox(width: 10,),
                       Icon(Icons.arrow_forward,color: AppColors.SecondaryBase,)
                     ],

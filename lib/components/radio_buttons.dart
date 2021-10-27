@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
 
@@ -14,7 +13,7 @@ class RadioItem extends StatelessWidget {
       child: Center(
         child: new Text(
           _item.text,
-          style: _item.isSelected?AppStyles.smallRegularPrimaryLight:AppStyles.smallRegular),
+          style: _item.isSelected?TextStyles.smallRegularPrimaryLight:TextStyles.smallRegular),
         ),
 
       decoration: new BoxDecoration(
@@ -42,7 +41,7 @@ class RadioItem2 extends StatelessWidget {
         child: new Text(
             _item.text,
             style: _item.isSelected
-                ? AppStyles.smallRegularWhite:AppStyles.smallRegular),
+                ? TextStyles.smallRegularWhite:TextStyles.smallRegular),
       ),
 
       decoration: new BoxDecoration(

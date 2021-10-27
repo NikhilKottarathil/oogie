@@ -3,15 +3,12 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
-import 'package:oogie/components/custom_textfield_2.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/default_button.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/used_phones/sell_a_phone_step_3.dart';
-import 'package:oogie/screens/shopping/checkout_review.dart';
 import 'package:oogie/special_components/image_picking.dart';
-import 'package:oogie/special_components/stepper_horizontal.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class SellAPhoneStep2 extends StatefulWidget {

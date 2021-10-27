@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 class MessageAdapter extends StatelessWidget {
   MessageGS messageGS;
@@ -31,7 +30,7 @@ class MessageAdapter extends StatelessWidget {
       child: Column(
         children: [
 
-          Container(padding: EdgeInsets.all(10), child: Text(messageGS.message, style: messageGS.type != "Send"?AppStyles.smallRegular:AppStyles.smallRegularWhite,)),
+          Container(padding: EdgeInsets.all(10), child: Text(messageGS.message, style: messageGS.type != "Send"?TextStyles.smallRegular:TextStyles.smallRegularWhite,)),
           // Align(
           //     alignment: Alignment.bottomRight,
           //     child: Row(
@@ -39,7 +38,7 @@ class MessageAdapter extends StatelessWidget {
           //       children: [
           //         Text(
           //           messageGS.time,
-          //           style: messageGS.type != "Send"?AppStyles.smallRegular:AppStyles.smallRegularWhite,
+          //           style: messageGS.type != "Send"?TextStyles.smallRegular:TextStyles.smallRegularWhite,
           //         ),
           //         Icon(Icons.check)
           //       ],

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
 import 'package:oogie/common/chating_page.dart';
+import 'package:oogie/constants/styles.dart';
 
 class ChatAdapter extends StatelessWidget {
   @override
@@ -34,7 +33,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatingPage()));
               ),
             ),
             SizedBox(width: 8,),
-            Expanded(child: Text('Sergio Greenfelder',style: AppStyles.smallMedium,)),
+            Expanded(child: Text('Sergio Greenfelder',style: TextStyles.smallMedium,)),
             Container(
 
               padding: EdgeInsets.only(left: 11,top: 6,right: 11,bottom: 6),
@@ -43,7 +42,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatingPage()));
                 shape: BoxShape.circle,
                color: AppColors.PrimaryLightest
               ),
-              child: Text('2',style: AppStyles.mediumMediumPrimaryLight,),
+              child: Text('2',style: TextStyles.mediumMediumPrimaryLight,),
             ),
           ],
         ),

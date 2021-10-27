@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/product_description.dart';
 
 class ProductLandscapeAdapter extends StatelessWidget {
@@ -38,8 +37,8 @@ class ProductLandscapeAdapter extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(brandName, style: AppStyles.smallMedium,),
-                  Text(productName, style: AppStyles.smallRegular,overflow: TextOverflow.ellipsis,),
+                  Text(brandName, style: TextStyles.smallMedium,),
+                  Text(productName, style: TextStyles.smallRegular,overflow: TextOverflow.ellipsis,),
                 ],
               ),
             ),

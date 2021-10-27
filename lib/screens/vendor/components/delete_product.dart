@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
 import 'package:oogie/components/default_button.dart';
-import 'package:oogie/components/radio_buttons.dart';
+import 'package:oogie/constants/styles.dart';
 
 deleteProduct({BuildContext buildContext}) async {
   await showModalBottomSheet(
@@ -36,7 +34,7 @@ deleteProduct({BuildContext buildContext}) async {
                             children: [
                               Text(
                                 'Delete',
-                                style: AppStyles.largeMedium,
+                                style: TextStyles.largeMedium,
                               ),
                               InkWell(
                                 onTap: () {
@@ -54,7 +52,7 @@ deleteProduct({BuildContext buildContext}) async {
                           ),
                           Text(
                             'Are you sure to delete product Realme C20 (120 GB Storage)',
-                            style: AppStyles.smallRegular,
+                            style: TextStyles.smallRegular,
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,

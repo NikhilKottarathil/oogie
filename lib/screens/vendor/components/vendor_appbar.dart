@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
 import 'package:oogie/common/chats.dart';
 import 'package:oogie/common/notifications.dart';
+import 'package:oogie/constants/styles.dart';
 
 Widget vendorAppBar({BuildContext context,String text}) {
   TextEditingController textEditingController = TextEditingController();
@@ -12,7 +11,7 @@ Widget vendorAppBar({BuildContext context,String text}) {
     backgroundColor: AppColors.PrimaryBase,
 
 
-    title: Text(text,style: AppStyles.mediumMediumWhite,),
+    title: Text(text,style: TextStyles.mediumMediumWhite,),
     actions: [
       IconButton(
         icon: SvgPicture.asset(

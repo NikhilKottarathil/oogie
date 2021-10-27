@@ -1,18 +1,12 @@
-import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_text_button.dart';
-import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
-import 'package:oogie/screens/explore/used_phones/sell_a_phone_step_2.dart';
-import 'package:oogie/screens/shopping/checkout_review.dart';
-import 'package:oogie/special_components/stepper_horizontal.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 
 class SellAPhoneStep5 extends StatefulWidget {
@@ -110,22 +104,22 @@ class _State extends State<SellAPhoneStep5> {
                       ]),
                     ),
                     SizedBox(height: 16),
-                    Text('Realme C20 (Cool Grey,32 GB, 2GB RAM)',style: AppStyles.mediumRegular,),
+                    Text('Realme C20 (Cool Grey,32 GB, 2GB RAM)',style: TextStyles.mediumRegular,),
                     SizedBox(height: 8),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(rupeesString+' 26999',style: AppStyles.mediumMedium,),
+                        Text(rupeesString+' 26999',style: TextStyles.mediumMedium,),
                         SvgPicture.asset('icons/share.svg',height: 24,fit: BoxFit.scaleDown,)
                       ],
                     ),
                     SizedBox(height: 16),
 
-                    Text('Description:',style: AppStyles.smallMedium,),
+                    Text('Description:',style: TextStyles.smallMedium,),
                     SizedBox(height: 4),
 
-                    Text('2 GB RAM, 16.51 CM, 8 MP Rear Camera, 5000 mAh Battery',style: AppStyles.smallRegularSubdued,),
+                    Text('2 GB RAM, 16.51 CM, 8 MP Rear Camera, 5000 mAh Battery',style: TextStyles.smallRegularSubdued,),
 
 
                     Spacer(),

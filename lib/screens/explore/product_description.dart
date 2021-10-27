@@ -1,24 +1,14 @@
-import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/review_adapter.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/secondary_app_bar.dart';
 import 'package:oogie/components/custom_text_button.dart';
-import 'package:oogie/components/custom_textfield_2.dart';
-import 'package:oogie/components/default_button.dart';
-import 'package:oogie/screens/explore/product_details.dart';
-import 'package:oogie/screens/explore/used_phones/sell_a_phone_step_2.dart';
-import 'package:oogie/screens/shopping/cart.dart';
-import 'package:oogie/screens/shopping/checkout_review.dart';
-import 'package:oogie/screens/shopping/checkout_shipping.dart';
-import 'package:oogie/special_components/select_varient.dart';
-import 'package:oogie/special_components/stepper_horizontal.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/screens/explore/product/product_details.dart';
+// import 'package:oogie/screens/shopping/checkout_shipping.dart';
+import 'package:oogie/screens/explore/product/select_varient.dart';
 import 'package:oogie/views/grid_views/product_landscape_gridview.dart';
 
 class ProductPage extends StatefulWidget {
@@ -41,16 +31,8 @@ class _State extends State<ProductPage> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: secondaryAppBar(
-          context: context,
-          suffixAction: () {},
-          suffixWidget: Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Center(
-                child: CustomTextButton2(
-              text: 'Edit',
-              action: () {},
-            )),
-          )),
+        context: context,
+      ),
       body: LayoutBuilder(builder: (context, constraints) {
         return Column(
           children: [
@@ -136,7 +118,7 @@ class _State extends State<ProductPage> {
                               SizedBox(height: 16),
                               Text(
                                 'Realme C20 (Cool Grey,32 GB, 2GB RAM)',
-                                style: AppStyles.largeRegular,
+                                style: TextStyles.largeRegular,
                               ),
                               SizedBox(height: 8),
                               Row(
@@ -145,7 +127,7 @@ class _State extends State<ProductPage> {
                                 children: [
                                   Text(
                                     rupeesString + '26999',
-                                    style: AppStyles.largeMedium,
+                                    style: TextStyles.largeMedium,
                                   ),
                                   SvgPicture.asset(
                                     'icons/share.svg',
@@ -164,12 +146,12 @@ class _State extends State<ProductPage> {
                                   ),
                                   Text(
                                     '4.6',
-                                    style: AppStyles.mediumRegular,
+                                    style: TextStyles.mediumRegular,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
                                     '(54 Reviews)',
-                                    style: AppStyles.smallRegularSubdued,
+                                    style: TextStyles.smallRegularSubdued,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
@@ -179,7 +161,6 @@ class _State extends State<ProductPage> {
                           ),
                         ),
                         dividerDefault,
-
                         Padding(
                           padding: EdgeInsets.all(20),
                           child: Column(
@@ -187,7 +168,7 @@ class _State extends State<ProductPage> {
                             children: [
                               Text(
                                 'Highlights',
-                                style: AppStyles.smallMedium,
+                                style: TextStyles.smallMedium,
                               ),
                               SizedBox(
                                 height: 16,
@@ -206,7 +187,7 @@ class _State extends State<ProductPage> {
                                   ),
                                   Text(
                                     '2 GB RAM',
-                                    style: AppStyles.smallRegular,
+                                    style: TextStyles.smallRegular,
                                   )
                                 ],
                               ),
@@ -224,7 +205,7 @@ class _State extends State<ProductPage> {
                                   ),
                                   Text(
                                     '16.5 CM',
-                                    style: AppStyles.smallRegular,
+                                    style: TextStyles.smallRegular,
                                   )
                                 ],
                               ),
@@ -242,7 +223,7 @@ class _State extends State<ProductPage> {
                                   ),
                                   Text(
                                     '8 MP Rear Camera',
-                                    style: AppStyles.smallRegular,
+                                    style: TextStyles.smallRegular,
                                   )
                                 ],
                               ),
@@ -260,7 +241,7 @@ class _State extends State<ProductPage> {
                                   ),
                                   Text(
                                     '5000 mAh Battery',
-                                    style: AppStyles.smallRegular,
+                                    style: TextStyles.smallRegular,
                                   )
                                 ],
                               ),
@@ -272,65 +253,59 @@ class _State extends State<ProductPage> {
                           padding: const EdgeInsets.all(20),
                           child: Row(
                             children: [
-
                               Expanded(
-                                child:         InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Cart()));
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(17),
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                    ),
-                                    child: Text(
-                                      'Add To Cart',
-                                      style: TextStyle(
-                                          color: AppColors.PrimaryBase,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: 'DMSans',
-                                          fontSize: 14),
-                                      textAlign: TextAlign.center,
-                                    ),
+                                  child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, 'cart');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(17),
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
                                   ),
-                                )
-                              ),
-                              Expanded(
-                                  child:         InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => CheckoutShipping()));
-                                    },
-                                    child: Container(
-                                      width: double.maxFinite,
-                                      padding: EdgeInsets.all(17),
-                                      decoration: BoxDecoration(
+                                  child: Text(
+                                    'Add To Cart',
+                                    style: TextStyle(
                                         color: AppColors.PrimaryBase,
-                                        boxShadow: AppShadows.shadowSmall,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                        'Buy Now',
-                                        style: TextStyle(
-                                            color: AppColors.SkyLightest,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'DMSans',
-                                            fontSize: 14),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  )
-                              ),
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'DMSans',
+                                        fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )),
+                              Expanded(
+                                  child: InkWell(
+                                onTap: () {
+                                  // Navigator.pushNamed(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             CheckoutShipping()));
+                                },
+                                child: Container(
+                                  width: double.maxFinite,
+                                  padding: EdgeInsets.all(17),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.PrimaryBase,
+                                    boxShadow: AppShadows.shadowSmall,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    'Buy Now',
+                                    style: TextStyle(
+                                        color: AppColors.SkyLightest,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'DMSans',
+                                        fontSize: 14),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )),
                             ],
                           ),
                         ),
                         dividerDefault,
-
                         CustomTextButton3(
                           text: 'Product Details',
                           action: () {
@@ -355,7 +330,7 @@ class _State extends State<ProductPage> {
                             children: [
                               Text(
                                 'Review (12)',
-                                style: AppStyles.smallMedium,
+                                style: TextStyles.smallMedium,
                               ),
                               ReviewAdapter(),
                               ReviewAdapter(),
@@ -381,7 +356,7 @@ class _State extends State<ProductPage> {
                                 children: [
                                   Text(
                                     'Featured Phones',
-                                    style: AppStyles.displayMedium,
+                                    style: TextStyles.displayMedium,
                                   ),
                                 ],
                               ),

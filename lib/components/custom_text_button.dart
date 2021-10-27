@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 class CustomTextButton extends StatefulWidget {
   String text, errorText;
@@ -139,7 +138,7 @@ class _CustomTextButton3State extends State<CustomTextButton3> {
           children: [
             Text(
               widget.text,
-              style:AppStyles.smallRegular,
+              style:TextStyles.smallRegular,
             ),
             Icon(Icons.arrow_forward_ios_sharp,color: AppColors.OutlinedIcon,),
           ],
@@ -182,13 +181,13 @@ class _CustomTextButton4State extends State<CustomTextButton4> {
       },
       child: Container(
         width: double.maxFinite,
-        padding: EdgeInsets.all(17),
+        padding: EdgeInsets.only(top: 17,bottom: 17),
         decoration: BoxDecoration(
           color: Colors.transparent,
         ),
         child: Text(
           widget.text,
-          style: AppStyles.smallRegular,
+          style: TextStyles.smallRegular,
         ), ),
     );
   }

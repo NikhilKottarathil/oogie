@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oogie/adapters/product_landscape_adapter_2.dart';
 import 'package:oogie/adapters/product_portrait_adapter_2.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
 import 'package:oogie/components/radio_buttons.dart';
-import 'package:oogie/special_components/filter_and_sort.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/screens/explore/product_filter/filter_and_sort.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -16,15 +15,16 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController textEditingController = TextEditingController();
   List<RadioModel> radioModels = [
-    RadioModel(true, 'All'),
-    RadioModel(false, 'Mobiles'),
-    RadioModel(false, 'Accessories'),
+    // RadioModel(isSelected: true, text: 'All'),
+    // RadioModel(isSelected: false, text: 'Mobiles'),
+    // RadioModel(isSelected: false, text: 'Accessories'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar:
+      AppBar(
         title: Padding(
           padding: const EdgeInsets.only(top: 6.0, bottom: 6),
           child: Material(
@@ -36,7 +36,7 @@ class _SearchState extends State<Search> {
               onChanged: (text) {
                 setState(() {});
               },
-              style: AppStyles.smallRegular,
+              style: TextStyles.smallRegular,
               decoration: new InputDecoration(
                 hintText: 'Search for mobiles and accessories',
                 fillColor: Colors.white,
@@ -61,7 +61,7 @@ class _SearchState extends State<Search> {
                           size: 25,
                         ),
                       ),
-                hintStyle: AppStyles.smallRegularSubdued,
+                hintStyle: TextStyles.smallRegularSubdued,
                 prefixIcon: SvgPicture.asset(
                   'icons/search.svg',
                   color: AppColors.TextDefault,
@@ -164,7 +164,7 @@ class _SearchState extends State<Search> {
                         children: [
                           Text(
                             'Search Results:',
-                            style: AppStyles.displayMedium,
+                            style: TextStyles.displayMedium,
                           ),
                           InkWell(
                             onTap: (){
@@ -190,7 +190,7 @@ class _SearchState extends State<Search> {
                                   ),
                                   Text(
                                     'Filter',
-                                    style: AppStyles.smallMedium,
+                                    style: TextStyles.smallMedium,
                                   )
                                 ],
                               ),

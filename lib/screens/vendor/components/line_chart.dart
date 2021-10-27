@@ -2,8 +2,7 @@
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 class _LineChart extends StatefulWidget {
   const _LineChart({@required this.isShowingMainData});
@@ -238,7 +237,7 @@ class LineChartSample1State extends State<LineChartSample1> {
                 ),
                 const Text(
                   'Monthly Sales',
-                  style: AppStyles.largeMedium,
+                  style: TextStyles.largeMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(

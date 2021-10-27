@@ -1,21 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/order_details_adapter.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_dropdown.dart';
-import 'package:oogie/components/custom_image_button.dart';
-import 'package:oogie/components/custom_text_button.dart';
-import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
-import 'package:oogie/components/password_text_field.dart';
-import 'package:oogie/screens/authentication/login_with_otp.dart';
-import 'package:oogie/screens/authentication/register.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/special_components/image_picker_grid.dart';
-import 'package:oogie/special_components/stepper_vertical.dart';
 
 class RequestReturn extends StatefulWidget {
 
@@ -57,7 +49,7 @@ class _RequestReturnState extends State<RequestReturn> {
                               top: 20, left: 20, right: 20, bottom: 10),
                           child: Text(
                             'Order ID - 876428347JSBDCKJSDSDYCUI',
-                            style: AppStyles.smallRegularSubdued,
+                            style: TextStyles.smallRegularSubdued,
                           ),
                         ),
                         dividerDefault,
@@ -78,9 +70,9 @@ class _RequestReturnState extends State<RequestReturn> {
                               CustomDropdown(titleText: 'Reason for return',items: items,selected: selectedItem,),
                               SizedBox(height: 10,),
 
-                              Text('Capture Product Image',style: AppStyles.smallRegular,),
+                              Text('Capture Product Image',style: TextStyles.smallRegular,),
                               SizedBox(height: 2,),
-                              Text('Note: Any instruction about capturing image goes here',style: AppStyles.tinyRegularSubdued,),
+                              Text('Note: Any instruction about capturing image goes here',style: TextStyles.tinyRegularSubdued,),
                               SizedBox(height: 8,),
                               SizedBox(
                                 height: ((width-40)/3),

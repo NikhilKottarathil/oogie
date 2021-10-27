@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:oogie/app/app_colors.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/special_components/image_picking.dart';
 
 class ImagePickerGrid extends StatefulWidget {

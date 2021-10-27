@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 class OrderAdapter extends StatefulWidget {
 
@@ -47,18 +45,18 @@ class _OrderAdapterState extends State<OrderAdapter> {
                   children: [
                     Text(
                       widget.status,
-                      style: AppStyles.smallMedium,
+                      style: TextStyles.smallMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       widget.productName,
-                      style: AppStyles.smallRegular,
+                      style: TextStyles.smallRegular,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       widget.date,
-                      style: AppStyles.smallRegularSubdued,
+                      style: TextStyles.smallRegularSubdued,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],

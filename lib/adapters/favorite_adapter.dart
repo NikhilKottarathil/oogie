@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
 import 'package:oogie/components/custom_text_button.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/product_description.dart';
 
 class FavoriteAdapter extends StatelessWidget {
@@ -50,21 +49,21 @@ class FavoriteAdapter extends StatelessWidget {
                 children: [
                   Text(
                     productName,
-                    style: AppStyles.smallRegular,
+                    style: TextStyles.smallRegular,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
 
                   Text(
                     brandName,
-                    style: AppStyles.smallRegularSubdued,
+                    style: TextStyles.smallRegularSubdued,
                   ),
                   SizedBox(
                     height: 8,
                   ),
                   Text(
                     rupeesString + '23000',
-                    style: AppStyles.smallMedium,
+                    style: TextStyles.smallMedium,
                   ),
                   SizedBox(
                     height: 6,
@@ -78,7 +77,7 @@ class FavoriteAdapter extends StatelessWidget {
                       ),
                       Text(
                         rating,
-                        style: AppStyles.tinyRegular,
+                        style: TextStyles.tinyRegular,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Spacer(),

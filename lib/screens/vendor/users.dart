@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
-import 'package:oogie/screens/vendor/add_product.dart';
 import 'package:oogie/screens/vendor/add_user.dart';
-import 'package:oogie/screens/vendor/components/product_adapter.dart';
 import 'package:oogie/screens/vendor/components/user_adapter.dart';
-
-import 'components/order_adapter.dart';
 
 class Users extends StatefulWidget {
   @override

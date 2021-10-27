@@ -1,20 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/strings_and_urls.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/models/product_model.dart';
+import 'package:oogie/screens/shopping/checkout/checkout_bloc.dart';
+import 'package:oogie/screens/shopping/checkout/checkout_event.dart';
 
 class CartAdapter extends StatefulWidget {
-  String productName, brandName, imageUrl, price;
+  ProductModel productModel;
+  Function deleteAction;
+  String parentPage;
+  CheckoutBloc checkoutBloc;
 
-  CartAdapter({this.productName, this.brandName, this.imageUrl, this.price});
+  CartAdapter({this.productModel, this.deleteAction,this.parentPage,this.checkoutBloc});
 
   @override
   _CartAdapterState createState() => _CartAdapterState();
 }
 
 class _CartAdapterState extends State<CartAdapter> {
-  int qty = 1;
+  ProductModel productModel;
+
+String parentPage;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.parentPage==null){
+      parentPage=widget.parentPage;
+    }else{
+      parentPage='';
+    }
+    productModel = widget.productModel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +44,23 @@ class _CartAdapterState extends State<CartAdapter> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(3.0),
-                child: Image.asset(
-                  'refAssets/blue_red_image.png',
-                  fit: BoxFit.fitWidth,
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, 'product',
+                      arguments: {'id': productModel.id, 'parentPage': 'cart'});
+                },
+                child: SizedBox(
                   width: 64,
+                  height: 64,
+                  child: Center(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(3.0),
+                        child: productModel.imageUrl != null
+                            ? Image.network(productModel.imageUrl,
+                                fit: BoxFit.scaleDown)
+                            : SvgPicture.asset(Urls().productImage,
+                                fit: BoxFit.scaleDown)),
+                  ),
                 ),
               ),
               SizedBox(
@@ -47,63 +77,81 @@ class _CartAdapterState extends State<CartAdapter> {
                       children: [
                         Expanded(
                             child: Text(
-                          widget.productName,
-                          style: AppStyles.smallRegular,
+                          productModel.displayName,
+                          style: TextStyles.smallRegular,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         )),
-                        IconButton(
-                            icon: SvgPicture.asset('icons/delete.svg'),
-                            splashColor: Colors.transparent,
-                            onPressed: () {}),
+                        widget.deleteAction != null
+                            ? IconButton(
+                                icon: SvgPicture.asset('icons/delete.svg'),
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  widget.deleteAction();
+                                })
+                            : Container(),
                       ],
                     ),
                     Text(
-                      widget.brandName,
-                      style: AppStyles.smallRegularSubdued,
+                      productModel.brandName,
+                      style: TextStyles.smallRegularSubdued,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
                         Row(
-
                           children: [
                             Text(
                               'Qty:',
-                              style: AppStyles.smallRegular,
+                              style: TextStyles.smallRegular,
                             ),
                             Row(
                               children: [
-                                IconButton(
-                                    icon:
-                                        SvgPicture.asset('icons/minus_square.svg'),
+                                widget.parentPage!='payment'? IconButton(
+                                    icon: SvgPicture.asset(
+                                        'icons/minus_square.svg'),
                                     splashColor: Colors.transparent,
                                     onPressed: () {
-                                      if (qty > 0) {
-                                        qty -= 1;
+                                      if (productModel.qty > 1) {
+                                        productModel.qty -= 1;
+                                        productModel.totalPrice = double.parse(
+                                                productModel.qty.toString()) *
+                                            double.parse(productModel.unitPrice
+                                                .toString());
+                                        // if(widget.checkoutBloc!=null){
+                                        //   widget.checkoutBloc.add(QtyUpdated());
+                                        // }
                                         setState(() {});
                                       }
-                                    }),
+                                    }):Container(width: 10,),
                                 Text(
-                                  qty.toString(),
-                                  style: AppStyles.mediumRegular,
+                                  productModel.qty.toString(),
+                                  style: TextStyles.mediumRegular,
                                 ),
-                                IconButton(
-                                    icon: SvgPicture.asset('icons/plus_square.svg'),
+                                widget.parentPage!='payment'? IconButton(
+                                    icon: SvgPicture.asset(
+                                        'icons/plus_square.svg'),
                                     splashColor: Colors.transparent,
                                     onPressed: () {
-                                      qty += 1;
-
+                                      productModel.qty += 1;
+                                      productModel.totalPrice = double.parse(
+                                              productModel.qty.toString()) *
+                                          double.parse(productModel.unitPrice
+                                              .toString());
+                                      if(widget.checkoutBloc!=null){
+                                        widget.checkoutBloc.add(QtyUpdated());
+                                      }
                                       setState(() {});
-                                    }),
+                                    }):Container(),
                               ],
                             )
                           ],
                         ),
-                        Text(widget.price,style: AppStyles.smallMedium,)
-
+                        Text(
+                          productModel.totalPrice.toStringAsFixed(2),
+                          style: TextStyles.smallMedium,
+                        )
                       ],
                     )
                   ],

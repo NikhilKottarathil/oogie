@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/product_portrait_adapter_2.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/components/custom_app_bars.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/components/app_bar/secondary_app_bar.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/screens/explore/product_filter/filter_and_sort.dart';
 import 'package:oogie/screens/explore/used_phones/sell_a_phone_step1.dart';
-import 'package:oogie/special_components/filter_and_sort.dart';
-import 'package:oogie/views/grid_views/product_potrait_gridview.dart';
 
 class UsedPhonesList extends StatefulWidget {
   @override
@@ -28,7 +26,7 @@ class _UsedPhonesListState extends State<UsedPhonesList> {
               children: [
                 Text(
                   'Used Phones',
-                  style: AppStyles.displayMedium,
+                  style: TextStyles.displayMedium,
                 ),
                 InkWell(
                   onTap: (){
@@ -48,7 +46,7 @@ class _UsedPhonesListState extends State<UsedPhonesList> {
                         ),
                         Text(
                           'Filter',
-                          style: AppStyles.smallMedium,
+                          style: TextStyles.smallMedium,
                         )
                       ],
                     ),

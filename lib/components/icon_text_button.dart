@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 class IconTextButton extends StatefulWidget {
   String text, iconUrl;
@@ -33,7 +33,7 @@ class _IconTextButtonState extends State<IconTextButton> {
             SizedBox(width: 10,),
             Text(
               "  " + widget.text,
-              style: AppStyles.mediumMedium,
+              style: TextStyles.mediumMedium,
             ),
           ],
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/adapters/order_adapter.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_blue.dart';
+
 import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/screens/orders/order_details.dart';
 

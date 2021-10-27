@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
-import 'package:oogie/components/custom_dropdown.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
-import 'package:oogie/screens/vendor/components/attribute.dart';
-import 'package:oogie/special_components/image_picker_grid.dart';
 
 class AddUser extends StatefulWidget {
   String title;

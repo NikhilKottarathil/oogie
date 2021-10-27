@@ -1,9 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
 import 'package:oogie/components/custom_dropdown.dart';
+import 'package:oogie/constants/styles.dart';
 
 class ProductReport extends StatefulWidget {
   @override
@@ -137,7 +135,7 @@ List<PieChartSectionData> paiChartSelectionDatas = [
     color: AppColors.PrimaryBase,
     value: 25,
     // title: 'Remdi 9',
-    // titleStyle: AppStyles.tinyRegular,
+    // titleStyle: TextStyles.tinyRegular,
     showTitle: false,
     radius: 25,
   ),
@@ -201,18 +199,18 @@ class StorageInfoCard extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppStyles.smallRegular,
+                  style: TextStyles.smallRegular,
                 ),
                 Text(
                   "$number items",
-                  style: AppStyles.tinyRegularSubdued,
+                  style: TextStyles.tinyRegularSubdued,
                 ),
               ],
             ),
           ),
           Text(
             rupeesString + " " + amount,
-            style: AppStyles.smallMedium,
+            style: TextStyles.smallMedium,
           )
         ],
       ),

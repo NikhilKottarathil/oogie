@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 class OrderDetailsAdapter extends StatefulWidget {
 
@@ -33,24 +33,24 @@ class _OrderDetailsAdapterState extends State<OrderDetailsAdapter> {
 
                 Text(
                   widget.productName,
-                  style: AppStyles.smallRegular,
+                  style: TextStyles.smallRegular,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   'Redmi',
-                  style: AppStyles.smallRegularSubdued,
+                  style: TextStyles.smallRegularSubdued,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   'Seller: Shop4u',
-                  style: AppStyles.smallRegular,
+                  style: TextStyles.smallRegular,
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 8,),
                 Text(
                   rupeesString+'10030',
-                  style: AppStyles.smallMedium,
+                  style: TextStyles.smallMedium,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

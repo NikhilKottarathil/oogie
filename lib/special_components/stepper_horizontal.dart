@@ -1,5 +1,5 @@
-import 'package:oogie/special_components/oogie_stepper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oogie/special_components/oogie_stepper.dart';
 class StepperHorizontal extends StatelessWidget {
   int index;
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/product_description.dart';
 
 class ProductPortraitAdapter2 extends StatelessWidget {
@@ -33,13 +32,13 @@ class ProductPortraitAdapter2 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(productName, style: AppStyles.smallRegular,overflow: TextOverflow.ellipsis,),
+                  Text(productName, style: TextStyles.smallRegular,overflow: TextOverflow.ellipsis,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(child: Text(rupeesString+price, style: AppStyles.smallMedium,)),
+                      Expanded(child: Text(rupeesString+price, style: TextStyles.smallMedium,)),
                       Icon(Icons.star,color: AppColors.SecondaryBase,size: 12,),
-                      Text(rating, style: AppStyles.tinyRegular,overflow: TextOverflow.ellipsis,),
+                      Text(rating, style: TextStyles.tinyRegular,overflow: TextOverflow.ellipsis,),
 
                     ],
                   ),

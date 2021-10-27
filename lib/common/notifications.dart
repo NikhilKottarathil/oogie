@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oogie/adapters/notification_adapter.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_blue.dart';
+
 class Notifications extends StatefulWidget {
   @override
   _NotificationsState createState() => _NotificationsState();

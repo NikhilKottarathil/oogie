@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/functions/date_conversion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,7 +89,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                     ),
                     Text(
                       'Verify OTP',
-                      style: AppStyles.largeRegular,
+                      style: TextStyles.largeRegular,
                     ),
                     CustomTextField(
                       hintText: 'Enter OTP',
@@ -115,7 +115,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                       visible: step == 1,
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: Text(    getDurationTime(pendingTimeInMills.toString()),style: AppStyles.smallMedium,),
+                        child: Text(    getDurationTime(pendingTimeInMills.toString()),style: TextStyles.smallMedium,),
                       ),
                     ),
                     SizedBox(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oogie/adapters/chat_adapter.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/radio_buttons.dart';
+import 'package:oogie/constants/styles.dart';
 class Chats extends StatefulWidget {
   @override
   _ChatsState createState() => _ChatsState();

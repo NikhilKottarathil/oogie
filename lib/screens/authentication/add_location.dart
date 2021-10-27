@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
-import 'package:oogie/screens/authentication/shops_near_me.dart';
+import 'package:oogie/constants/styles.dart';
 
 class AddLocation extends StatefulWidget {
   @override
@@ -35,20 +35,20 @@ class _AddLocationState extends State<AddLocation> {
             ),
             Text(
               'Update Your Location',
-              style: AppStyles.largeRegular,
+              style: TextStyles.largeRegular,
             ),
             SizedBox(
               height: 4,
             ),
             Text(
               'Select a region to showcase shops around it.',
-              style: AppStyles.smallRegularSubdued,
+              style: TextStyles.smallRegularSubdued,
             ),
             Row(
               children: [
                 Text(
                   'If your region is not listed.',
-                  style: AppStyles.smallRegularSubdued,
+                  style: TextStyles.smallRegularSubdued,
                 ),
                 CustomTextButton2(
                   text: 'Explore',
@@ -67,7 +67,7 @@ class _AddLocationState extends State<AddLocation> {
                   itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ShopsNearMe(locations[index])));
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>ShopsNearMe(locations[index])));
                   },
                   child: Padding(
                     padding: EdgeInsets.all(16),
@@ -82,7 +82,7 @@ class _AddLocationState extends State<AddLocation> {
                         SizedBox(width: 12,),
                         Text(
                           locations[index],
-                          style: AppStyles.smallRegular,
+                          style: TextStyles.smallRegular,
                         ),
                       ],
                     ),

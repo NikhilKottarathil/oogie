@@ -4,9 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 // TODO(dragostis): Missing functionality:
 //   * mobile horizontal mode with adding/removing steps
@@ -353,7 +351,7 @@ class _OogieStepperState extends State<OogieStepper> with TickerProviderStateMix
         // );
         return Text(
           '${index + 1}',
-          style: AppStyles.smallRegularWhite,
+          style: TextStyles.smallRegularWhite,
         );
       case StepState.complete:
         return Icon(

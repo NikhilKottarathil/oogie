@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/screens/explore/explore_page.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/vendor/add_user.dart';
 class UserAdapter extends StatefulWidget {
   @override
@@ -45,9 +43,9 @@ class _UserAdapterState extends State<UserAdapter> {
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Vendor Name',style: AppStyles.smallMedium),
-                Text('9876543210',style: AppStyles.smallRegularSubdued),
-                Text('Vendor',style: AppStyles.smallRegularSubdued),
+                Text('Vendor Name',style: TextStyles.smallMedium),
+                Text('9876543210',style: TextStyles.smallRegularSubdued),
+                Text('Vendor',style: TextStyles.smallRegularSubdued),
               ],
             )),
 

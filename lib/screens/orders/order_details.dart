@@ -1,17 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/order_details_adapter.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
-import 'package:oogie/components/custom_image_button.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_text_button.dart';
-import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';
-import 'package:oogie/components/password_text_field.dart';
-import 'package:oogie/screens/authentication/login_with_otp.dart';
-import 'package:oogie/screens/authentication/register.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/orders/request_return.dart';
 import 'package:oogie/special_components/stepper_vertical.dart';
 
@@ -51,7 +45,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               top: 20, left: 20, right: 20, bottom: 10),
                           child: Text(
                             'Order ID - 876428347JSBDCKJSDSDYCUI',
-                            style: AppStyles.smallRegularSubdued,
+                            style: TextStyles.smallRegularSubdued,
                           ),
                         ),
                         dividerDefault,
@@ -87,14 +81,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   ),
                                   Text(
                                     'Shipping To:',
-                                    style: AppStyles.smallRegular,
+                                    style: TextStyles.smallRegular,
                                   ),
                                   SizedBox(
                                     height: 12,
                                   ),
                                   Text(
                                     'Francisco Román Alarcón\n1060 W Addison St #13\nChicago, IL 60613 \n(123) 456-7890',
-                                    style: AppStyles.smallRegularSubdued,
+                                    style: TextStyles.smallRegularSubdued,
                                   ),
                                   SizedBox(
                                     height: 16,
@@ -112,12 +106,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           Text(
                                             'Subtotal',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           ),
                                           Text(
                                             rupeesString + '165',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           )
                                         ],
                                       ),
@@ -131,11 +125,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           Text(
                                             'Shipping',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           ),
                                           Text('FREE',
                                               style:
-                                                  AppStyles.smallRegularSubdued)
+                                                  TextStyles.smallRegularSubdued)
                                         ],
                                       ),
                                       SizedBox(
@@ -148,12 +142,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           Text(
                                             'Expected Delivery',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           ),
                                           Text(
                                             'Apr 20 - 28',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           )
                                         ],
                                       ),
@@ -167,12 +161,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           Text(
                                             'Taxes',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           ),
                                           Text(
                                             rupeesString + '11.55',
                                             style:
-                                                AppStyles.smallRegularSubdued,
+                                                TextStyles.smallRegularSubdued,
                                           )
                                         ],
                                       ),
@@ -185,11 +179,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         children: [
                                           Text(
                                             'Total',
-                                            style: AppStyles.mediumMedium,
+                                            style: TextStyles.mediumMedium,
                                           ),
                                           Text(
                                             rupeesString + '176.55',
-                                            style: AppStyles.mediumMedium,
+                                            style: TextStyles.mediumMedium,
                                           )
                                         ],
                                       )

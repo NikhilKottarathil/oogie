@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/vendor/reports/product_report.dart';
 import 'package:oogie/screens/vendor/reports/sale_report.dart';
 class Reports extends StatefulWidget {
@@ -22,7 +21,7 @@ class _ReportsState extends State<Reports> {
             title: TabBar(
               unselectedLabelColor: AppColors.TextSubdued,
               labelColor:AppColors.TextDefault ,
-              labelStyle: AppStyles.smallRegular,
+              labelStyle: TextStyles.smallRegular,
 
               indicatorColor: Colors.transparent,
               indicatorSize: TabBarIndicatorSize.values[1],

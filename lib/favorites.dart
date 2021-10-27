@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+
 
 import 'adapters/favorite_adapter.dart';
-import 'adapters/product_landscape_adapter_2.dart';
-import 'adapters/product_portrait_adapter_2.dart';
+import 'components/app_bar/default_appbar_blue.dart';
 
-class Favorites extends StatefulWidget {
+class FavoritesOld extends StatefulWidget {
   @override
   _FavoritesState createState() => _FavoritesState();
 }
 
-class _FavoritesState extends State<Favorites> {
+class _FavoritesState extends State<FavoritesOld> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

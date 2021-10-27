@@ -1,7 +1,6 @@
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/special_components/oogie_stepper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/special_components/oogie_stepper.dart';
 
 class StepperVertical extends StatefulWidget {
   int index;
@@ -58,7 +57,7 @@ class _StepperVerticalState extends State<StepperVertical> {
           title: const Text('Ordered'),
           subtitle: Text(
             'Lorem ipsum dolor sit ',
-            style: AppStyles.tinyRegularSubdued,
+            style: TextStyles.tinyRegularSubdued,
           ),
           state: index == 0 ? StepState.editing : StepState.complete,
           content: Container(),
@@ -67,7 +66,7 @@ class _StepperVerticalState extends State<StepperVertical> {
           title: Text('Packed'),
           subtitle: Text(
             'Lorem ipsum dolor sit ',
-            style: AppStyles.tinyRegularSubdued,
+            style: TextStyles.tinyRegularSubdued,
           ),
           isActive: true,
           state: widget == 1
@@ -81,7 +80,7 @@ class _StepperVerticalState extends State<StepperVertical> {
           title: Text('Shipped'),
           subtitle: Text(
             'Lorem ipsum dolor sit ',
-            style: AppStyles.tinyRegularSubdued,
+            style: TextStyles.tinyRegularSubdued,
           ),
           state: widget == 2
               ? StepState.editing
@@ -94,7 +93,7 @@ class _StepperVerticalState extends State<StepperVertical> {
           title: Text('Delivery'),
           subtitle: Text(
             'Lorem ipsum dolor sit ',
-            style: AppStyles.tinyRegularSubdued,
+            style: TextStyles.tinyRegularSubdued,
           ),
           state: widget.index == 3 ? StepState.editing : StepState.indexed,
           content: Container(),

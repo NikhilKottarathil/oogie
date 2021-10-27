@@ -1,34 +1,31 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/strings_and_urls.dart';
+import 'package:oogie/constants/styles.dart';
+import 'package:oogie/models/category_model.dart';
 
 class CategoryAdapter extends StatelessWidget {
-  String imageUrl,name;
-  CategoryAdapter({this.name,this.imageUrl});
+  CategoryModel categoryModel;
+  CategoryAdapter({this.categoryModel});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 68,
+    return Container(
+      margin: EdgeInsets.only(right: 8,top: 8,bottom: 8),
       height: 92,
+      width: 75,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: 44,
-            width: 44,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.BorderDisabled),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(imageUrl),
-              )
-            ),
+          CircleAvatar(
+            radius: 22,
+            backgroundColor: AppColors.White,
+            child: categoryModel.imageUrl!=null?Image.network(categoryModel.imageUrl):SvgPicture.asset(Urls().categoryImage),
           ),
+
           SizedBox(height: 5,),
-          Text(name,style: AppStyles.tinyMedium,),
+          Text(categoryModel.name,style: TextStyles.tinyMedium,textAlign: TextAlign.center,),
         ],
       ),
     );

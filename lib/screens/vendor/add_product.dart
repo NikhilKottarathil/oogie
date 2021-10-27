@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_dropdown.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/vendor/components/attribute.dart';
 import 'package:oogie/special_components/image_picker_grid.dart';
 
@@ -56,9 +57,9 @@ class _AddProductState extends State<AddProduct> {
                           CustomTextField2(labelText: 'Specification'),
                           CustomTextField2(labelText: 'Highlights'),
                           SizedBox(height: 12,),
-                          Text('Capture Product Image',style: AppStyles.smallRegular,),
+                          Text('Capture Product Image',style: TextStyles.smallRegular,),
                           SizedBox(height: 2,),
-                          Text('Note: Any instruction about capturing image goes here',style: AppStyles.tinyRegularSubdued,),
+                          Text('Note: Any instruction about capturing image goes here',style: TextStyles.tinyRegularSubdued,),
                           SizedBox(height: 8,),
                           SizedBox(
                               height: ((width-40)/3),

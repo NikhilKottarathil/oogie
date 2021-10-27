@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:oogie/app/app_colors.dart';
+import 'package:oogie/constants/styles.dart';
 
 class PasswordTextField extends StatefulWidget {
   final hintText;

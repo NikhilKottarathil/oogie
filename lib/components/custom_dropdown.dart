@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 
 typedef void StringCallback(String val);
 
@@ -37,7 +36,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               padding: const EdgeInsets.only(bottom: 0.0),
               child: new Text(
                 widget.titleText ==null ?'':widget.titleText,
-                style: AppStyles.smallRegular,
+                style: TextStyles.smallRegular,
 
               ),
             ),
@@ -79,7 +78,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                     child: Text(
                       '\t $value',
                       textAlign: TextAlign.center,
-                      style:AppStyles.smallRegularSubdued
+                      style:TextStyles.smallRegularSubdued
                     ),
                   );
                 }).toList(),

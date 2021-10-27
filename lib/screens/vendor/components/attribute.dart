@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/text_styles.dart';
+import 'package:oogie/constants/styles.dart';
 class Attribute extends StatefulWidget {
   String title;
   List values;
@@ -21,7 +21,7 @@ class _AttributeState extends State<Attribute> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.title,style: AppStyles.smallRegular,),
+              Text(widget.title,style: TextStyles.smallRegular,),
               Switch(value: switchValue, onChanged: (onChanged){
               }),
             ],
@@ -41,7 +41,7 @@ class _AttributeState extends State<Attribute> {
                       radioGroup=value;
                     });
                   }),
-                  Text(widget.values[index],style: AppStyles.smallRegular,),
+                  Text(widget.values[index],style: TextStyles.smallRegular,),
 
                 ],
               );

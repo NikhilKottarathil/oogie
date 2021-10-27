@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
-import 'package:oogie/screens/explore/used_phones/sell_a_phone_step_2.dart';
-import 'package:oogie/screens/shopping/checkout_review.dart';
-import 'package:oogie/special_components/stepper_horizontal.dart';
+import 'package:oogie/constants/styles.dart';
 
 import 'sell_a_phone_step_4.dart';
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_white.dart';
+
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/used_phones/sell_a_phone_step_2.dart';
-import 'package:oogie/screens/shopping/checkout_review.dart';
-import 'package:oogie/special_components/stepper_horizontal.dart';
 
 
 class SellAPhoneStep1 extends StatefulWidget {
@@ -33,11 +32,11 @@ class _State extends State<SellAPhoneStep1> {
                     CustomTextField2(labelText: 'Brand',),
                     SizedBox(height: 8,),
                     CustomTextField2(labelText: 'Ad title'),
-                   Text('Enter key features of your item(e.g. brand, model, type, age)' ,style:AppStyles.smallRegularSubdued,),
+                   Text('Enter key features of your item(e.g. brand, model, type, age)' ,style:TextStyles.smallRegularSubdued,),
                     SizedBox(height: 8,),
 
                     CustomTextField2(labelText: 'Describe what you are selling'),
-                    Text('Include condition, features and reason for selling' ,style:AppStyles.smallRegularSubdued,),
+                    Text('Include condition, features and reason for selling' ,style:TextStyles.smallRegularSubdued,),
 
                     Spacer(),
                     DefaultButton(

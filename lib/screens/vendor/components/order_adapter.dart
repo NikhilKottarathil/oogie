@@ -1,15 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/app/app_colors.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_text_button.dart';
-import 'package:oogie/screens/explore/product_description.dart';
-import 'package:oogie/screens/vendor/add_product.dart';
+import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/vendor/order_view.dart';
 import 'package:share/share.dart';
-
-import 'delete_product.dart';
 
 class OrderAdapter extends StatelessWidget {
 
@@ -37,15 +31,15 @@ class OrderAdapter extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('ORDER15875098600064587', style: AppStyles.smallRegular,),
-                    Text('12/08/2022', style: AppStyles.smallRegularSubdued,overflow: TextOverflow.ellipsis,),
+                    Text('ORDER15875098600064587', style: TextStyles.smallRegular,),
+                    Text('12/08/2022', style: TextStyles.smallRegularSubdued,overflow: TextOverflow.ellipsis,),
 
                   ],
                 ),
-                Text('QTY: 12', style: AppStyles.smallRegularSubdued,overflow: TextOverflow.ellipsis,),
+                Text('QTY: 12', style: TextStyles.smallRegularSubdued,overflow: TextOverflow.ellipsis,),
                 SizedBox(height: 2,),
 
-                Text('Delivery Date : 12/08/2022', style: AppStyles.smallRegular,maxLines: 2,overflow: TextOverflow.ellipsis,),
+                Text('Delivery Date : 12/08/2022', style: TextStyles.smallRegular,maxLines: 2,overflow: TextOverflow.ellipsis,),
 
 
                 SizedBox(height: 8,),
@@ -53,7 +47,7 @@ class OrderAdapter extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                   children: [
-                    Text(rupeesString+'23000', style: AppStyles.smallMedium,),
+                    Text(rupeesString+'23000', style: TextStyles.smallMedium,),
                     Row(
                       children: [
                         // CustomTextButton2(text: 'View',action: (){

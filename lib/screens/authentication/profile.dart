@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/app/text_styles.dart';
-import 'package:oogie/components/custom_app_bars.dart';
+import 'package:oogie/components/app_bar/default_appbar_blue.dart';
+
 import 'package:oogie/components/custom_text_button.dart';
+import 'package:oogie/constants/styles.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -40,11 +41,11 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Text(
                       'Wade O Conner',
-                      style: AppStyles.mediumRegular,
+                      style: TextStyles.mediumRegular,
                     ),
                     Text(
                       '+91 7896674587',
-                      style: AppStyles.smallRegularSubdued,
+                      style: TextStyles.smallRegularSubdued,
                     ),
                   ],
                 )
@@ -56,7 +57,7 @@ class _ProfileState extends State<Profile> {
             padding: const EdgeInsets.all(20.0),
             child: Text(
               'General',
-              style: AppStyles.smallRegularSubdued,
+              style: TextStyles.smallRegularSubdued,
             ),
           ),
           SizedBox(
