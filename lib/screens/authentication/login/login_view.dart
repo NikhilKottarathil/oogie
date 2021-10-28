@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/components/custom_image_button.dart';
-import 'package:oogie/components/custom_progress_indicator.dart';
+import 'package:oogie/components/ui_widgets/custom_image_button.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';
@@ -177,13 +177,13 @@ class LoginView extends StatelessWidget {
                             SizedBox(
                               height: 16,
                             ),
-                            // CustomTextButton2(
-                            //   text: 'Continue as Guest',
-                            //   action: () {
-                            //     Navigator.pushReplacementNamed(context, '/myLocation');
-                            //
-                            //   },
-                            // ),
+                            CustomTextButton2(
+                              text: 'Continue as Guest',
+                              action: () {
+                                Navigator.pushReplacementNamed(context, '/myLocation');
+
+                              },
+                            ),
                             SizedBox(
                               height: 16,
                             ),

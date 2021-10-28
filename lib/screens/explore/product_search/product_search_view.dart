@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/vertical_product_adapter.dart';
 import 'package:oogie/components/app_bar/secondary_app_bar.dart';
-import 'package:oogie/components/custom_progress_indicator.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/functions/show_snack_bar.dart';

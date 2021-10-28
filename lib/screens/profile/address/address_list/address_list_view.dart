@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/address_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
 
-import 'package:oogie/components/custom_progress_indicator.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/functions/show_snack_bar.dart';

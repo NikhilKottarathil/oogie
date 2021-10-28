@@ -6,8 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/horizontal_product_view.dart';
 import 'package:oogie/adapters/review_adapter.dart';
 import 'package:oogie/components/app_bar/secondary_app_bar.dart';
-import 'package:oogie/components/custom_progress_indicator.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/components/custom_text_button.dart';
+import 'package:oogie/components/ui_widgets/custom_text_button_3.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/product/product_bloc.dart';
@@ -90,6 +91,8 @@ class ProductView extends StatelessWidget {
                                                     alignment:
                                                         Alignment.topRight,
                                                     child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
                                                       child: state.productModel
                                                               .isInWishList
                                                           ? SvgPicture.asset(
@@ -212,9 +215,12 @@ class ProductView extends StatelessWidget {
                                     ),
                                   ),
                                   dividerDefault,
-                                  ProductHighlights(
-                                    highlights: state.productModel.highlights,
-                                  ),
+                                  state.productModel.highlights.length > 0
+                                      ? ProductHighlights(
+                                          highlights:
+                                              state.productModel.highlights,
+                                        )
+                                      : Container(),
                                   Padding(
                                     // padding: const EdgeInsets.only(left: 20,right: 20),
                                     padding: const EdgeInsets.all(20),

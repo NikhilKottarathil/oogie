@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:oogie/components/custom_dropdown.dart';
+import 'package:oogie/components/ui_widgets/custom_dropdown.dart';
 import 'package:oogie/constants/styles.dart';
 
 class ProductReport extends StatefulWidget {

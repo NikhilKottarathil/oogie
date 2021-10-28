@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oogie/adapters/order_details_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
 
-import 'package:oogie/components/custom_dropdown.dart';
+import 'package:oogie/components/ui_widgets/custom_dropdown.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';

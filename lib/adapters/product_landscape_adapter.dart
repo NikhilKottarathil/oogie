@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:oogie/screens/explore/product_description.dart';
+// import 'package:oogie/screens/explore/product_description.dart';
 
 class ProductLandscapeAdapter extends StatelessWidget {
   String productName, brandName, imageUrl;
@@ -12,7 +12,7 @@ class ProductLandscapeAdapter extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage()));
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage()));
       },
       child: Container(
         height: 240,

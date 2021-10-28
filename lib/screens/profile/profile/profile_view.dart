@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
 
 import 'package:oogie/components/custom_text_button.dart';
+import 'package:oogie/components/ui_widgets/custom_text_button_4.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/profile/edit_profile/edit_profile_view.dart';
 import 'package:oogie/screens/profile/profile/profile_bloc.dart';

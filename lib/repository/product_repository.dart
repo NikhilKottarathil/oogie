@@ -1,4 +1,5 @@
 import 'package:oogie/components/radio_buttons.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/functions/api_calls.dart';
 import 'package:oogie/functions/date_conversion.dart';
@@ -20,8 +21,10 @@ List<ProductModel> wishListProducts = [];
 class ProductRepository {
 
   ProductRepository(){
-    setProductsInCart();
-    setProductInWishlist();
+   if( AppData().isUser) {
+     setProductsInCart();
+     setProductInWishlist();
+   }
   }
 
 // CATEGORY
@@ -385,6 +388,7 @@ class ProductRepository {
             imageUrl: medias.isNotEmpty ? medias[0] : null,
             variants: variants,
             attributes: attributes,
+            highlights: highlights,
             isAddedToCart: isInCart,
             qty: cartQty,
             isInWishList: isInWishList,

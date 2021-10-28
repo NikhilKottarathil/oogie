@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/repository/auth_repo.dart';
 import 'package:oogie/repository/order_repository.dart';
 import 'package:oogie/repository/product_repository.dart';
@@ -155,14 +156,22 @@ class AppRouter {
           ),
         );
       case '/cart':
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => CartBloc(
-              productRepository: productRepository,
+        if (AppData().isUser) {
+          return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => CartBloc(
+                productRepository: productRepository,
+              ),
+              child: CartView(),
             ),
-            child: CartView(),
-          ),
-        );
+          );
+        }
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => LoginBloc(authRepo: authRepository),
+                  child: LoginView(),
+                ));
+
       case '/wishlist':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(

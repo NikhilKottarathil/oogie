@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/components/icon_text_button.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/repository/profile_repository.dart';
 import 'package:oogie/screens/orders/order_list.dart';
@@ -143,6 +144,7 @@ class MenuDrawer extends StatelessWidget {
                       SharedPreferences sharedPreference =
                           await SharedPreferences.getInstance();
                       sharedPreference.clear();
+                      AppData().clearAllData();
                       Navigator.pop(context);
                       Navigator.pushReplacementNamed(context, '/');
                     }),

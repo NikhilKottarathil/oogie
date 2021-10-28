@@ -74,4 +74,13 @@ class AppData {
     appDataModel.selectedShopName =shopModel.name;
   }
 
+  Future<void> clearAllData() async {
+    appDataModel.isUser=false;
+    appDataModel.userName ='Guest';
+    appDataModel.phoneNumber = '0123456789';
+    appDataModel.userId = null;
+    appDataModel.locationId = null;
+    appDataModel.selectedShopId =null;
+    appDataModel.profilePic =null;
+  }
 }

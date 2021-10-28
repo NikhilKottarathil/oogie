@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:oogie/screens/explore/product_description.dart';
+// import 'package:oogie/screens/explore/product_description.dart';
 import 'package:oogie/screens/vendor/add_product.dart';
 import 'package:share/share.dart';
 
@@ -72,9 +72,9 @@ class ProductAdapter extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomTextButton2(text: 'View',action: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage()));
-                },),
+                // CustomTextButton2(text: 'View',action: (){
+                //   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage()));
+                // },),
                 SizedBox(width: 12,),
                 InkWell(onTap:() async {
                   await Share.share("text");

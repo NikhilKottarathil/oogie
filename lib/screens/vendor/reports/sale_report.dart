@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/components/custom_dropdown.dart';
+import 'package:oogie/components/ui_widgets/custom_dropdown.dart';
 import 'package:oogie/screens/vendor/components/line_chart.dart';
 class SaleReport extends StatefulWidget {
   @override

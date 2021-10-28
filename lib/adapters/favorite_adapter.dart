@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:oogie/screens/explore/product_description.dart';
+// import 'package:oogie/screens/explore/product_description.dart';
 
 class FavoriteAdapter extends StatelessWidget {
   String productName, brandName, imageUrl, price, rating;
@@ -17,10 +17,10 @@ class FavoriteAdapter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ProductPage()));
-      },
+      // onTap: () {
+      //   Navigator.of(context)
+      //       .push(MaterialPageRoute(builder: (context) => ProductPage()));
+      // },
       child: Container(
         margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.all(10),

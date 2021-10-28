@@ -38,7 +38,8 @@ class SelectShopBloc extends Bloc<SelectShopEvent, SelectShopState> {
           await profileRepository.editProfile(
               locationId: locationModel.id, shopId: event.shop.id);
 
-          // await appData.setUserDetails();
+          await appData.setUserDetails();
+          await profileRepository.updateSelectedShop(event.shop);
           yield state.copyWith(
               formStatus: SubmissionSuccess(), selectedShop: event.shop);
         } else {

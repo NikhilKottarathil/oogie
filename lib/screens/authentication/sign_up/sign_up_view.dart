@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
 
-import 'package:oogie/components/custom_image_button.dart';
-import 'package:oogie/components/custom_progress_indicator.dart';
+import 'package:oogie/components/ui_widgets/custom_image_button.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';

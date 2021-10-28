@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/review_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
 
-import 'package:oogie/components/custom_progress_indicator.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/functions/show_snack_bar.dart';
 import 'package:oogie/screens/explore/review/review_list/review_list_bloc.dart';
