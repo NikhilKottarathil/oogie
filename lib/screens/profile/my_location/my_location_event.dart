@@ -7,6 +7,7 @@ class SearchLocationChanged extends MyLocationEvent {
 
   SearchLocationChanged({this.searchString});
 }
+
 class LocationsUpdated extends MyLocationEvent {
   final List<LocationModel> locationModels;
 
@@ -14,10 +15,7 @@ class LocationsUpdated extends MyLocationEvent {
 }
 
 class MyLocationSelected extends MyLocationEvent {
-  final  myLocation;
+  final myLocation;
 
   MyLocationSelected({this.myLocation});
 }
-
-
-

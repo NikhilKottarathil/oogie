@@ -1,25 +1,23 @@
-
 import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/models/product_model.dart';
 
 class CartState {
-  List<ProductModel> newProductModels=[];
-  List<ProductModel> usedProductModels=[];
+  List<ProductModel> newProductModels = [];
+  List<ProductModel> usedProductModels = [];
   PageScrollStatus pageScrollStatus;
   int currentPageIndex;
   bool isLoading;
   String parentPage;
   Exception actionErrorMessage;
 
-  CartState({
-    this.newProductModels,
-    this.usedProductModels,
-    this.pageScrollStatus=const InitialScrollStatus(),
-    this.currentPageIndex=0,
-    this.parentPage,
-    this.actionErrorMessage,
-    this.isLoading=false
-  });
+  CartState(
+      {this.newProductModels,
+      this.usedProductModels,
+      this.pageScrollStatus = const InitialScrollStatus(),
+      this.currentPageIndex = 0,
+      this.parentPage,
+      this.actionErrorMessage,
+      this.isLoading = false});
 
   CartState copyWith({
     var newProductModels,

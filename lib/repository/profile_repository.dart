@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:fuzzy/fuzzy.dart';
 import 'package:http/http.dart' as http;
-import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
+import 'package:oogie/flavour_config.dart';
 import 'package:oogie/functions/api_calls.dart';
 import 'package:oogie/models/address_model.dart';
 import 'package:oogie/models/location_model.dart';
@@ -17,9 +17,10 @@ final List<ShopModel> shopModels = [];
 class ProfileRepository {
   Future<Map<String, dynamic>> getUserDetails() async {
     try {
-      var body = await getDataRequest(address: 'user/profile');
-      if (body['User'] != null) {
-        return body['User'];
+      var body = await getDataRequest(
+          address: FlavorConfig().flavorValue + '/profile');
+      if (body[FlavorConfig().flavorKey] != null) {
+        return body[FlavorConfig().flavorKey];
       } else {
         if (body['message'] != null) {
           throw Exception(body['message']);
@@ -32,7 +33,7 @@ class ProfileRepository {
     }
   }
 
-  Future<void> editProfile(
+  Future<void> editUserProfile(
       {String userName, phoneNumber, shopId, locationId}) async {
     try {
       Map<String, dynamic> myBody = {};
@@ -53,18 +54,18 @@ class ProfileRepository {
         myBody.addAll(bioBody);
       }
       print(myBody);
-      var body =
-          await patchDataRequest(address: 'user/profile', myBody: myBody);
+      var body = await patchDataRequest(
+          address: FlavorConfig().flavorValue + '/profile', myBody: myBody);
       if (body['message'] == 'Successfully Updated') {
       } else {
         if (body['message'] != null) {
           throw Exception(body['message']);
         } else {
-          throw Exception('Please retry');
+          throw AppExceptions().somethingWentWrong;
         }
       }
     } catch (e) {
-      throw Exception('Please retry');
+      throw e;
     }
   }
 
@@ -73,7 +74,8 @@ class ProfileRepository {
     String token = sharedPreferences.getString('token');
     Map<String, String> headers = {};
     headers['x-access-token'] = token;
-    String url = "https://143.244.132.53/api/user/profile";
+    String url =
+        "https://143.244.132.53/api/" + FlavorConfig().flavorValue + "/profile";
 
     var request = http.MultipartRequest('PATCH', Uri.parse(url));
     request.headers.addAll(headers);
@@ -98,7 +100,9 @@ class ProfileRepository {
         locationModels.clear();
         body['Location'].forEach((element) {
           locationModels.add(LocationModel(
-              id: element['id'].toString(), name: element['name']));
+              id: element['id'].toString(),
+              name: element['name'],
+              isSelected: false));
         });
         return locationModels;
       } else {
@@ -130,12 +134,6 @@ class ProfileRepository {
     } catch (e) {
       throw AppExceptions().serverException;
     }
-  }
-
-  //Update LocationToProfile
-  Future<void> updateMyLocation(LocationModel locationModel) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('locationId', locationModel.id);
   }
 
   // Select Shop //
@@ -180,13 +178,6 @@ class ProfileRepository {
     } catch (e) {
       throw AppExceptions().serverException;
     }
-  }
-
-  //Update Selected Shop To Profile
-  Future<void> updateSelectedShop(ShopModel shopModel) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('shopId', shopModel.id);
-    AppData().updateShopDetails(shopModel);
   }
 
   Future<void> addNewAddress(

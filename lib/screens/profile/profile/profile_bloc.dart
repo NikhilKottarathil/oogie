@@ -5,10 +5,7 @@ import 'package:oogie/repository/profile_repository.dart';
 import 'package:oogie/screens/profile/profile/profile_events.dart';
 import 'package:oogie/screens/profile/profile/profile_state.dart';
 
-
-
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-
   ProfileRepository profileRepository;
   var imageAspectRatio;
 
@@ -22,7 +19,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       state.name = user['name'] != null ? user['name'] : '';
       state.phoneNumber = user['mobile'] != null ? user['mobile'] : '';
       state.bio = user['about_me'] != null ? user['about_me'] : '';
-      state.imageUrl=user['profile_pic']['url']!=null?'https://api.queschat.com/'+user['profile_pic']['url']:Urls().personUrl;
+      state.imageUrl = user['profile_pic']['url'] != null
+          ? 'https://api.queschat.com/' + user['profile_pic']['url']
+          : Urls().personUrl;
       emit(state);
     } on Exception {
       // emit();
@@ -39,10 +38,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             imageFile: state.imageFile,
             aspectRatios: imageAspectRatio,
             context: event.context);
-       await profileRepository.changeProfilePicture(imageFile: state.imageFile);
-       await getUserData();
+        await profileRepository.changeProfilePicture(
+            imageFile: state.imageFile);
+        await getUserData();
         yield state.copyWith();
-
       } catch (e) {
         print(e);
       }
@@ -53,10 +52,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         print(state.phoneNumber);
 
         yield state.copyWith();
-
-      }catch(e){
-
-      }
+      } catch (e) {}
     }
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/models/shop_model.dart';
 
@@ -6,7 +5,6 @@ class SelectShopState {
   List<ShopModel> shopModels;
   ShopModel selectedShop;
   String searchString;
-
 
   final FormSubmissionStatus formStatus;
 
@@ -22,7 +20,6 @@ class SelectShopState {
     var selectedShop,
     FormSubmissionStatus formStatus,
     String searchString,
-
   }) {
     return SelectShopState(
       shopModels: shopModels ?? this.shopModels,

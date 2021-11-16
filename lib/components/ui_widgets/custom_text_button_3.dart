@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
 
@@ -8,7 +7,13 @@ class CustomTextButton3 extends StatefulWidget {
   bool active = true;
   Color textColor;
 
-  CustomTextButton3({Key key, this.text, this.errorText, this.action, this.active,this.textColor})
+  CustomTextButton3(
+      {Key key,
+      this.text,
+      this.errorText,
+      this.action,
+      this.active,
+      this.textColor})
       : super(key: key);
 
   @override
@@ -39,13 +44,15 @@ class _CustomTextButton3State extends State<CustomTextButton3> {
           children: [
             Text(
               widget.text,
-              style:TextStyles.smallRegular,
+              style: TextStyles.smallRegular,
             ),
-            Icon(Icons.arrow_forward_ios_sharp,color: AppColors.OutlinedIcon,),
+            Icon(
+              Icons.arrow_forward_ios_sharp,
+              color: AppColors.OutlinedIcon,
+            ),
           ],
         ),
       ),
     );
   }
 }
-

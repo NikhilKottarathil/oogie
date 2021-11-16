@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/constants/app_data.dart';
+import 'package:oogie/flavour_config.dart';
 import 'package:oogie/repository/auth_repo.dart';
+import 'package:oogie/repository/distributor_repository.dart';
 import 'package:oogie/repository/order_repository.dart';
 import 'package:oogie/repository/product_repository.dart';
 import 'package:oogie/repository/profile_repository.dart';
-import 'package:oogie/screens/authentication//reset_password/reset_password_bloc.dart';
-import 'package:oogie/screens/authentication/authentication/session_cubit.dart';
-import 'package:oogie/screens/authentication/authentication/splash_screen.dart';
-import 'package:oogie/screens/authentication/login/login_bloc.dart';
-import 'package:oogie/screens/authentication/login/login_view.dart';
-import 'package:oogie/screens/authentication/otp_login/otp_login_bloc.dart';
-import 'package:oogie/screens/authentication/otp_login/otp_login_view.dart';
-import 'package:oogie/screens/authentication/reset_password/reset_password_view.dart';
-import 'package:oogie/screens/authentication/sign_up/sign_up_bloc.dart';
-import 'package:oogie/screens/authentication/sign_up/sign_up_view.dart';
+import 'package:oogie/repository/vendor_repository.dart';
+import 'package:oogie/repository/wholesale_repository.dart';
+import 'package:oogie/screens/common/authentication/authentication/session_cubit.dart';
+import 'package:oogie/screens/common/authentication/authentication/splash_screen.dart';
+import 'package:oogie/screens/common/authentication/login/login_bloc.dart';
+import 'package:oogie/screens/common/authentication/login/login_view.dart';
+import 'package:oogie/screens/common/authentication/otp_login/otp_login_bloc.dart';
+import 'package:oogie/screens/common/authentication/otp_login/otp_login_view.dart';
+import 'package:oogie/screens/common/authentication/reset_password/reset_password_bloc.dart';
+import 'package:oogie/screens/common/authentication/reset_password/reset_password_view.dart';
+import 'package:oogie/screens/common/authentication/sign_up/sign_up_bloc.dart';
+import 'package:oogie/screens/common/authentication/sign_up/sign_up_view.dart';
+import 'package:oogie/screens/common/products/add_product/add_product_bloc.dart';
+import 'package:oogie/screens/common/products/add_product/add_product_view_0.dart';
+import 'package:oogie/screens/common/products/add_product/add_product_view_1.dart';
+import 'package:oogie/screens/common/products/add_product/add_product_view_4.dart';
+import 'package:oogie/screens/distributor/connection_agents_list/connection_agents_list_bloc.dart';
+import 'package:oogie/screens/distributor/distributor_home/distributor_home_bloc.dart';
+import 'package:oogie/screens/distributor/distributor_home/distributor_home_view.dart';
 import 'package:oogie/screens/explore/explore/explore_bloc.dart';
 import 'package:oogie/screens/explore/explore/explore_view.dart';
-import 'package:oogie/screens/explore/product/product_bloc.dart';
-import 'package:oogie/screens/explore/product/product_view.dart';
-import 'package:oogie/screens/explore/product_filter/product_filter_bloc.dart';
-import 'package:oogie/screens/explore/product_filter/product_filter_view.dart';
-import 'package:oogie/screens/explore/product_list/product_list_bloc.dart';
-import 'package:oogie/screens/explore/product_list/product_list_view.dart';
+import 'package:oogie/screens/common/products/product/product_bloc.dart';
+import 'package:oogie/screens/common/products/product/product_view.dart';
+import 'package:oogie/screens/common/products/product_filter/product_filter_bloc.dart';
+import 'package:oogie/screens/common/products/product_filter/product_filter_view.dart';
+import 'package:oogie/screens/common/products/product_list/product_list_bloc.dart';
+import 'package:oogie/screens/common/products/product_list/product_list_view.dart';
 import 'package:oogie/screens/explore/review/review_list/review_list_bloc.dart';
 import 'package:oogie/screens/explore/review/review_list/review_list_view.dart';
 import 'package:oogie/screens/profile/address/address_list/address_list_bloc.dart';
@@ -35,6 +46,9 @@ import 'package:oogie/screens/shopping/cart/cart_bloc.dart';
 import 'package:oogie/screens/shopping/cart/cart_view.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_bloc.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_shipping_view.dart';
+import 'package:oogie/screens/vendor/vendor_home/vendor_home_bloc.dart';
+import 'package:oogie/screens/vendor/vendor_home/vendor_home_view.dart';
+import 'package:oogie/screens/vendor_old/add_product.dart';
 import 'package:oogie/screens/wishlist/wishlist_bloc.dart';
 import 'package:oogie/screens/wishlist/wishlist_view.dart';
 
@@ -42,6 +56,9 @@ AuthRepository authRepository = AuthRepository();
 ProfileRepository profileRepository = ProfileRepository();
 ProductRepository productRepository = ProductRepository();
 OrderRepository orderRepository = OrderRepository();
+DistributorRepository distributorRepository = DistributorRepository();
+VendorRepository vendorRepository = VendorRepository();
+WholeSaleRepository wholeSaleRepository = WholeSaleRepository();
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -49,6 +66,7 @@ class AppRouter {
     Map arguments = settings.arguments;
 
     switch (settings.name) {
+      //auth
       case '/':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -105,6 +123,8 @@ class AppRouter {
             child: ResetPasswordView(),
           ),
         );
+
+      //home
       case '/explore':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -113,6 +133,39 @@ class AppRouter {
             child: ExploreView(),
           ),
         );
+      case '/home':
+        if (FlavorConfig().flavorName == 'distributor' ||
+            FlavorConfig().flavorName == 'sales_executive') {
+          return MaterialPageRoute(
+              builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => DistributorHomeBloc(),
+                      ),
+                      BlocProvider(
+                        create: (context) => ConnectionAgentsListBloc(
+                            distributorRepository: distributorRepository,
+                            parentPage: 'homePage'),
+                      ),
+                    ],
+                    child: DistributorHomeView(),
+                  ));
+        }
+        if (FlavorConfig().flavorName == 'vendor' ||
+            FlavorConfig().flavorName == 'wholesale_dealer') {
+          return MaterialPageRoute(
+              builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => VendorHomeBloc(),
+                      ),
+                    ],
+                    child: VendorHomeView(),
+                  ));
+        }
+        return null;
+
+
 
       case '/productList':
         return MaterialPageRoute(
@@ -173,14 +226,21 @@ class AppRouter {
                 ));
 
       case '/wishlist':
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => WishlistBloc(
-              productRepository: productRepository,
+        if (AppData().isUser) {
+          return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => WishlistBloc(
+                productRepository: productRepository,
+              ),
+              child: WishlistView(),
             ),
-            child: WishlistView(),
-          ),
-        );
+          );
+        }
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => LoginBloc(authRepo: authRepository),
+                  child: LoginView(),
+                ));
       case '/addressList':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -192,7 +252,6 @@ class AppRouter {
           ),
         );
       case '/checkout':
-        print('checkout ');
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => CheckoutBloc(

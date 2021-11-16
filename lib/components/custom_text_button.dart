@@ -7,7 +7,13 @@ class CustomTextButton extends StatefulWidget {
   bool active = true;
   Color textColor;
 
-  CustomTextButton({Key key, this.text, this.errorText, this.action, this.active,this.textColor})
+  CustomTextButton(
+      {Key key,
+      this.text,
+      this.errorText,
+      this.action,
+      this.active,
+      this.textColor})
       : super(key: key);
 
   @override
@@ -30,7 +36,6 @@ class _CustomTextButtonState extends State<CustomTextButton> {
     return Column(
       children: [
         Padding(padding: EdgeInsets.only(bottom: 16)),
-
         InkWell(
           onTap: () {
             widget.action();
@@ -43,7 +48,9 @@ class _CustomTextButtonState extends State<CustomTextButton> {
             child: Text(
               widget.text,
               style: TextStyle(
-                  color:widget.textColor==null? AppColors.PrimaryBase:widget.textColor,
+                  color: widget.textColor == null
+                      ? AppColors.PrimaryBase
+                      : widget.textColor,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'DMSans',
                   fontSize: 14),
@@ -56,14 +63,19 @@ class _CustomTextButtonState extends State<CustomTextButton> {
   }
 }
 
-
 class CustomTextButton2 extends StatefulWidget {
   String text, errorText;
   Function action;
   bool active = true;
   Color textColor;
 
-  CustomTextButton2({Key key, this.text, this.errorText, this.action, this.active,this.textColor})
+  CustomTextButton2(
+      {Key key,
+      this.text,
+      this.errorText,
+      this.action,
+      this.active,
+      this.textColor})
       : super(key: key);
 
   @override
@@ -90,7 +102,9 @@ class _CustomTextButton2State extends State<CustomTextButton2> {
       child: Text(
         widget.text,
         style: TextStyle(
-            color:widget.textColor==null? AppColors.PrimaryLight:widget.textColor,
+            color: widget.textColor == null
+                ? AppColors.PrimaryLight
+                : widget.textColor,
             fontWeight: FontWeight.w500,
             fontFamily: 'DMSans',
             fontSize: 14),
@@ -99,5 +113,3 @@ class _CustomTextButton2State extends State<CustomTextButton2> {
     );
   }
 }
-
-

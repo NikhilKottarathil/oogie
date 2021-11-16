@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/adapters/product_portrait_adapter.dart';
+import 'package:oogie/adapters/vertical_product_adapter.dart';
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/models/product_model.dart';
-import 'package:oogie/views/grid_views/product_potrait_gridview.dart';
-import 'package:oogie/adapters/vertical_product_adapter.dart';
 
 class VerticalProductView extends StatelessWidget {
   Function viewAllAction;
@@ -22,7 +20,8 @@ class VerticalProductView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title,
+              Text(
+                title,
                 style: TextStyles.displayMedium,
               ),
               CustomTextButton2(

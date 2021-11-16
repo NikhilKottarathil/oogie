@@ -1,25 +1,23 @@
-
 import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/models/review_model.dart';
 
 class ReviewListState {
-  List<ReviewModel> reviewModels=[];
+  List<ReviewModel> reviewModels = [];
   PageScrollStatus pageScrollStatus;
   int page;
-  List<String> reviewIDs=[];
+  List<String> reviewIDs = [];
   bool isLoading;
   String parentPage;
   Exception actionErrorMessage;
 
-  ReviewListState({
-    this.reviewModels,
-    this.pageScrollStatus=const InitialScrollStatus(),
-    this.reviewIDs,
-    this.page=1,
-    this.parentPage,
-    this.actionErrorMessage,
-    this.isLoading=false
-  });
+  ReviewListState(
+      {this.reviewModels,
+      this.pageScrollStatus = const InitialScrollStatus(),
+      this.reviewIDs,
+      this.page = 1,
+      this.parentPage,
+      this.actionErrorMessage,
+      this.isLoading = false});
 
   ReviewListState copyWith({
     var reviewModels,

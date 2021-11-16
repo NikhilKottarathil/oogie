@@ -1,6 +1,8 @@
+import 'package:http/http.dart';
 import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
+import 'package:oogie/flavour_config.dart';
 import 'package:oogie/functions/api_calls.dart';
 import 'package:oogie/functions/date_conversion.dart';
 import 'package:oogie/models/attribute_model.dart';
@@ -9,6 +11,7 @@ import 'package:oogie/models/filter_model.dart';
 import 'package:oogie/models/key_value_radio_model.dart';
 import 'package:oogie/models/product_model.dart';
 import 'package:oogie/models/review_model.dart';
+import 'package:oogie/screens/common/products/add_product/add_product_state.dart';
 
 List<CategoryModel> categoryModels = [];
 List<ProductModel> featuresProductModels = [];
@@ -19,12 +22,11 @@ List<ProductModel> cartNewProducts = [];
 List<ProductModel> wishListProducts = [];
 
 class ProductRepository {
-
-  ProductRepository(){
-   if( AppData().isUser) {
-     setProductsInCart();
-     setProductInWishlist();
-   }
+  ProductRepository() {
+    if (FlavorConfig().flavorName=='user'&& AppData().isUser) {
+      setProductsInCart();
+      setProductInWishlist();
+    }
   }
 
 // CATEGORY
@@ -34,8 +36,10 @@ class ProductRepository {
       if (body['Product Category'] != null) {
         categoryModels.clear();
         body['Product Category'].forEach((category) {
+          List<CategoryModel> subCategories = [];
           categoryModels.add(CategoryModel(
             name: category['display_name'].toString(),
+            isSelected: false,
             imageUrl: category['media'] != null
                 ? Urls().serverAddress + category['media'].toString()
                 : null,
@@ -44,6 +48,99 @@ class ProductRepository {
         });
       } else {
         throw Exception('Please retry');
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<List<KeyValueRadioModel>> getProductBrand() async {
+    try {
+      var body = await getDataRequest(address: 'product_brand/list');
+      if (body['Product Brand'] != null) {
+        List<KeyValueRadioModel> models = [];
+        body['Product Brand'].forEach((element) {
+          List<KeyValueRadioModel> subModels = [];
+
+          element['product_models'].forEach((subElement) {
+            subModels.add(KeyValueRadioModel(
+                isSelected: false,
+                value: subElement['id'].toString(),
+                key: subElement['name']));
+          });
+
+          models.add(KeyValueRadioModel(
+              isSelected: false,
+              value: element['id'].toString(),
+              key: element['name'],
+              subKeyValueModels: subModels));
+        });
+        return models;
+      } else {
+        if (body['message'] != null) {
+          throw Exception(body['Message']);
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<List> getAttributes() async {
+    try {
+      var body = await getDataRequest(address: 'product_attribute/list');
+      if (body['Product Attribute'] != null) {
+        List<AttributeModel> models = [];
+        body['Product Attribute'].forEach((element) {
+          List values = element['values'].toString().split(',');
+          List<RadioModel> subModels = [];
+
+          values.forEach((subElement) {
+            subModels.add(RadioModel(false, subElement));
+          });
+
+          models.add(AttributeModel(
+              id: element['id'].toString(),
+              name: element['name'],
+              values: subModels));
+        });
+        return models;
+      } else {
+        if (body['message'] != null) {
+          throw Exception(body['Message']);
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<List> getUnitOfMeasures() async {
+    try {
+      var body = await getDataRequest(address: 'unit_of_measure/list');
+      if (body['Unit Of Measure'] != null) {
+        List<KeyValueRadioModel> models = [];
+        body['Unit Of Measure'].forEach((element) {
+          models.add(KeyValueRadioModel(
+            isSelected: false,
+            value: element['id'].toString(),
+            key: element['name'],
+          ));
+        });
+        return models;
+      } else {
+        if (body['message'] != null) {
+          throw Exception(body['Message']);
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
       }
     } catch (e) {
       print(e);
@@ -95,10 +192,141 @@ class ProductRepository {
     return categoryModels;
   }
 
+  Future<String> addProduct(
+      {AddProductState state, String parentPage, String isUsedProduct}) async {
+    try {
+      String highLights = '';
+      state.highlights.forEach((element) {
+        if (highLights.isEmpty) {
+          highLights = element;
+        } else {
+          highLights = highLights+','+ element;
+        }
+      });
+      List<Map<String, Map<String, String>>> specifications = [];
+      state.specificationModels.forEach((element) {
+        Map<String, String> subSpec = {};
+        element.values.forEach((element) {
+          subSpec.addAll({element.key: element.value});
+        });
+        specifications.add({element.heading: subSpec});
+      });
+      List<Map<String, String>> attributes = [];
+      state.attributes.forEach((element) {
+        Map<String, String> attribute = {'product_attribute_id': element.id};
+        element.values.forEach((element) {
+          if (element.isSelected) {
+            attribute.addAll({'value': element.text});
+          }
+        });
+        attributes.add(attribute);
+      });
+      dynamic requestBody = {
+        'name': state.name,
+        // 'media': state.media,
+        'unit_price': state.unitPrice,
+        'description': state.description,
+        'category_id': state.categories
+            .singleWhere((element) => element.isSelected == true)
+            .id,
+        'product_brand_id': state.brands
+            .singleWhere((element) => element.isSelected == true)
+            .value,
+        'unit_of_measure_id': state.unitMeasures
+            .singleWhere((element) => element.isSelected == true)
+            .value,
+        'product_model_id': state.models
+            .singleWhere((element) => element.isSelected == true)
+            .value,
+        'qty_available': state.qtyAvailable,
+        'specifications': specifications,
+        'product_variants': attributes,
+        'vendor_id': '',
+        'is_used_product': isUsedProduct,
+        'highlights': highLights
+      };
+      print(requestBody);
+      var body = await postDataRequest(address: 'product', myBody: requestBody);
+      if (body['id'] != null) {
+        try {
+          Map<String,String>imageBody={};
+          await patchMediaDataRequest(
+              address: 'product/${body['id'].toString()}',
+              myBody:imageBody ,
+              imageAddress: 'images',
+              imageFiles: state.images);
+          return body['id'].toString();
+        } catch (e) {
+          throw Exception(body['Image Upload failed! product created']);
+        }
+      } else {
+        if (body['message'] != null) {
+          throw Exception(body['Message']);
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
 
+  Future<List> getProductsByCreator(
+      {int page, rowsPerPage, String parentPage, String isUsedProduct}) async {
+    try {
+      print('page $page rowsPerPage $rowsPerPage');
+      var requestBody = {
+        'rows_per_page': rowsPerPage.toString(),
+        'page': page.toString()
+      };
+      var body = await getDataRequest(
+          address:
+              'product/by_creator?rows_per_page=$rowsPerPage&page=$page&is_used_product=$isUsedProduct');
 
+      if (body['Products'] != null) {
+        List<ProductModel> productModels = [];
+        body['Products'].forEach((product) {
+          String imageUrl;
+          int i = 0;
+          if (product['media'] != null) {
+            product['media'].forEach((media) {
+              if (i == 0) {
+                imageUrl = Urls().serverAddress + media['url'];
+              }
+            });
+          }
+          productModels.add(new ProductModel(
+            id: product['id'].toString(),
+            imageUrl: imageUrl,
+            name: product['name'],
+            displayName: product['display_name'],
+            brandName: product['product_brand'] != null
+                ? product['product_brand']['name']
+                : null,
+            brandId: product['product_brand'] != null
+                ? product['product_brand']['id'].toString()
+                : null,
+            description: product['description'],
+            discountedPrice: product['unit_price'].toString(),
+            discountPercentage: '',
+            unitPrice: product['unit_price'].toString(),
+          ));
+        });
 
-
+        return productModels;
+      } else {
+        if (body['message'] != null) {
+          throw Exception(body['message']);
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
 
   //PRODUCT
   Future<List> getProducts(int page, rowsPerPage, parentPage) async {
@@ -328,23 +556,32 @@ class ProductRepository {
                 heading: spec.toString(), values: subSpecificationModels));
           });
         });
+        List<KeyValueRadioModel> attributeLines = [];
 
-        List<String> highlights=[];
+        product['product_variant_attribute_lines'].forEach((element) {
+          element.forEach((spec, values) {
+            attributeLines.add(KeyValueRadioModel(
+                key: element['value'].toString(),
+                value: element['product_attribute']['id'].toString()));
+          });
+        });
 
-        if(product['highlights']!=null){
-          product['highlights'].forEach((element){
+        List<String> highlights = [];
+
+        if (product['highlights'] != null) {
+          product['highlights'].forEach((element) {
             highlights.add(element.toString());
           });
         }
         bool isInCart = false, isInWishList = false;
         int cartQty = 1;
-        String cartId,wishlistId;
+        String cartId, wishlistId;
 
         cartNewProducts.forEach((element) {
           if (element.id == id) {
             isInCart = true;
             cartQty = element.qty;
-            cartId=element.cartId;
+            cartId = element.cartId;
           }
         });
 
@@ -352,34 +589,41 @@ class ProductRepository {
           if (element.id == id) {
             isInCart = true;
             cartQty = element.qty;
-            cartId=element.cartId;
-
+            cartId = element.cartId;
           }
         });
         wishListProducts.forEach((element) {
           if (element.id == id) {
             isInWishList = true;
-            wishlistId=element.wishListId;
-
+            wishlistId = element.wishListId;
           }
         });
-
 
         ProductModel productModel = new ProductModel(
             id: product['id'].toString(),
             name: product['name'],
             displayName: product['display_name'],
+            categoryId: product['product_category'] != null
+                ? product['product_category']['id'].toString()
+                : null,
             brandName: product['product_brand'] != null
                 ? product['product_brand']['name']
                 : null,
+            modelId: product['product_model'] != null
+                ? product['product_model']['id'].toString()
+                : null,
             brandId: product['product_brand'] != null
                 ? product['product_brand']['id'].toString()
+                : null,
+            unitOfMeasureId: product['unit_of_measure'] != null
+                ? product['unit_of_measure']['id'].toString()
                 : null,
             description: product['description'],
             discountedPrice: product['unit_price'].toString(),
             discountPercentage: '',
             unitPrice: product['unit_price'].toString(),
             rating: product['rating'].toString(),
+            qtyAvailable: product['qty_available'],
             ratingCount: double.parse(product['total_rating'].toString())
                 .toStringAsFixed(0),
             reviewCount: double.parse(product['total_rating'].toString())
@@ -392,6 +636,7 @@ class ProductRepository {
             isAddedToCart: isInCart,
             qty: cartQty,
             isInWishList: isInWishList,
+            attributeLines: attributeLines,
             cartId: cartId,
             wishListId: wishlistId,
             specificationModels: specificationModels);
@@ -407,10 +652,6 @@ class ProductRepository {
       throw AppExceptions().serverException;
     }
   }
-
-
-
-
 
   //PRODUCT REVIEWS
   Future<List<ReviewModel>> getProductReviews(
@@ -441,53 +682,47 @@ class ProductRepository {
     }
   }
 
-
-
-
   //CART
   Future<void> addNewProductToCart(
       {String productId, noOfItem, cartType}) async {
     String cartId;
     int qty;
-    List<ProductModel> cartList=[];
+    List<ProductModel> cartList = [];
     cartList.addAll(cartUsedProducts);
     cartList.addAll(cartNewProducts);
     cartList.forEach((element) {
-      if(element.id ==productId)
-        {
-          cartId=element.cartId;
-          qty=element.qty+1;
-        }
+      if (element.id == productId) {
+        cartId = element.cartId;
+        qty = element.qty + 1;
+      }
     });
-    if(cartId==null){
-    dynamic requestBody = {
-      'product_id': productId,
-      'no_of_item': noOfItem,
-      'cart_type': cartType
-    };
-    print(requestBody);
-    try {
-      var body =
-          await postDataRequest(address: 'add/cart', myBody: requestBody);
-      setProductsInCart();
-    } catch (e) {
-      throw AppExceptions().serverException;
+    if (cartId == null) {
+      dynamic requestBody = {
+        'product_id': productId,
+        'no_of_item': noOfItem,
+        'cart_type': cartType
+      };
+      print(requestBody);
+      try {
+        var body =
+            await postDataRequest(address: 'add/cart', myBody: requestBody);
+        setProductsInCart();
+      } catch (e) {
+        throw AppExceptions().serverException;
+      }
+    } else {
+      await updateProductQtyInCart(noOfItem: qty, cartId: cartId);
     }
-    }else{
-     await  updateProductQtyInCart(noOfItem: qty,cartId: cartId);
-    }
-
   }
 
-  Future<void> updateProductQtyInCart(
-      {String cartId, noOfItem}) async {
+  Future<void> updateProductQtyInCart({String cartId, noOfItem}) async {
     dynamic requestBody = {
       'no_of_item': noOfItem,
     };
     print(requestBody);
     try {
-      var body =
-          await postDataRequest(address: 'cart_line/$cartId', myBody: requestBody);
+      var body = await postDataRequest(
+          address: 'cart_line/$cartId', myBody: requestBody);
     } catch (e) {
       throw AppExceptions().serverException;
     }
@@ -530,7 +765,8 @@ class ProductRepository {
                 imageUrl: imageUrl,
                 name: product['product_name'],
                 displayName: product['display_name'],
-                totalPrice: double.parse(product['no_of_item'].toString())*double.parse(product['unit_price'].toString()),
+                totalPrice: double.parse(product['no_of_item'].toString()) *
+                    double.parse(product['unit_price'].toString()),
                 brandName: product['product_brand'].toString(),
                 discountedPrice: product['unit_price'].toString(),
                 unitPrice: product['unit_price'].toString(),
@@ -557,8 +793,8 @@ class ProductRepository {
                 id: product['product_id'].toString(),
                 qty: int.parse(product['no_of_item'].toString()),
                 imageUrl: imageUrl,
-                totalPrice: double.parse(product['no_of_item'].toString())*double.parse(product['unit_price'].toString()),
-
+                totalPrice: double.parse(product['no_of_item'].toString()) *
+                    double.parse(product['unit_price'].toString()),
                 name: product['product_name'],
                 displayName: product['display_name'],
                 brandName: product['product_brand'].toString(),
@@ -568,7 +804,6 @@ class ProductRepository {
             });
           }
         }
-
       } else {
         throw Exception('Please retry');
       }
@@ -581,10 +816,6 @@ class ProductRepository {
   Future getProductsInCart() async {
     return [cartNewProducts, cartUsedProducts];
   }
-
-
-
-
 
   //WishList
 
@@ -605,11 +836,10 @@ class ProductRepository {
       try {
         var body =
             await postDataRequest(address: 'wishlist', myBody: requestBody);
-        if(body['id']!=null){
+        if (body['id'] != null) {
           return body['id'].toString();
-        }else{
+        } else {
           throw AppExceptions().somethingWentWrong;
-
         }
       } catch (e) {
         throw AppExceptions().serverException;

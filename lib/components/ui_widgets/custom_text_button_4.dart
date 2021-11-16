@@ -7,7 +7,13 @@ class CustomTextButton4 extends StatefulWidget {
   bool active = true;
   Color textColor;
 
-  CustomTextButton4({Key key, this.text, this.errorText, this.action, this.active,this.textColor})
+  CustomTextButton4(
+      {Key key,
+      this.text,
+      this.errorText,
+      this.action,
+      this.active,
+      this.textColor})
       : super(key: key);
 
   @override
@@ -33,16 +39,15 @@ class _CustomTextButton4State extends State<CustomTextButton4> {
       },
       child: Container(
         width: double.maxFinite,
-        padding: EdgeInsets.only(top: 17,bottom: 17),
+        padding: EdgeInsets.only(top: 17, bottom: 17),
         decoration: BoxDecoration(
           color: Colors.transparent,
         ),
         child: Text(
           widget.text,
           style: TextStyles.smallRegular,
-        ), ),
+        ),
+      ),
     );
   }
 }
-
-

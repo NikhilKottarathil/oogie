@@ -31,17 +31,16 @@ class _DefaultButtonState extends State<DefaultButton> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(padding: EdgeInsets.only(bottom: 16)),
-
         widget.errorText != null
             ? Padding(
                 padding: EdgeInsets.only(bottom: 16, top: 16),
                 child: Text(
                   widget.errorText,
-                  style: TextStyle(color: Colors.red,
+                  style: TextStyle(
+                      color: Colors.red,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'DMSans',
                       fontSize: 14),
-
                   textAlign: TextAlign.center,
                 ),
               )
@@ -73,7 +72,6 @@ class _DefaultButtonState extends State<DefaultButton> {
             ),
           ),
         ),
-
       ],
     );
   }

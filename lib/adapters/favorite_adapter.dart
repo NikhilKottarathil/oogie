@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/constants/styles.dart';
-// import 'package:oogie/screens/explore/product_description.dart';
+// import 'package:oogie/screens/common/products/product_description.dart';
 
 class FavoriteAdapter extends StatelessWidget {
   String productName, brandName, imageUrl, price, rating;
@@ -53,7 +53,6 @@ class FavoriteAdapter extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-
                   Text(
                     brandName,
                     style: TextStyles.smallRegularSubdued,

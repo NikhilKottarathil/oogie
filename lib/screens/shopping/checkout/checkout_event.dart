@@ -25,13 +25,21 @@ class DefaultAddressChanged extends CheckoutEvent {
 
   DefaultAddressChanged({this.addressModel});
 }
+
 class PaymentMethodChanged extends CheckoutEvent {
   PaymentTypeState paymentTypeState;
 
   PaymentMethodChanged({this.paymentTypeState});
 }
+
 class OrderStatusChanged extends CheckoutEvent {
   OrderStatus orderStatus;
 
   OrderStatusChanged({this.orderStatus});
 }
+
+class CreateOrder extends CheckoutEvent {}
+
+class ProcessPayment extends CheckoutEvent {}
+
+class ConfirmOrder extends CheckoutEvent {}

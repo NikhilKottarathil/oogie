@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
-
-import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';
+import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/functions/show_snack_bar.dart';
 import 'package:oogie/screens/profile/address/add_address/add_address_bloc.dart';

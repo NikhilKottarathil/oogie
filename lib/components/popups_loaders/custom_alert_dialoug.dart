@@ -1,0 +1,62 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:oogie/components/default_button.dart';
+import 'package:oogie/constants/styles.dart';
+
+customAlertDialog(
+    {BuildContext context,
+    String heading,
+    Function positiveAction,
+    positiveText}) async {
+  await showDialog(
+      context: context,
+      useSafeArea: true,
+      builder: (context) => AlertDialog(
+            insetPadding: EdgeInsets.all(20),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              padding:
+                  EdgeInsets.only(top: 30, right: 20, left: 20, bottom: 30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text(
+                  //   'Exit',
+                  //   style: TextStyles.largeRegularSubdued,
+                  // ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .02,
+                  ),
+                  Text(heading, style: TextStyles.largeRegular),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .05,
+                  ),
+                  DefaultButton(
+                    text: positiveText == null ? 'Yes' : positiveText,
+                    action: () {
+                      positiveAction();
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .02,
+                  ),
+                  TextButton(
+                    child: Text('No'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+            ),
+          ));
+  return false;
+}

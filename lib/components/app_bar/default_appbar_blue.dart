@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
 
-
 Widget defaultAppBarBlue(
     {BuildContext context,
-      String text,
-      Function prefixAction,
-      suffixAction,
-      Widget suffixWidget,
-      prefixWidget}) {
+    String text,
+    Function prefixAction,
+    suffixAction,
+    Widget suffixWidget,
+    prefixWidget}) {
   return AppBar(
     leading: InkWell(
       child: prefixWidget == null
           ? Icon(
-        Icons.arrow_back,
-        color: AppColors.SkyLightest,
-      )
+              Icons.arrow_back,
+              color: AppColors.SkyLightest,
+            )
           : prefixWidget,
       onTap: () {
         if (prefixAction != null) {
@@ -28,13 +27,13 @@ Widget defaultAppBarBlue(
     actions: [
       suffixWidget != null
           ? InkWell(
-        child: suffixWidget,
-        onTap: () {
-          if (suffixAction != null) {
-            suffixAction();
-          }
-        },
-      )
+              child: suffixWidget,
+              onTap: () {
+                if (suffixAction != null) {
+                  suffixAction();
+                }
+              },
+            )
           : Container(),
     ],
     title: Text(

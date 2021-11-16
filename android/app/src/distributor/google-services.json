@@ -1,0 +1,193 @@
+{
+  "project_info": {
+    "project_number": "411258564242",
+    "firebase_url": "https://oogie-e4199-default-rtdb.firebaseio.com",
+    "project_id": "oogie-e4199",
+    "storage_bucket": "oogie-e4199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411258564242:android:feff9e411caf743558004b",
+        "android_client_info": {
+          "package_name": "com.hamrut.oogie.delivery_partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpNngH1oyHJVq90YqJZYCHvg5mjgxB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411258564242:android:504e6f8fcb5ea62d58004b",
+        "android_client_info": {
+          "package_name": "com.hamrut.oogie.distributor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpNngH1oyHJVq90YqJZYCHvg5mjgxB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411258564242:android:ee1a7ba94b9789c158004b",
+        "android_client_info": {
+          "package_name": "com.hamrut.oogie.sales_executive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpNngH1oyHJVq90YqJZYCHvg5mjgxB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411258564242:android:305c485acc4c58e758004b",
+        "android_client_info": {
+          "package_name": "com.hamrut.oogie.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411258564242-63gggs9b3bo4gn26ijlflcgct4n2n02d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hamrut.oogie.user",
+            "certificate_hash": "ed9bfa032e206b6f35574847878aed864cd7b559"
+          }
+        },
+        {
+          "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpNngH1oyHJVq90YqJZYCHvg5mjgxB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411258564242:android:529690a9418bf12158004b",
+        "android_client_info": {
+          "package_name": "com.hamrut.oogie.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpNngH1oyHJVq90YqJZYCHvg5mjgxB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411258564242:android:ef74c2b146c9556358004b",
+        "android_client_info": {
+          "package_name": "com.hamrut.oogie.wholesale_dealer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNpNngH1oyHJVq90YqJZYCHvg5mjgxB-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411258564242-f3kkh4lp04de07seo9ui53hgagkhh3cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

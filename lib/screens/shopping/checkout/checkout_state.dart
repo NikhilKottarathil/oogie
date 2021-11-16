@@ -39,7 +39,8 @@ class CheckoutState {
       this.deliveryCharge,
       this.expectedDeliveryDate,
       this.taxes,
-      this.paymentTypeState,this.orderStatus,
+      this.paymentTypeState,
+      this.orderStatus,
       this.subTotal});
 
   CheckoutState copyWith({

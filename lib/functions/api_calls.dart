@@ -14,13 +14,14 @@ postDataRequest({address, myBody}) async {
   headers['x-access-token'] = token;
 
   if (await checkInternetIsConnected()) {
-    String url = Urls().apiAddress+address;
+    String url = Urls().apiAddress + address;
     print(url);
     dynamic response = await http.post(Uri.parse(url),
         headers: headers,
         body: json.encode(myBody),
         encoding: Encoding.getByName("utf-8"));
     var body = json.decode(response.body);
+
     print(body);
 
     return body;
@@ -39,7 +40,7 @@ getDataRequest({address}) async {
   headers['x-access-token'] = token;
 
   if (await checkInternetIsConnected()) {
-    String url = Urls().apiAddress+address;
+    String url = Urls().apiAddress + address;
     dynamic response = await http.Client().get(
       Uri.parse(url),
       headers: headers,
@@ -53,6 +54,7 @@ getDataRequest({address}) async {
     return data;
   }
 }
+
 patchDataRequest({address, myBody}) async {
   print('=======$address====================');
 
@@ -62,7 +64,7 @@ patchDataRequest({address, myBody}) async {
   headers['x-access-token'] = token;
 
   if (await checkInternetIsConnected()) {
-    String url = Urls().apiAddress+address;
+    String url = Urls().apiAddress + address;
     dynamic response = await http.Client().patch(Uri.parse(url),
         headers: headers,
         body: json.encode(myBody),
@@ -86,7 +88,7 @@ deleteDataRequest({address}) async {
   headers['x-access-token'] = token;
 
   if (await checkInternetIsConnected()) {
-    String url = Urls().apiAddress+address;
+    String url = Urls().apiAddress + address;
     dynamic response = await http.Client().delete(
       Uri.parse(url),
       headers: headers,
@@ -112,8 +114,8 @@ postSingleImageDataRequest(
     if (await checkInternetIsConnected()) {
       print('net connectuin');
 
-      var request = http.MultipartRequest(
-          'POST', Uri.parse(Urls().apiAddress + address));
+      var request =
+          http.MultipartRequest('POST', Uri.parse(Urls().apiAddress + address));
       request.headers.addAll(headers);
       request.fields.addAll(myBody);
       if (imageFile != null) {
@@ -122,7 +124,7 @@ postSingleImageDataRequest(
             filename: imageFile.path.split("/").last));
       }
       http.Response response =
-      await http.Response.fromStream(await request.send());
+          await http.Response.fromStream(await request.send());
       var body = json.decode(response.body);
       return body;
     } else {
@@ -146,8 +148,59 @@ postListImageDataRequest(
     if (await checkInternetIsConnected()) {
       print('net connectuin');
 
-      var request = http.MultipartRequest(
-          'POST', Uri.parse(Urls().apiAddress + address));
+      var request =
+          http.MultipartRequest('POST', Uri.parse(Urls().apiAddress + address));
+      request.headers.addAll(headers);
+      request.fields.addAll(myBody);
+      // imageFiles.forEach((imageFile) {
+      //   request.files.add(http.MultipartFile(imageAddress,
+      //       imageFile.readAsBytes().asStream(), imageFile.lengthSync(),
+      //       filename: imageFile.path.split("/").last));
+      // });
+      List<http.MultipartFile> newList = [];
+      for (int i = 0; i < imageFiles.length; i++) {
+        http.MultipartFile multipartFile = http.MultipartFile(imageAddress,
+            imageFiles[i].readAsBytes().asStream(), imageFiles[i].lengthSync(),
+            filename: imageFiles[i].path.split("/").last);
+        newList.add(multipartFile);
+      }
+      request.files.addAll(newList);
+
+      print('listing ok');
+      try {
+        http.Response response =
+            await http.Response.fromStream(await request.send());
+        var body = json.decode(response.body);
+
+        return body;
+      } catch (e) {
+        print('fgdf');
+        print(e);
+      }
+    } else {
+      var data = {'message': 'noInternet'};
+      return data;
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
+
+patchMediaDataRequest(
+    {String address, imageAddress, var myBody, List imageFiles}) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  String token = sharedPreferences.getString('token');
+  Map<String, String> headers = {};
+  headers['x-access-token'] = token;
+  print('in pbobst inage');
+  print(myBody);
+  try {
+    if (await checkInternetIsConnected()) {
+      print('net connectuin');
+
+      var request =
+      http.MultipartRequest('PATCH', Uri.parse(Urls().apiAddress + address));
       request.headers.addAll(headers);
       request.fields.addAll(myBody);
       // imageFiles.forEach((imageFile) {
@@ -183,7 +236,6 @@ postListImageDataRequest(
     print(e);
   }
 }
-
 checkInternetIsConnected() async {
   try {
     final result = await InternetAddress.lookup('google.com');

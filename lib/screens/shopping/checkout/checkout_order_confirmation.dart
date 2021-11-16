@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/special_components/stepper_horizontal.dart';
-
-
 
 class CheckoutConfirmationView extends StatefulWidget {
   @override
@@ -34,10 +31,10 @@ class _State extends State<CheckoutConfirmationView> {
                         child: StepperHorizontal(2),
                       ),
                       Spacer(),
-
-                      Text('Your Order Placed Successfully',style: TextStyles.mediumMediumSubdued,),
-
-
+                      Text(
+                        'Your Order Placed Successfully',
+                        style: TextStyles.mediumMediumSubdued,
+                      ),
                       Spacer(),
                       SizedBox(
                         height: 100,

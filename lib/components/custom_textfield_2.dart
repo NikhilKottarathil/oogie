@@ -16,19 +16,19 @@ class CustomTextField2 extends StatefulWidget {
   var onChange;
   var text;
 
-  CustomTextField2(
-      {this.labelText,
-        this.prefixIcon,
-        this.textInputType,
-        this.validator,
-        this.text,
-        this.onChange,
-        this.suffixText,
-        this.suffixAction,
-        this.suffixType,
-        this.maxLines,
-        this.hintText,
-        });
+  CustomTextField2({
+    this.labelText,
+    this.prefixIcon,
+    this.textInputType,
+    this.validator,
+    this.text,
+    this.onChange,
+    this.suffixText,
+    this.suffixAction,
+    this.suffixType,
+    this.maxLines,
+    this.hintText,
+  });
 
   @override
   _CustomTextField2State createState() => _CustomTextField2State();
@@ -62,19 +62,19 @@ class _CustomTextField2State extends State<CustomTextField2> {
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Padding(
       padding: EdgeInsets.only(top: 16),
-
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-            visible: widget.labelText!=null,
-              child: Text(widget.labelText!=null?widget.labelText:'',style: TextStyles.smallRegular,)),
+              visible: widget.labelText != null,
+              child: Text(
+                widget.labelText != null ? widget.labelText : '',
+                style: TextStyles.smallRegular,
+              )),
           Container(
-            margin: EdgeInsets.only(top: 3,bottom: 3),
+            margin: EdgeInsets.only(top: 3, bottom: 3),
             decoration: BoxDecoration(
               color: AppColors.White,
               borderRadius: new BorderRadius.circular(8.0),
@@ -84,12 +84,14 @@ class _CustomTextField2State extends State<CustomTextField2> {
               maxLines: widget.maxLines == null ? 1 : widget.maxLines,
               controller: controller,
               onChanged: widget.onChange,
-              validator: widget.validator,              obscureText: widget.textInputType == TextInputType.visiblePassword
+              validator: widget.validator,
+              obscureText: widget.textInputType == TextInputType.visiblePassword
                   ? true
                   : false,
-              enableSuggestions: widget.textInputType == TextInputType.visiblePassword
-                  ? false
-                  : true,
+              enableSuggestions:
+                  widget.textInputType == TextInputType.visiblePassword
+                      ? false
+                      : true,
               autocorrect: widget.textInputType == TextInputType.visiblePassword
                   ? false
                   : true,
@@ -99,10 +101,9 @@ class _CustomTextField2State extends State<CustomTextField2> {
                   fontFamily: 'DMSans',
                   color: AppColors.TextDefault),
               decoration: new InputDecoration(
-
                 contentPadding: const EdgeInsets.all(17.0),
                 fillColor: Colors.white,
-                hintText:widget.hintText!=null?widget.hintText:'' ,
+                hintText: widget.hintText != null ? widget.hintText : '',
                 hintStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -110,72 +111,71 @@ class _CustomTextField2State extends State<CustomTextField2> {
                     color: _focus.hasFocus
                         ? AppColors.TextDefault
                         : AppColors.TextSubdued),
-                prefixIcon:widget.prefixIcon!=null? SvgPicture.asset(
-                  widget.prefixIcon,
-                  color:
-                  _focus.hasFocus ? AppColors.TextDefault : AppColors.TextSubdued,
-                  fit: BoxFit.scaleDown,
-                ):null,
-
-
+                prefixIcon: widget.prefixIcon != null
+                    ? SvgPicture.asset(
+                        widget.prefixIcon,
+                        color: _focus.hasFocus
+                            ? AppColors.TextDefault
+                            : AppColors.TextSubdued,
+                        fit: BoxFit.scaleDown,
+                      )
+                    : null,
                 suffixIcon: widget.suffixType != null
                     ? widget.suffixType == 'optional'
-                    ? SizedBox(
-                  width: MediaQuery.of(context).size.width * .25,
-                  child: Center(
-                    child: Text(
-                      widget.suffixText,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.Grey1Text,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                )
-                    : SizedBox(
-                  width: MediaQuery.of(context).size.width * .25,
-                  child: InkWell(
-                    onTap: () {
-                      widget.suffixAction();
-                    },
-                    child: Center(
-                      child: Text(
-                        widget.suffixText,
-                        style: TextStyle(
-                          color: AppColors.PrimaryBase,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                )
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * .25,
+                            child: Center(
+                              child: Text(
+                                widget.suffixText,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.Grey1Text,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width * .25,
+                            child: InkWell(
+                              onTap: () {
+                                widget.suffixAction();
+                              },
+                              child: Center(
+                                child: Text(
+                                  widget.suffixText,
+                                  style: TextStyle(
+                                    color: AppColors.PrimaryBase,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          )
                     : null,
-
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.BorderDefault, width: 1),
+                  borderSide:
+                      BorderSide(color: AppColors.BorderDefault, width: 1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-
                 enabledBorder: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(8.0),
-                    borderSide:
-                    new BorderSide(color: AppColors.BorderDisabled, width: 1.0)),
+                    borderSide: new BorderSide(
+                        color: AppColors.BorderDisabled, width: 1.0)),
                 errorBorder: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(8.0),
-                    borderSide:
-                    new BorderSide(color: AppColors.CriticalBase, width: 1.0)),
+                    borderSide: new BorderSide(
+                        color: AppColors.CriticalBase, width: 1.0)),
                 border: AppBorders.transparentBorder,
                 disabledBorder: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(8.0),
-                    borderSide:
-                    new BorderSide(color: AppColors.BorderDisabled, width: 1.0)),
+                    borderSide: new BorderSide(
+                        color: AppColors.BorderDisabled, width: 1.0)),
                 focusedErrorBorder: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(8.0),
-                    borderSide:
-                    new BorderSide(color: AppColors.CriticalBase, width: 1.0)),
-
+                    borderSide: new BorderSide(
+                        color: AppColors.CriticalBase, width: 1.0)),
               ),
               keyboardType: widget.textInputType,
             ),

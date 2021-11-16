@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-pickImage({context, File imageFile, var aspectRatios}) async{
+pickImage({context, File imageFile, var aspectRatios}) async {
   await showModalBottomSheet(
       elevation: 10,
       useRootNavigator: true,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          )),
+        topLeft: Radius.circular(10.0),
+        topRight: Radius.circular(10.0),
+      )),
       context: context,
       builder: (BuildContext bc) {
         return Container(
@@ -37,7 +37,6 @@ pickImage({context, File imageFile, var aspectRatios}) async{
 
                     Navigator.pop(context);
                     return imageFile;
-
                   }),
               new ListTile(
                 leading: new Icon(Icons.photo, color: Colors.red),
@@ -47,14 +46,14 @@ pickImage({context, File imageFile, var aspectRatios}) async{
                 ),
                 onTap: () async {
                   imageFile = await getImageFromGallery();
-                  imageFile=await cropImage(image: imageFile,aspectRatios: aspectRatios);
+                  imageFile = await cropImage(
+                      image: imageFile, aspectRatios: aspectRatios);
 
                   print('imageFile');
                   print(imageFile);
 
                   Navigator.pop(context);
                   return imageFile;
-
                 },
               ),
             ],
@@ -90,27 +89,27 @@ getImageFromCamera() async {
 Future cropImage({File image, var aspectRatios}) async {
   File croppedFile = await ImageCropper.cropImage(
       sourcePath: image.path,
-      compressQuality:30,
+      compressQuality: 30,
       aspectRatioPresets: aspectRatios == null
           ? Platform.isAndroid
-          ? [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9,
-      ]
-          : [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio5x3,
-        CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio16x9
-      ]
+              ? [
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio16x9,
+                ]
+              : [
+                  CropAspectRatioPreset.original,
+                  CropAspectRatioPreset.square,
+                  CropAspectRatioPreset.ratio3x2,
+                  CropAspectRatioPreset.ratio4x3,
+                  CropAspectRatioPreset.ratio5x3,
+                  CropAspectRatioPreset.ratio5x4,
+                  CropAspectRatioPreset.ratio7x5,
+                  CropAspectRatioPreset.ratio16x9,
+                  CropAspectRatioPreset.ratio16x9
+                ]
           : aspectRatios,
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: 'Cropper',

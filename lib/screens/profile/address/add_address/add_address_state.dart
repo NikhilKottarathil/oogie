@@ -40,7 +40,7 @@ class AddAddressState {
   String pinCode;
 
   String get pinCodeValidationText {
-    if (userName.trim().length == 0) {
+    if (pinCode.trim().length == 0) {
       return 'Please enter Pincode';
     } else if (pinCode.trim().length != 6) {
       return 'Enter a valid  Pincode';
@@ -122,7 +122,8 @@ class AddAddressState {
       userName: userName ?? this.userName,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       address2: address2 ?? this.address2,
-      alternativePhoneNumber: alternativePhoneNumber ?? this.alternativePhoneNumber,
+      alternativePhoneNumber:
+          alternativePhoneNumber ?? this.alternativePhoneNumber,
       pinCode: pinCode ?? this.pinCode,
       city: city ?? this.city,
       state: state ?? this.state,

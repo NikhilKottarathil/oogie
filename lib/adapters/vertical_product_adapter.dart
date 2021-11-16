@@ -6,7 +6,6 @@ import 'package:oogie/constants/styles.dart';
 import 'package:oogie/models/product_model.dart';
 
 class VerticalProductAdapter extends StatelessWidget {
-
   ProductModel productModel;
 
   VerticalProductAdapter(this.productModel);
@@ -14,8 +13,9 @@ class VerticalProductAdapter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        Navigator.pushNamed(context, '/product',arguments: {'id':productModel.id});
+      onTap: () {
+        Navigator.pushNamed(context, '/product',
+            arguments: {'id': productModel.id});
       },
       child: Container(
         padding: EdgeInsets.all(8),
@@ -24,24 +24,35 @@ class VerticalProductAdapter extends StatelessWidget {
           boxShadow: AppShadows.shadowSmall,
           borderRadius: BorderRadius.circular(8),
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width:(MediaQuery.of(context).size.width-80)/2,
-              height:(MediaQuery.of(context).size.width-80)/2,
+              width: (MediaQuery.of(context).size.width - 80) / 2,
+              height: (MediaQuery.of(context).size.width - 80) / 2,
               child: Center(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(3.0),
-                  child:productModel.imageUrl!=null? Image.network(productModel.imageUrl, fit: BoxFit.fitWidth):SvgPicture.asset(Urls().productImage, fit: BoxFit.fitWidth)),
+                    borderRadius: BorderRadius.circular(3.0),
+                    child: productModel.imageUrl != null
+                        ? Image.network(productModel.imageUrl,
+                            fit: BoxFit.fitWidth)
+                        : SvgPicture.asset(Urls().productImage,
+                            fit: BoxFit.fitWidth)),
               ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(productModel.brandName, style: TextStyles.smallMedium,),
-                Text(productModel.displayName, style: TextStyles.smallRegular,overflow: TextOverflow.ellipsis,maxLines: 2,),
+                Text(
+                  productModel.brandName,
+                  style: TextStyles.smallMedium,
+                ),
+                Text(
+                  productModel.displayName,
+                  style: TextStyles.smallRegular,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
               ],
             ),
           ],

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/cart_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
-
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/constants/styles.dart';
@@ -123,13 +122,21 @@ class CartView extends StatelessWidget {
                           ),
                   ],
                 ),
-                bottomNavigationBar: state.newProductModels.length!=0?DefaultButton(text: 'Proceed to Checkout',action: (){
-                 List<String> productIds=[];
-                 state.newProductModels.forEach((element) {
-                   productIds.add(element.id.toString());
-                 });
-                  Navigator.pushNamed(context, '/checkout',arguments: {'parenPage':'cart','productIds':productIds});
-                },):null,
+                bottomNavigationBar: state.newProductModels.length != 0
+                    ? DefaultButton(
+                        text: 'Proceed to Checkout',
+                        action: () {
+                          List<String> productIds = [];
+                          state.newProductModels.forEach((element) {
+                            productIds.add(element.id.toString());
+                          });
+                          Navigator.pushNamed(context, '/checkout', arguments: {
+                            'parenPage': 'cart',
+                            'productIds': productIds
+                          });
+                        },
+                      )
+                    : null,
               ),
             ),
           );
@@ -219,7 +226,8 @@ removeFromCart(
                               width: 1.0,
                               color: AppColors.BorderDefault,
                               style: BorderStyle.solid,
-                            ),                          ),
+                            ),
+                          ),
                           onPressed: () {
                             buildContext.read<CartBloc>().add(
                                 RemoveProductFromCart(

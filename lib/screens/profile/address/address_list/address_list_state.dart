@@ -23,7 +23,8 @@ class AddressListState {
   }) {
     return AddressListState(
       addressModels: addressModels ?? this.addressModels,
-      tittle: tittle ?? this.tittle, isLoading: isLoading ?? this.isLoading,
+      tittle: tittle ?? this.tittle,
+      isLoading: isLoading ?? this.isLoading,
       parentPage: parentPage ?? this.parentPage,
       actionErrorMessage: actionErrorMessage ?? this.actionErrorMessage,
     );

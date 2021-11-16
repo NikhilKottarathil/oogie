@@ -25,13 +25,14 @@ class HorizontalProductView extends StatelessWidget {
                 title,
                 style: TextStyles.displayMedium,
               ),
-             viewAllAction!=null ?CustomTextButton2(
-                text: 'View all',
-                action: viewAllAction,
-              ):Container(),
+              viewAllAction != null
+                  ? CustomTextButton2(
+                      text: 'View all',
+                      action: viewAllAction,
+                    )
+                  : Container(),
             ],
           ),
-
           SizedBox(
             height: 24,
           ),
@@ -41,7 +42,6 @@ class HorizontalProductView extends StatelessWidget {
               shrinkWrap: true,
               padding: EdgeInsets.all(2),
               scrollDirection: Axis.horizontal,
-
               itemCount: productModels.length,
               itemBuilder: (context, index) {
                 return HorizontalProductAdapter(productModels[index]);

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/components/icon_text_button.dart';
-import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/styles.dart';
+import 'package:oogie/flavour_config.dart';
+import 'package:oogie/repository/auth_repo.dart';
 import 'package:oogie/repository/profile_repository.dart';
 import 'package:oogie/screens/orders/order_list.dart';
 import 'package:oogie/screens/profile/profile/profile_bloc.dart';
 import 'package:oogie/screens/profile/profile/profile_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuDrawer extends StatelessWidget {
   ProfileRepository profileRepository = ProfileRepository();
@@ -107,30 +107,36 @@ class MenuDrawer extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                IconTextButton(
-                    iconUrl: 'icons/order.svg',
-                    text: 'Orders',
-                    action: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => OrderList()));
-                    }),
-                IconTextButton(
-                    iconUrl: 'icons/favourite.svg',
-                    text: 'Wishlist',
-                    action: () {
-                      Navigator.of(context).pushNamed('/wishlist');
-                    }),
+                Visibility(
+                    visible: FlavorConfig().flavorName == 'user',
+                    child: Column(
+                      children: [
+                        IconTextButton(
+                            iconUrl: 'icons/order.svg',
+                            text: 'Orders',
+                            action: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => OrderList()));
+                            }),
+                        IconTextButton(
+                            iconUrl: 'icons/favourite.svg',
+                            text: 'Wishlist',
+                            action: () {
+                              Navigator.of(context).pushNamed('/wishlist');
+                            }),
+                        IconTextButton(
+                            iconUrl: 'icons/location.svg',
+                            text: 'Stores',
+                            action: () {
+                              Navigator.pushNamed(context, '/myLocation');
+                            }),
+                      ],
+                    )),
                 IconTextButton(
                     iconUrl: 'icons/user.svg',
                     text: 'Profile',
                     action: () {
                       Navigator.pushNamed(context, '/profile');
-                    }),
-                IconTextButton(
-                    iconUrl: 'icons/location.svg',
-                    text: 'Stores',
-                    action: () {
-                      Navigator.pushNamed(context, '/myLocation');
                     }),
                 IconTextButton(
                     iconUrl: 'icons/settings.svg',
@@ -141,10 +147,8 @@ class MenuDrawer extends StatelessWidget {
                     iconUrl: 'icons/logout.svg',
                     text: 'Logout',
                     action: () async {
-                      SharedPreferences sharedPreference =
-                          await SharedPreferences.getInstance();
-                      sharedPreference.clear();
-                      AppData().clearAllData();
+                      AuthRepository authRepo = AuthRepository();
+                      await authRepo.logOut();
                       Navigator.pop(context);
                       Navigator.pushReplacementNamed(context, '/');
                     }),

@@ -11,7 +11,6 @@ void main() {
 class MyApp extends StatelessWidget {
   final AppRouter _appRouter = AppRouter();
 
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -21,27 +20,22 @@ class MyApp extends StatelessWidget {
         statusBarColor: AppColors.PrimaryBase,
         statusBarIconBrightness: Brightness.light));
     return WillPopScope(
-      onWillPop: (){
+      onWillPop: () {
         return appExitAlert(context);
       },
       child: MaterialApp(
         title: 'oogie',
         theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.BackgroundColor,
-          primaryColor: AppColors.PrimaryBase,
-          appBarTheme: AppBarTheme(
-            backwardsCompatibility: false,
-            systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarColor: AppColors.PrimaryBase,
-                statusBarIconBrightness: Brightness.light,
-                statusBarBrightness: Brightness.light,
-            )
-          )
-        ),
-
-
+            scaffoldBackgroundColor: AppColors.BackgroundColor,
+            primaryColor: AppColors.PrimaryBase,
+            appBarTheme: AppBarTheme(
+                backwardsCompatibility: false,
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: AppColors.PrimaryBase,
+                  statusBarIconBrightness: Brightness.light,
+                  statusBarBrightness: Brightness.light,
+                ))),
         onGenerateRoute: _appRouter.onGenerateRoute,
-
         debugShowCheckedModeBanner: false,
       ),
     );

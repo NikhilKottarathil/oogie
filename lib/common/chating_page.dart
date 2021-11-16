@@ -19,11 +19,10 @@ class _ChatingPageState extends State<ChatingPage> {
         "Charu",
         "1h ago"));
     messageGSs.add(new MessageGS(
- "Send", "Lorem ipsum dolor sit amet", "Amal", " 45 min ago"));
+        "Send", "Lorem ipsum dolor sit amet", "Amal", " 45 min ago"));
     messageGSs.add(new MessageGS(
- "Receive", "Lorem ipsum dolor sit amet", "Cahru", "44 min ago"));
+        "Receive", "Lorem ipsum dolor sit amet", "Cahru", "44 min ago"));
     messageGSs.add(new MessageGS(
-
         "Send",
         "Lorem ipsum dolor sit amet, consetetur sadipscing elitr",
         "Amal",
@@ -82,48 +81,45 @@ class _ChatingPageState extends State<ChatingPage> {
       //   );
       // }),
 
-      body:Column(
-
-          children: [
-
-            Expanded(
-              child: ListView.builder(
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
                 padding: EdgeInsets.all(20),
-                  shrinkWrap: true,
-                  reverse: true,
-                  // physics: NeverScrollableScrollPhysics(),
-                  itemCount: messageGSs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return MessageAdapter(messageGSs[index]);
-                  }),
+                shrinkWrap: true,
+                reverse: true,
+                // physics: NeverScrollableScrollPhysics(),
+                itemCount: messageGSs.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return MessageAdapter(messageGSs[index]);
+                }),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: TextField(
+              style: TextStyles.smallRegular,
+              decoration: InputDecoration(
+                  hintText: "Write your message…",
+                  hintStyle: TextStyles.smallRegularSubdued,
+                  // prefixIcon: IconButton(
+                  //   onPressed: () {},
+                  //   icon: Icon(
+                  //     Icons.attach_file,
+                  //     color: AppColors.OutlinedIcon,
+                  //   ),
+                  // ),
+                  border: InputBorder.none,
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.send,
+                      color: AppColors.TextSubdued,
+                    ),
+                  )),
             ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: TextField(
-                style: TextStyles.smallRegular,
-                decoration: InputDecoration(
-                    hintText: "Write your message…",
-                    hintStyle: TextStyles.smallRegularSubdued,
-                    // prefixIcon: IconButton(
-                    //   onPressed: () {},
-                    //   icon: Icon(
-                    //     Icons.attach_file,
-                    //     color: AppColors.OutlinedIcon,
-                    //   ),
-                    // ),
-                    border: InputBorder.none,
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.send,
-                        color: AppColors.TextSubdued,
-                      ),
-                    )),
-
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }

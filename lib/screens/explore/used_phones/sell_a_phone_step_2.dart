@@ -4,7 +4,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/explore/used_phones/sell_a_phone_step_3.dart';
@@ -39,7 +38,6 @@ class _State extends State<SellAPhoneStep2> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-
     return Scaffold(
       appBar: defaultAppBarWhite(
         context: context,
@@ -62,19 +60,20 @@ class _State extends State<SellAPhoneStep2> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Visibility(
-                            visible: imgList.length>0,
+                            visible: imgList.length > 0,
                             child: Expanded(
                               child: Center(
                                 child: SizedBox(
-                                  height: width+40,
-
+                                  height: width + 40,
                                   child: Stack(children: [
                                     CarouselSlider(
                                       items: imgList
                                           .map((item) => Container(
                                                 child: ClipRRect(
-                                                    borderRadius: BorderRadius.all(
-                                                        Radius.circular(8.0)),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                8.0)),
                                                     child: Image.file(
                                                       item,
                                                       fit: BoxFit.fitWidth,
@@ -85,7 +84,7 @@ class _State extends State<SellAPhoneStep2> {
                                       carouselController: _controller,
                                       options: CarouselOptions(
                                           autoPlay: true,
-                                          height: width-40,
+                                          height: width - 40,
                                           viewportFraction: 1.0,
                                           enlargeCenterPage: true,
                                           onPageChanged: (index, reason) {
@@ -99,9 +98,12 @@ class _State extends State<SellAPhoneStep2> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(20.0),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children:
-                                              imgList.asMap().entries.map((entry) {
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: imgList
+                                              .asMap()
+                                              .entries
+                                              .map((entry) {
                                             return GestureDetector(
                                               onTap: () => _controller
                                                   .animateToPage(entry.key),
@@ -109,11 +111,14 @@ class _State extends State<SellAPhoneStep2> {
                                                 width: 12.0,
                                                 height: 12.0,
                                                 margin: EdgeInsets.symmetric(
-                                                    vertical: 8.0, horizontal: 4.0),
+                                                    vertical: 8.0,
+                                                    horizontal: 4.0),
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: AppColors.BorderDefault.withOpacity(
-                                                        _current == entry.key
+                                                    color: AppColors
+                                                            .BorderDefault
+                                                        .withOpacity(_current ==
+                                                                entry.key
                                                             ? 0.9
                                                             : 0.4)),
                                               ),
@@ -137,9 +142,7 @@ class _State extends State<SellAPhoneStep2> {
                                       imageFile: image,
                                       aspectRatios: image2AspectRatio);
                                   imgList.add(image);
-                                  setState(() {
-
-                                  });
+                                  setState(() {});
                                 } else {
                                   await [Permission.camera].request();
                                 }

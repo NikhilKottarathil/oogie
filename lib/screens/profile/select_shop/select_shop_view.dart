@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/shop_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/constants/styles.dart';

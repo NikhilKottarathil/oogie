@@ -18,7 +18,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   getWishlistProducts() async {
     state.productModels.clear();
 
-     await productRepository.setProductInWishlist();
+    await productRepository.setProductInWishlist();
     var productModels = await productRepository.getProductInWishlist();
     add(UpdateProductModels(productModels: productModels));
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
 
@@ -31,13 +30,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-            visible: widget.titleText ==null ||widget.titleText == ''? false : true,
+            visible: widget.titleText == null || widget.titleText == ''
+                ? false
+                : true,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 0.0),
               child: new Text(
-                widget.titleText ==null ?'':widget.titleText,
+                widget.titleText == null ? '' : widget.titleText,
                 style: TextStyles.smallRegular,
-
               ),
             ),
           ),
@@ -58,7 +58,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 value: widget.selected,
                 iconSize: 24,
                 isExpanded: true,
-                icon: Icon(Icons.keyboard_arrow_down_outlined,color: AppColors.TextDefault,),
+                icon: Icon(
+                  Icons.keyboard_arrow_down_outlined,
+                  color: AppColors.TextDefault,
+                ),
                 elevation: 16,
                 style: TextStyle(color: Colors.grey),
                 underline: Container(
@@ -71,15 +74,13 @@ class _CustomDropdownState extends State<CustomDropdown> {
                     widget.callback(newValue);
                   });
                 },
-                items: widget.items
-                    .map<DropdownMenuItem<String>>((String value) {
+                items:
+                    widget.items.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(
-                      '\t $value',
-                      textAlign: TextAlign.center,
-                      style:TextStyles.smallRegularSubdued
-                    ),
+                    child: Text('\t $value',
+                        textAlign: TextAlign.center,
+                        style: TextStyles.smallRegularSubdued),
                   );
                 }).toList(),
               )),
@@ -88,5 +89,3 @@ class _CustomDropdownState extends State<CustomDropdown> {
     );
   }
 }
-
-

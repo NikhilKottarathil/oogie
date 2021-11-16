@@ -37,8 +37,7 @@ class ReviewAdapter extends StatelessWidget {
                     reviewModel.createdTime,
                     softWrap: true,
                     maxLines: 10,
-                    style: TextStyles.tinyRegularSubdued
-                    ,
+                    style: TextStyles.tinyRegularSubdued,
                   ),
                 ],
               ),
@@ -59,13 +58,14 @@ class ReviewAdapter extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                reviewModel.name ,
+                reviewModel.name,
                 softWrap: true,
                 maxLines: 10,
                 style: TextStyles.smallRegular,
               ),
-              SizedBox(height: 5,),
-
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
         ),

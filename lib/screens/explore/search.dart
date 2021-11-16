@@ -5,8 +5,7 @@ import 'package:oogie/adapters/product_landscape_adapter_2.dart';
 import 'package:oogie/adapters/product_portrait_adapter_2.dart';
 import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:oogie/screens/explore/product_filter/filter_and_sort.dart';
-
+import 'package:oogie/screens/common/products/product_filter/filter_and_sort.dart';
 class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
@@ -23,8 +22,7 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(
+      appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(top: 6.0, bottom: 6),
           child: Material(
@@ -86,7 +84,7 @@ class _SearchState extends State<Search> {
       body: Column(
         children: [
           Visibility(
-            visible: textEditingController.text=='',
+            visible: textEditingController.text == '',
             child: Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +92,8 @@ class _SearchState extends State<Search> {
                   SizedBox(
                     height: 60,
                     child: ListView.builder(
-                        padding: EdgeInsets.only(left: 20,right: 20,top: 12,bottom: 12),
+                        padding: EdgeInsets.only(
+                            left: 20, right: 20, top: 12, bottom: 12),
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemCount: radioModels.length,
@@ -102,8 +101,8 @@ class _SearchState extends State<Search> {
                           return InkWell(
                             child: RadioItem(radioModels[index]),
                             onTap: () {
-                              radioModels
-                                  .forEach((element) => element.isSelected = false);
+                              radioModels.forEach(
+                                  (element) => element.isSelected = false);
                               radioModels[index].isSelected = true;
 
                               setState(() {});
@@ -112,36 +111,36 @@ class _SearchState extends State<Search> {
                         }),
                   ),
                   dividerDefault,
-
                   Expanded(
                     child: ListView(
-                      padding: EdgeInsets.only(left: 20,right: 20,top: 16,bottom: 20),
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20, top: 16, bottom: 20),
                       shrinkWrap: true,
                       children: [
                         ProductLandscapeAdapter2(
-                          price: "10030",
-                          brandName: 'Redmi',
-                          productName: 'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
-                          rating: '4',
-                          imageUrl:
-                              'https://www.gizbot.com/images/2019-07/vivo-s1_156352984560.jpg'
-                        ),
-                        ProductLandscapeAdapter2(
-                          price: "10030",
-                          brandName: 'Redmi',
-                          productName: 'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
-                          rating: '4',
+                            price: "10030",
+                            brandName: 'Redmi',
+                            productName:
+                                'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
+                            rating: '4',
                             imageUrl:
-                            'https://www.gizbot.com/images/2019-07/vivo-s1_156352984560.jpg'
-                        ),
+                                'https://www.gizbot.com/images/2019-07/vivo-s1_156352984560.jpg'),
                         ProductLandscapeAdapter2(
-                          price: "10030",
-                          brandName: 'Redmi',
-                          productName: 'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
-                          rating: '4',
+                            price: "10030",
+                            brandName: 'Redmi',
+                            productName:
+                                'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
+                            rating: '4',
                             imageUrl:
-                            'https://www.gizbot.com/images/2019-07/vivo-s1_156352984560.jpg'
-                        ),
+                                'https://www.gizbot.com/images/2019-07/vivo-s1_156352984560.jpg'),
+                        ProductLandscapeAdapter2(
+                            price: "10030",
+                            brandName: 'Redmi',
+                            productName:
+                                'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
+                            rating: '4',
+                            imageUrl:
+                                'https://www.gizbot.com/images/2019-07/vivo-s1_156352984560.jpg'),
                       ],
                     ),
                   )
@@ -153,106 +152,104 @@ class _SearchState extends State<Search> {
             visible: textEditingController.text != '',
             child: Expanded(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 12,bottom: 12,left: 20,right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Search Results:',
-                            style: TextStyles.displayMedium,
-                          ),
-                          InkWell(
-                            onTap: (){
-                              filterAndSort(buildContext: context);
-                              FocusScopeNode currentFocus =
-                              FocusScope.of(context);
-                              if (!currentFocus.hasPrimaryFocus) {
-                                currentFocus.unfocus();
-                              }
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 16, right: 16, top: 8, bottom: 8),
-                              decoration: BoxDecoration(
-                                  border:
-                                  Border.all(color: AppColors.BorderDefault),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset('icons/filter.svg'),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    'Filter',
-                                    style: TextStyles.smallMedium,
-                                  )
-                                ],
-                              ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 12, bottom: 12, left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Search Results:',
+                          style: TextStyles.displayMedium,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            filterAndSort(buildContext: context);
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, top: 8, bottom: 8),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: AppColors.BorderDefault),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset('icons/filter.svg'),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Filter',
+                                  style: TextStyles.smallMedium,
+                                )
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    dividerDefault,
-                    Expanded(
-                      child:
-                      GridView(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(20),
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.7,
-                            crossAxisSpacing: 15,
-                            mainAxisSpacing: 15),
-                        children: [
-                          ProductPortraitAdapter2(
-                            productName: 'Redmi 9 (Sky Blue, 32GB)',
-                            brandName: 'Redmi',
-                            price: '25000',
-                            rating: '3',
-                            imageUrl:
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
-                          ),
-                          ProductPortraitAdapter2(
-                            productName: 'Redmi 9 (Sky Blue, 32GB)',
-                            brandName: 'Redmi',
-                            price: '25000',
-                            rating: '3',
-                            imageUrl:
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
-                          ),
-                          ProductPortraitAdapter2(
-                            productName: 'Redmi 9 (Sky Blue, 32GB)',
-                            brandName: 'Redmi',
-                            price: '25000',
-                            rating: '3',
-                            imageUrl:
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
-                          ),
-                          ProductPortraitAdapter2(
-                            productName: 'Redmi 9 (Sky Blue, 32GB)',
-                            brandName: 'Redmi',
-                            price: '25000',
-                            rating: '3',
-                            imageUrl:
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
-                          ),
-                        ],
-                      ),
-
-                    )
-                  ],
-                ),
+                  ),
+                  dividerDefault,
+                  Expanded(
+                    child: GridView(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(20),
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15),
+                      children: [
+                        ProductPortraitAdapter2(
+                          productName: 'Redmi 9 (Sky Blue, 32GB)',
+                          brandName: 'Redmi',
+                          price: '25000',
+                          rating: '3',
+                          imageUrl:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
+                        ),
+                        ProductPortraitAdapter2(
+                          productName: 'Redmi 9 (Sky Blue, 32GB)',
+                          brandName: 'Redmi',
+                          price: '25000',
+                          rating: '3',
+                          imageUrl:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
+                        ),
+                        ProductPortraitAdapter2(
+                          productName: 'Redmi 9 (Sky Blue, 32GB)',
+                          brandName: 'Redmi',
+                          price: '25000',
+                          rating: '3',
+                          imageUrl:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
+                        ),
+                        ProductPortraitAdapter2(
+                          productName: 'Redmi 9 (Sky Blue, 32GB)',
+                          brandName: 'Redmi',
+                          price: '25000',
+                          rating: '3',
+                          imageUrl:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2wOfWNFDmeGDTtRze4VdbESP8XDlyC3EFKw&usqp=CAU',
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-
         ],
       ),
     );

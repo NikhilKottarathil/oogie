@@ -29,8 +29,14 @@ class MessageAdapter extends StatelessWidget {
           borderRadius: BorderRadius.circular(16)),
       child: Column(
         children: [
-
-          Container(padding: EdgeInsets.all(10), child: Text(messageGS.message, style: messageGS.type != "Send"?TextStyles.smallRegular:TextStyles.smallRegularWhite,)),
+          Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                messageGS.message,
+                style: messageGS.type != "Send"
+                    ? TextStyles.smallRegular
+                    : TextStyles.smallRegularWhite,
+              )),
           // Align(
           //     alignment: Alignment.bottomRight,
           //     child: Row(

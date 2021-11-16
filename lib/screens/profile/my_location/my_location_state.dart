@@ -1,4 +1,3 @@
-
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/models/location_model.dart';
 
@@ -6,7 +5,6 @@ class MyLocationState {
   List<LocationModel> locationModels;
   LocationModel selectedLocation;
   String searchString;
-
 
   final FormSubmissionStatus formStatus;
 
@@ -22,7 +20,6 @@ class MyLocationState {
     var selectedLocation,
     FormSubmissionStatus formStatus,
     String searchString,
-
   }) {
     return MyLocationState(
       locationModels: locationModels ?? this.locationModels,

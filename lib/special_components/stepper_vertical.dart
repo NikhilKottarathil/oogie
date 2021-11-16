@@ -14,12 +14,14 @@ class StepperVertical extends StatefulWidget {
 
 class _StepperVerticalState extends State<StepperVertical> {
   int index;
-@override
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    index=widget.index;
+    index = widget.index;
   }
+
   @override
   Widget build(BuildContext context) {
     return OogieStepper(
@@ -27,30 +29,38 @@ class _StepperVerticalState extends State<StepperVertical> {
       currentStep: index,
       onStepCancel: () {
         if (index > 0) {
-          setState(() { index -= 1; });
+          setState(() {
+            index -= 1;
+          });
         }
       },
       onStepContinue: () {
-        if (index <3) {
-          setState(() { index += 1; });
+        if (index < 3) {
+          setState(() {
+            index += 1;
+          });
         }
       },
       onStepTapped: (int index) {
-        setState(() { index = index; });
+        setState(() {
+          index = index;
+        });
       },
-      controlsBuilder:  widget.isEditable?null:(BuildContext context,
-          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-        return Row(
-          children: <Widget>[
-            Container(
-              child: null,
-            ),
-            Container(
-              child: null,
-            ),
-          ],
-        );
-      },
+      controlsBuilder: widget.isEditable
+          ? null
+          : (BuildContext context,
+              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+              return Row(
+                children: <Widget>[
+                  Container(
+                    child: null,
+                  ),
+                  Container(
+                    child: null,
+                  ),
+                ],
+              );
+            },
       type: OogieStepperType.vertical,
       steps: <Step>[
         Step(

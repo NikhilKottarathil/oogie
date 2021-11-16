@@ -26,11 +26,11 @@ class _IconTextButtonState extends State<IconTextButton> {
           children: [
             SvgPicture.asset(
               widget.iconUrl,
-
               fit: BoxFit.scaleDown,
-
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Text(
               "  " + widget.text,
               style: TextStyles.mediumMedium,

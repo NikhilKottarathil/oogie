@@ -12,6 +12,4 @@ class EditProfilePhoneNumberChangeChanged extends EditProfileEvent {
   EditProfilePhoneNumberChangeChanged({this.phoneNumber});
 }
 
-
-
 class EditProfileSubmitted extends EditProfileEvent {}

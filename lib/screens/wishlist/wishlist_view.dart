@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/wishlist_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
-
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/constants/styles.dart';
@@ -17,7 +16,7 @@ class WishlistView extends StatelessWidget {
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
-      appBar: defaultAppBarBlue(context: buildContext,text: 'Wishlist'),
+      appBar: defaultAppBarBlue(context: buildContext, text: 'Wishlist'),
       body: BlocListener<WishlistBloc, WishlistState>(
         listener: (context, state) async {
           Exception e = state.actionErrorMessage;
@@ -25,50 +24,48 @@ class WishlistView extends StatelessWidget {
             showSnackBar(context, e);
           }
         },
-        child: BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
-          return  state.productModels.length == 0
-                ? Center(
-                child: Text(
+        child:
+            BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
+          return state.productModels.length == 0
+              ? Center(
+                  child: Text(
                   'Your wishlist is empty',
                   style: TextStyles.mediumMediumSubdued,
                 ))
-                : ListView.separated(
-            padding: EdgeInsets.all(20),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: state.productModels.length,
-              itemBuilder: (BuildContext context, int index) {
-                return WishlistAdapter(
-                  
-                  productModel: state.productModels[index],
-                  deleteAction: () {
-                    removeFromWishlist(
-                        buildContext: context,
-                        productModel:
-                        state.productModels[index],
-                        index: index,
+              : ListView.separated(
+                  padding: EdgeInsets.all(20),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: state.productModels.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return WishlistAdapter(
+                      productModel: state.productModels[index],
+                      deleteAction: () {
+                        removeFromWishlist(
+                          buildContext: context,
+                          productModel: state.productModels[index],
+                          index: index,
                         );
+                      },
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: 20,
+                    );
                   },
                 );
-              },
-              separatorBuilder:
-                  (BuildContext context, int index) {
-                return SizedBox(
-                  height: 20,
-                );
-              },
-
-          );
         }),
       ),
     );
   }
 }
 
-removeFromWishlist(
-    {BuildContext buildContext,
-    ProductModel productModel,
-    int index,}) async {
+removeFromWishlist({
+  BuildContext buildContext,
+  ProductModel productModel,
+  int index,
+}) async {
   await showModalBottomSheet(
       context: buildContext,
       enableDrag: false,
@@ -84,7 +81,8 @@ removeFromWishlist(
       builder: (builder) {
         return BlocProvider.value(
           value: buildContext.read<WishlistBloc>(),
-          child: BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
+          child: BlocBuilder<WishlistBloc, WishlistState>(
+              builder: (context, state) {
             return Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -108,7 +106,8 @@ removeFromWishlist(
                                       fit: BoxFit.scaleDown)),
                         ),
                       ),
-                      Column(crossAxisAlignment: CrossAxisAlignment.start,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Remove from wishlist ?',
@@ -136,11 +135,11 @@ removeFromWishlist(
                     height: 20,
                   ),
                   DefaultButton(
-
                     text: 'Remove',
                     action: () {
-                      buildContext.read<WishlistBloc>().add(
-                          RemoveProductFromWishlist(index: index));
+                      buildContext
+                          .read<WishlistBloc>()
+                          .add(RemoveProductFromWishlist(index: index));
                       Navigator.of(context).pop();
                     },
                   )

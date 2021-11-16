@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
-
-import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/ui_widgets/custom_text_button_4.dart';
 import 'package:oogie/constants/styles.dart';
+import 'package:oogie/flavour_config.dart';
 import 'package:oogie/screens/profile/edit_profile/edit_profile_view.dart';
 import 'package:oogie/screens/profile/profile/profile_bloc.dart';
 import 'package:oogie/screens/profile/profile/profile_events.dart';
@@ -69,44 +68,51 @@ class ProfileView extends StatelessWidget {
                         ),
                         CustomTextButton4(
                           text: 'Edit Profile Picture',
-                          action: (){
-                            context.read<ProfileBloc>().add(
-                                ChangeProfilePicture(context: context));
+                          action: () {
+                            context
+                                .read<ProfileBloc>()
+                                .add(ChangeProfilePicture(context: context));
                           },
                         ),
                         dividerDefault,
                         CustomTextButton4(
-                          text: 'Edit Profile',action: (){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => BlocProvider.value(
-                                value: context.read<ProfileBloc>(),
-                                child: EditProfileView(),
+                          text: 'Edit Profile',
+                          action: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => BlocProvider.value(
+                                  value: context.read<ProfileBloc>(),
+                                  child: EditProfileView(),
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
                         ),
                         dividerDefault,
                         CustomTextButton4(
                           text: 'Manage Password',
-                          action: (){
+                          action: () {
                             Navigator.pushNamed(context, '/resetPassword');
                           },
                         ),
                         dividerDefault,
-                        CustomTextButton4(
-                          text: 'Manage Address',
-                          action: (){
-                            Navigator.pushNamed(context, '/addressList',arguments: {'parentPage':'profile'});
-                          },
-                        ),
-                        dividerDefault,
+                        Visibility(
+                            visible: FlavorConfig().flavorName == 'user',
+                            child: Column(
+                              children: [
+                                CustomTextButton4(
+                                  text: 'Manage Address',
+                                  action: () {
+                                    Navigator.pushNamed(context, '/addressList',
+                                        arguments: {'parentPage': 'profile'});
+                                  },
+                                ),
+                                dividerDefault,
+                              ],
+                            )),
                         CustomTextButton4(
                           text: 'Manage Payment',
                         ),
-
-
                         dividerDefault,
                       ],
                     ),

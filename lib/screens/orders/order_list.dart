@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/adapters/order_adapter.dart';
+import 'package:oogie/adapters/order_agent_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
-
 import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/screens/orders/order_details.dart';
 
@@ -23,8 +22,7 @@ class _OrderListState extends State<OrderList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: defaultAppBarBlue(context: context, text: 'My Orders'),
-      body:
-      Column(
+      body: Column(
         children: [
           SizedBox(
             height: 60,
@@ -47,45 +45,43 @@ class _OrderListState extends State<OrderList> {
                   );
                 }),
           ),
-          ListView(
-            padding: EdgeInsets.all(20),
-            shrinkWrap: true,
-            children: [
-              orderType == 'All' || orderType == 'On the way'
-                  ? InkWell(
-                      child: OrderAdapter(
-                          'On the way',
-                          'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
-                          'Ordered on:12/22/2024'),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>OrderDetails(1)));
-
-                      },
-                    )
-                  : Container(),
-
-              orderType == 'All' || orderType == 'Delivered'
-                  ? InkWell(
-                    child: OrderAdapter(
-                        'Delivered',
-                        'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
-                        'Ordered on:12/22/2024',),
-                onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>OrderDetails(3)));
-
-                },
-                  )
-                  : Container(),
-
-              orderType == 'All' || orderType == 'Cancelled'
-
-                  ? OrderAdapter(
-                      'Cancelled',
-                      'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
-                      'Ordered on:12/22/2024')
-                  : Container(),
-            ],
-          )
+          // ListView(
+          //   padding: EdgeInsets.all(20),
+          //   shrinkWrap: true,
+          //   children: [
+          //     orderType == 'All' || orderType == 'On the way'
+          //         ? InkWell(
+          //             child: OrderAdapter(
+          //                 'On the way',
+          //                 'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
+          //                 'Ordered on:12/22/2024'),
+          //             onTap: () {
+          //               Navigator.of(context).push(MaterialPageRoute(
+          //                   builder: (context) => OrderDetails(1)));
+          //             },
+          //           )
+          //         : Container(),
+          //     orderType == 'All' || orderType == 'Delivered'
+          //         ? InkWell(
+          //             child: OrderAdapter(
+          //               'Delivered',
+          //               'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
+          //               'Ordered on:12/22/2024',
+          //             ),
+          //             onTap: () {
+          //               Navigator.of(context).push(MaterialPageRoute(
+          //                   builder: (context) => OrderDetails(3)));
+          //             },
+          //           )
+          //         : Container(),
+          //     orderType == 'All' || orderType == 'Cancelled'
+          //         ? OrderAdapter(
+          //             'Cancelled',
+          //             'Redmi 9 (Sky Blue, 4GB RAM, 64GB Storage)',
+          //             'Ordered on:12/22/2024')
+          //         : Container(),
+          //   ],
+          // )
         ],
       ),
     );

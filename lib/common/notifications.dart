@@ -12,12 +12,14 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: defaultAppBarBlue(context: context,text: 'Notifications'),
+      appBar: defaultAppBarBlue(context: context, text: 'Notifications'),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [
           NotificationAdapter(),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           NotificationAdapter(),
         ],
       ),

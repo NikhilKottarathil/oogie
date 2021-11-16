@@ -1,5 +1,7 @@
-class KeyValueRadioModel{
-  String key,value;
+class KeyValueRadioModel {
+  String key, value;
   bool isSelected;
-  KeyValueRadioModel({this.isSelected,this.key,this.value});
+  List<KeyValueRadioModel> subKeyValueModels;
+
+  KeyValueRadioModel({this.isSelected, this.key, this.value,this.subKeyValueModels});
 }

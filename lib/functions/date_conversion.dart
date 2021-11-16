@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:intl/intl.dart';
 
-
-
 String getDateString(String string) {
   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(string));
   final f = new DateFormat('dd-MM-yyyy');
@@ -91,8 +89,6 @@ double calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 String getTimeDifferenceFromNow(DateTime dateTime) {
-
-
   Duration difference = DateTime.now().difference(dateTime);
   if (difference.inSeconds < 5) {
     return "Just now";
@@ -106,10 +102,11 @@ String getTimeDifferenceFromNow(DateTime dateTime) {
     return "${difference.inDays}d ago";
   }
 }
+
 String getTimeDifferenceFromNowString(String date) {
   // Dat  dateTime = DateFormat.w.format(DateTime.now());
-  DateTime dateTime = DateFormat('EEE, dd MMM yyyy hh:mm:ss').parse(date.substring(0,date.length-3));
-
+  DateTime dateTime = DateFormat('EEE, dd MMM yyyy hh:mm:ss')
+      .parse(date.substring(0, date.length - 3));
 
   print(dateTime);
   Duration difference = DateTime.now().difference(dateTime);
@@ -124,4 +121,13 @@ String getTimeDifferenceFromNowString(String date) {
   } else {
     return "${difference.inDays}d ago";
   }
+}
+
+getDateTimeFromNowStringFormat(String date){
+  DateTime dateTime = DateFormat('EEE, dd MMM yyyy hh:mm:ss')
+      .parse(date.substring(0, date.length - 3));
+  final f = new DateFormat('dd-MM-yyyy hh:mm a');
+  String time = f.format(dateTime);
+
+  return time;
 }

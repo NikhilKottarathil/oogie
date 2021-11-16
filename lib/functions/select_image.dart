@@ -12,11 +12,10 @@ selectImage({context, File imageFile, var aspectRatios}) async {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10.0),
-              topRight: Radius.circular(10.0),
-            )),
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+        )),
         context: context,
-
         builder: (BuildContext bc) {
           return Container(
             child: new Wrap(
@@ -28,8 +27,8 @@ selectImage({context, File imageFile, var aspectRatios}) async {
                     ),
                     title: new Text(
                       'Camera',
-                      style: TextStyle(
-                          color: Colors.blue.shade800, fontSize: 18),
+                      style:
+                          TextStyle(color: Colors.blue.shade800, fontSize: 18),
                     ),
                     onTap: () async {
                       imageFile = await getImageFromCamera();
@@ -65,9 +64,7 @@ selectImage({context, File imageFile, var aspectRatios}) async {
         });
 
     return imageFile;
-  }catch(e){
-
-  }
+  } catch (e) {}
 }
 
 getImageFromGallery() async {

@@ -12,7 +12,8 @@ class PasswordTextField extends StatefulWidget {
   PasswordTextField(
       {this.hintText,
       this.prefixIcon,
-      this.textEditingController,this.isLabelEnabled,
+      this.textEditingController,
+      this.isLabelEnabled,
       this.isValid});
 
   @override
@@ -20,14 +21,13 @@ class PasswordTextField extends StatefulWidget {
 }
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
-  bool isValid = true,isLabelEnabled=true,isVisible=true;
+  bool isValid = true, isLabelEnabled = true, isVisible = true;
   FocusNode _focus = new FocusNode();
 
   @override
   void initState() {
     super.initState();
     _focus.addListener(_onFocusChange);
-
   }
 
   @override
@@ -35,7 +35,6 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
     _focus.removeListener(_onFocusChange);
     _focus.dispose();
     super.dispose();
-
   }
 
   void _onFocusChange() {
@@ -70,15 +69,15 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         decoration: new InputDecoration(
           contentPadding: const EdgeInsets.all(17.0),
           fillColor: Colors.white,
-          labelText: isLabelEnabled?widget.hintText:null,
-          hintText:isLabelEnabled?null: widget.hintText,
+          labelText: isLabelEnabled ? widget.hintText : null,
+          hintText: isLabelEnabled ? null : widget.hintText,
           labelStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               fontFamily: 'DMSans',
               color: _focus.hasFocus
                   ? AppColors.TextDefault
-                  : AppColors.TextSubdued) ,
+                  : AppColors.TextSubdued),
           hintStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,

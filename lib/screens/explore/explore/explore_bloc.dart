@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oogie/flavour_config.dart';
 import 'package:oogie/repository/product_repository.dart';
 import 'package:oogie/screens/explore/explore/explore_event.dart';
 import 'package:oogie/screens/explore/explore/explore_state.dart';
@@ -17,6 +18,8 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
             itemsInCartCount: 0,
             notificationCount: 0)) {
     getInitialData();
+    print('FlavorConfig().appTitle');
+    print(FlavorConfig().flavorName);
   }
 
   Future getInitialData() async {

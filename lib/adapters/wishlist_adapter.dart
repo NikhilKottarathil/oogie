@@ -10,8 +10,7 @@ class WishlistAdapter extends StatelessWidget {
   ProductModel productModel;
   Function deleteAction;
 
-  WishlistAdapter(
-      {this.productModel,this.deleteAction});
+  WishlistAdapter({this.productModel, this.deleteAction});
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +26,20 @@ class WishlistAdapter extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-            onTap: (){
-              Navigator.of(context)
-                  .pushNamed('/product',arguments:{'id':productModel.id,'parentPage':'wishlist'});
+            onTap: () {
+              Navigator.of(context).pushNamed('/product',
+                  arguments: {'id': productModel.id, 'parentPage': 'wishlist'});
             },
             child: SizedBox(
               height: 130,
               width: 130,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(3.0),
-                  child:productModel.imageUrl!=null? Image.network(productModel.imageUrl, fit: BoxFit.scaleDown):SvgPicture.asset(Urls().productImage, fit: BoxFit.scaleDown)),
+                  child: productModel.imageUrl != null
+                      ? Image.network(productModel.imageUrl,
+                          fit: BoxFit.scaleDown)
+                      : SvgPicture.asset(Urls().productImage,
+                          fit: BoxFit.scaleDown)),
             ),
           ),
           SizedBox(
@@ -52,7 +55,6 @@ class WishlistAdapter extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-
                 Text(
                   productModel.brandName,
                   style: TextStyles.smallRegularSubdued,

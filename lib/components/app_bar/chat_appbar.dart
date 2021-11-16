@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
 
-
-
-
-
-Widget chatAppBar(
-    {BuildContext context,
-
-      prefixWidget}) {
+Widget chatAppBar({BuildContext context, prefixWidget}) {
   return AppBar(
-    leading:  Container(
+    leading: Container(
       margin: EdgeInsets.only(left: 20),
 
       // color: Colors.green,
@@ -32,11 +25,13 @@ Widget chatAppBar(
           color: AppColors.TextDefault,
           splashRadius: 24,
           splashColor: Colors.transparent,
-
         ),
       ),
     ],
-    title: Text('Sergio Greenfelder',style: TextStyles.mediumMedium,),
+    title: Text(
+      'Sergio Greenfelder',
+      style: TextStyles.mediumMedium,
+    ),
     backgroundColor: AppColors.White,
     centerTitle: true,
     shadowColor: AppColors.ShadowColor,

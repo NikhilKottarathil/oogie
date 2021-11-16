@@ -11,11 +11,11 @@ class CustomTextField3 extends StatefulWidget {
 
   CustomTextField3(
       {Key key,
-        this.hintText,
-        this.validator,
-        this.text,
-        this.onChange,
-        this.textInputType})
+      this.hintText,
+      this.validator,
+      this.text,
+      this.onChange,
+      this.textInputType})
       : super(key: key);
 
   @override
@@ -42,14 +42,14 @@ class _CustomTextField3State extends State<CustomTextField3> {
       style: TextStyles.smallRegular,
       validator: widget.validator,
       obscureText:
-      widget.textInputType == TextInputType.visiblePassword ? true : false,
+          widget.textInputType == TextInputType.visiblePassword ? true : false,
       enableSuggestions:
-      widget.textInputType == TextInputType.visiblePassword ? false : true,
+          widget.textInputType == TextInputType.visiblePassword ? false : true,
       autocorrect:
-      widget.textInputType == TextInputType.visiblePassword ? false : true,
+          widget.textInputType == TextInputType.visiblePassword ? false : true,
       onChanged: widget.onChange,
       decoration: new InputDecoration(
-        contentPadding: EdgeInsets.only(top: 17,bottom: 7),
+        contentPadding: EdgeInsets.only(top: 17, bottom: 7),
         hintText: widget.hintText,
         labelText: widget.hintText,
         labelStyle: TextStyles.smallRegularSubdued,
@@ -63,7 +63,8 @@ class _CustomTextField3State extends State<CustomTextField3> {
             fontFamily: 'NunitoSans',
             fontWeight: FontWeight.w400),
         border: AppBorders.transparentBorder,
-        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.transparent)),
         disabledBorder: AppBorders.transparentBorder,
         enabledBorder: AppBorders.transparentBorder,
         errorBorder: AppBorders.transparentBorder,

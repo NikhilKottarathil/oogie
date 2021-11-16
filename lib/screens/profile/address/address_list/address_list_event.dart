@@ -11,8 +11,10 @@ class UpdatedList extends AddressListEvent {
 class SubmitAddress extends AddressListEvent {}
 
 class NewAddressAdded extends AddressListEvent {}
+
 class DeleteSelectedAddress extends AddressListEvent {
   String id;
+
   DeleteSelectedAddress({this.id});
 }
 

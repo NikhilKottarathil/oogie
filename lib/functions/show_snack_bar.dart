@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 void showSnackBar(BuildContext context, Exception exception) {

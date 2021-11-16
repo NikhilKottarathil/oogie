@@ -22,10 +22,9 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
     super.initState();
     image2AspectRatio = Platform.isAndroid
         ? [
-      CropAspectRatioPreset.square,
-    ]
+            CropAspectRatioPreset.square,
+          ]
         : [CropAspectRatioPreset.square];
-
 
     File file;
     for (int i = 0; i < 3; i++) {
@@ -38,28 +37,35 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
     return GridView.builder(
         itemCount: 3,
         physics: NeverScrollableScrollPhysics(),
-        gridDelegate:
-        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,mainAxisSpacing: 8,crossAxisSpacing: 8),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () async {
-              imageFiles[index] = await pickImage(context: context,aspectRatios: image2AspectRatio,imageFile: imageFiles[index]);
-              setState(() {
-
-              });
+              imageFiles[index] = await pickImage(
+                  context: context,
+                  aspectRatios: image2AspectRatio,
+                  imageFile: imageFiles[index]);
+              setState(() {});
             },
             child: Container(
               decoration: BoxDecoration(
-                border:imageFiles[index] == null ? Border.all(color: AppColors.BorderDefault):null,
-                borderRadius: BorderRadius.circular(8)
-              ),
-
+                  border: imageFiles[index] == null
+                      ? Border.all(color: AppColors.BorderDefault)
+                      : null,
+                  borderRadius: BorderRadius.circular(8)),
               child: Center(
-                child: imageFiles[index] == null ? SvgPicture.asset(
-                  'icons/aperture.svg', height: 28,
-                  width: 28,
-                  fit: BoxFit.cover,) : Image.file(
-                  imageFiles[index], fit: BoxFit.cover,),
+                child: imageFiles[index] == null
+                    ? SvgPicture.asset(
+                        'icons/aperture.svg',
+                        height: 28,
+                        width: 28,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        imageFiles[index],
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           );

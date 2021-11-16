@@ -13,7 +13,11 @@ class CartAdapter extends StatefulWidget {
   String parentPage;
   CheckoutBloc checkoutBloc;
 
-  CartAdapter({this.productModel, this.deleteAction,this.parentPage,this.checkoutBloc});
+  CartAdapter(
+      {this.productModel,
+      this.deleteAction,
+      this.parentPage,
+      this.checkoutBloc});
 
   @override
   _CartAdapterState createState() => _CartAdapterState();
@@ -22,15 +26,16 @@ class CartAdapter extends StatefulWidget {
 class _CartAdapterState extends State<CartAdapter> {
   ProductModel productModel;
 
-String parentPage;
+  String parentPage;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.parentPage==null){
-      parentPage=widget.parentPage;
-    }else{
-      parentPage='';
+    if (widget.parentPage == null) {
+      parentPage = widget.parentPage;
+    } else {
+      parentPage = '';
     }
     productModel = widget.productModel;
   }
@@ -108,42 +113,53 @@ String parentPage;
                             ),
                             Row(
                               children: [
-                                widget.parentPage!='payment'? IconButton(
-                                    icon: SvgPicture.asset(
-                                        'icons/minus_square.svg'),
-                                    splashColor: Colors.transparent,
-                                    onPressed: () {
-                                      if (productModel.qty > 1) {
-                                        productModel.qty -= 1;
-                                        productModel.totalPrice = double.parse(
-                                                productModel.qty.toString()) *
-                                            double.parse(productModel.unitPrice
-                                                .toString());
-                                        // if(widget.checkoutBloc!=null){
-                                        //   widget.checkoutBloc.add(QtyUpdated());
-                                        // }
-                                        setState(() {});
-                                      }
-                                    }):Container(width: 10,),
+                                widget.parentPage != 'payment'
+                                    ? IconButton(
+                                        icon: SvgPicture.asset(
+                                            'icons/minus_square.svg'),
+                                        splashColor: Colors.transparent,
+                                        onPressed: () {
+                                          if (productModel.qty > 1) {
+                                            productModel.qty -= 1;
+                                            productModel.totalPrice =
+                                                double.parse(productModel.qty
+                                                        .toString()) *
+                                                    double.parse(productModel
+                                                        .unitPrice
+                                                        .toString());
+                                            // if(widget.checkoutBloc!=null){
+                                            //   widget.checkoutBloc.add(QtyUpdated());
+                                            // }
+                                            setState(() {});
+                                          }
+                                        })
+                                    : Container(
+                                        width: 10,
+                                      ),
                                 Text(
                                   productModel.qty.toString(),
                                   style: TextStyles.mediumRegular,
                                 ),
-                                widget.parentPage!='payment'? IconButton(
-                                    icon: SvgPicture.asset(
-                                        'icons/plus_square.svg'),
-                                    splashColor: Colors.transparent,
-                                    onPressed: () {
-                                      productModel.qty += 1;
-                                      productModel.totalPrice = double.parse(
-                                              productModel.qty.toString()) *
-                                          double.parse(productModel.unitPrice
-                                              .toString());
-                                      if(widget.checkoutBloc!=null){
-                                        widget.checkoutBloc.add(QtyUpdated());
-                                      }
-                                      setState(() {});
-                                    }):Container(),
+                                widget.parentPage != 'payment'
+                                    ? IconButton(
+                                        icon: SvgPicture.asset(
+                                            'icons/plus_square.svg'),
+                                        splashColor: Colors.transparent,
+                                        onPressed: () {
+                                          productModel.qty += 1;
+                                          productModel
+                                              .totalPrice = double.parse(
+                                                  productModel.qty.toString()) *
+                                              double.parse(productModel
+                                                  .unitPrice
+                                                  .toString());
+                                          if (widget.checkoutBloc != null) {
+                                            widget.checkoutBloc
+                                                .add(QtyUpdated());
+                                          }
+                                          setState(() {});
+                                        })
+                                    : Container(),
                               ],
                             )
                           ],

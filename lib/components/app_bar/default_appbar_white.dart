@@ -3,18 +3,18 @@ import 'package:oogie/constants/styles.dart';
 
 Widget defaultAppBarWhite(
     {BuildContext context,
-      String text,
-      Function prefixAction,
-      suffixAction,
-      Widget suffixWidget,
-      prefixWidget}) {
+    String text,
+    Function prefixAction,
+    suffixAction,
+    Widget suffixWidget,
+    prefixWidget}) {
   return AppBar(
     leading: InkWell(
       child: prefixWidget == null
           ? Icon(
-        Icons.arrow_back,
-        color: AppColors.TextDefault,
-      )
+              Icons.arrow_back,
+              color: AppColors.TextDefault,
+            )
           : prefixWidget,
       onTap: () {
         if (prefixAction != null) {
@@ -27,13 +27,13 @@ Widget defaultAppBarWhite(
     actions: [
       suffixWidget != null
           ? InkWell(
-        child: suffixWidget,
-        onTap: () {
-          if (suffixAction != null) {
-            suffixAction();
-          }
-        },
-      )
+              child: suffixWidget,
+              onTap: () {
+                if (suffixAction != null) {
+                  suffixAction();
+                }
+              },
+            )
           : Container(),
     ],
     title: Text(

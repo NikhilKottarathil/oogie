@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/address_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/shopping/cart_details_view.dart';
@@ -42,16 +41,20 @@ class CheckoutShippingView extends StatelessWidget {
                           return Column(children: [
                             state.addressModel != null
                                 ? Column(
-
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Shipping to: ',style: TextStyles.smallMediumPrimaryLight,),
-                                    AddressAdapter(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Shipping to: ',
+                                        style:
+                                            TextStyles.smallMediumPrimaryLight,
+                                      ),
+                                      AddressAdapter(
                                         addressModel: state.addressModel,
                                         parentPage: 'checkout',
                                       ),
-                                  ],
-                                )
+                                    ],
+                                  )
                                 : Container(),
                             SizedBox(
                               height: 20,

@@ -36,8 +36,12 @@ class ExploreView extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return InkWell(
-                                onTap: (){
-                                  Navigator.pushNamed(context, '/productFilter',arguments: {'parentPage':'exploreCategory','categoryId':state.categoryModels[index].id});
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, '/productFilter', arguments: {
+                                    'parentPage': 'exploreCategory',
+                                    'categoryId': state.categoryModels[index].id
+                                  });
                                 },
                                 child: CategoryAdapter(
                                   categoryModel: state.categoryModels[index],
@@ -59,7 +63,8 @@ class ExploreView extends StatelessWidget {
                         title: 'New Arrivals',
                         productModels: state.newArrivedProductModels,
                         viewAllAction: () {
-                          Navigator.pushNamed(context, '/productList',arguments: {'parentPage':'New Arrivals'});
+                          Navigator.pushNamed(context, '/productList',
+                              arguments: {'parentPage': 'New Arrivals'});
                         });
                   },
                 ),
@@ -69,8 +74,8 @@ class ExploreView extends StatelessWidget {
                         title: 'Featured Phones',
                         productModels: state.featuredProductModels,
                         viewAllAction: () {
-                          Navigator.pushNamed(context, '/productList',arguments: {'parentPage':'Featured Phones'});
-
+                          Navigator.pushNamed(context, '/productList',
+                              arguments: {'parentPage': 'Featured Phones'});
                         });
                   },
                 ),

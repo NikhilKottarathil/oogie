@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oogie/adapters/order_details_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
-import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/components/ui_widgets/custom_text_button_3.dart';
 import 'package:oogie/constants/styles.dart';
@@ -58,7 +56,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             '10030'),
                         dividerDefault,
                         SizedBox(
-                          child: StepperVertical(index:widget.step),
+                          child: StepperVertical(index: widget.step),
                           height: 300,
                         ),
                         Visibility(
@@ -129,8 +127,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                 TextStyles.smallRegularSubdued,
                                           ),
                                           Text('FREE',
-                                              style:
-                                                  TextStyles.smallRegularSubdued)
+                                              style: TextStyles
+                                                  .smallRegularSubdued)
                                         ],
                                       ),
                                       SizedBox(
@@ -211,8 +209,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                   child: DefaultButton(
                     text: widget.step == 3 ? 'Return' : 'Cancel',
                     action: () {
-                      widget.step == 3? Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RequestReturn())):null;
-
+                      widget.step == 3
+                          ? Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => RequestReturn()))
+                          : null;
                     },
                   ),
                 ),

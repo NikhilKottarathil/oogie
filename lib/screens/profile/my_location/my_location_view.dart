@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
@@ -25,14 +24,17 @@ class MyLocationView extends StatelessWidget {
         listener: (context, state) {
           if (state.formStatus is SubmissionSuccess) {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider(
-                    create: (_) =>
-                        SelectShopBloc(profileRepository: context.read<MyLocationBloc>().profileRepository,locationModel: state.selectedLocation),
-                    child: SelectShopView(),
-                  ),
-                ),);
+              context,
+              MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (_) => SelectShopBloc(
+                      profileRepository:
+                          context.read<MyLocationBloc>().profileRepository,
+                      locationModel: state.selectedLocation),
+                  child: SelectShopView(),
+                ),
+              ),
+            );
           }
         },
         child: Padding(
@@ -88,7 +90,6 @@ class MyLocationView extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: state.locationModels.length,
                         padding: EdgeInsets.only(top: 16, bottom: 16),
-
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {

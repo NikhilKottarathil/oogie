@@ -8,7 +8,8 @@ class CustomImageButton extends StatefulWidget {
   bool active = true;
   var image;
 
-  CustomImageButton({Key key, this.image, this.errorText, this.action, this.active})
+  CustomImageButton(
+      {Key key, this.image, this.errorText, this.action, this.active})
       : super(key: key);
 
   @override
@@ -39,9 +40,12 @@ class _CustomImageButtonState extends State<CustomImageButton> {
           color: AppColors.White,
           boxShadow: AppShadows.shadowSmall,
           borderRadius: BorderRadius.circular(8),
-
         ),
-        child: SvgPicture.asset(widget.image,height: 24,fit: BoxFit.scaleDown,),
+        child: SvgPicture.asset(
+          widget.image,
+          height: 24,
+          fit: BoxFit.scaleDown,
+        ),
       ),
     );
   }

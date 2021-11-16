@@ -6,6 +6,7 @@ class FetchInitialData extends ReviewListEvent {}
 
 class UpdatedList extends ReviewListEvent {
   List<ReviewModel> reviewModel;
+
   UpdatedList({this.reviewModel});
 }
 

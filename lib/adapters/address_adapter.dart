@@ -22,39 +22,34 @@ class AddressAdapter extends StatefulWidget {
 }
 
 class _AddressAdapterState extends State<AddressAdapter> {
-  int groupValue = 0;
-
-  AddressModel addressModel;
-
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  Widget build(BuildContext context) {
+    int groupValue = 0;
+
+    AddressModel addressModel;
+
     addressModel = widget.addressModel;
     if (addressModel.isDefault) {
       groupValue = 1;
     } else {
       groupValue = 0;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.parentPage=='checkout'?Container():  Radio(
-          value: 1,
-          groupValue: groupValue,
-          onChanged: (int value) async {
-            widget.makeAsDefaultAction();
+        widget.parentPage == 'checkout'
+            ? Container()
+            : Radio(
+                value: 1,
+                groupValue: groupValue,
+                onChanged: (int value) async {
+                  widget.makeAsDefaultAction();
 
-            setState(() {
-              groupValue = 1;
-            });
-          },
-        ),
+                  setState(() {
+                    groupValue = 1;
+                  });
+                },
+              ),
         Expanded(
           child: InkWell(
             onTap: () {

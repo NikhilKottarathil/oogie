@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
+
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
 
@@ -7,20 +8,21 @@ class RadioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       margin: EdgeInsets.only(right: 10),
       padding: new EdgeInsets.only(left: 16.0, right: 16.0, top: 8, bottom: 8),
       child: Center(
-        child: new Text(
-          _item.text,
-          style: _item.isSelected?TextStyles.smallRegularPrimaryLight:TextStyles.smallRegular),
-        ),
-
+        child: new Text(_item.text,
+            style: _item.isSelected
+                ? TextStyles.smallRegularPrimaryLight
+                : TextStyles.smallRegular),
+      ),
       decoration: new BoxDecoration(
         color: AppColors.White,
         border: new Border.all(
             color: _item.isSelected
-                ? AppColors.PrimaryLight:AppColors.BorderDefault),
+                ? AppColors.PrimaryLight
+                : AppColors.BorderDefault),
         borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
       ),
     );
@@ -34,22 +36,21 @@ class RadioItem2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       margin: EdgeInsets.only(right: 10),
       padding: new EdgeInsets.only(left: 16.0, right: 16.0, top: 8, bottom: 8),
       child: Center(
-        child: new Text(
-            _item.text,
+        child: new Text(_item.text,
             style: _item.isSelected
-                ? TextStyles.smallRegularWhite:TextStyles.smallRegular),
+                ? TextStyles.smallRegularWhite
+                : TextStyles.smallRegular),
       ),
-
       decoration: new BoxDecoration(
-        color: _item.isSelected
-            ? AppColors.PrimaryLight:AppColors.White,
+        color: _item.isSelected ? AppColors.PrimaryLight : AppColors.White,
         border: new Border.all(
             color: _item.isSelected
-                ? AppColors.PrimaryLight:AppColors.BorderDefault),
+                ? AppColors.PrimaryLight
+                : AppColors.BorderDefault),
         borderRadius: const BorderRadius.all(const Radius.circular(8.0)),
       ),
     );

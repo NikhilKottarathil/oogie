@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oogie/constants/styles.dart';
-// import 'package:oogie/screens/explore/product_description.dart';
+// import 'package:oogie/screens/common/products/product_description.dart';
 
 class ProductLandscapeAdapter extends StatelessWidget {
   String productName, brandName, imageUrl;
@@ -11,7 +11,7 @@ class ProductLandscapeAdapter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductPage()));
       },
       child: Container(
@@ -22,7 +22,6 @@ class ProductLandscapeAdapter extends StatelessWidget {
           boxShadow: AppShadows.shadowSmall,
           borderRadius: BorderRadius.circular(8),
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,15 +29,23 @@ class ProductLandscapeAdapter extends StatelessWidget {
               height: 170,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(3.0),
-                child: Image.network(imageUrl, fit: BoxFit.fitHeight),),
+                child: Image.network(imageUrl, fit: BoxFit.fitHeight),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(brandName, style: TextStyles.smallMedium,),
-                  Text(productName, style: TextStyles.smallRegular,overflow: TextOverflow.ellipsis,),
+                  Text(
+                    brandName,
+                    style: TextStyles.smallMedium,
+                  ),
+                  Text(
+                    productName,
+                    style: TextStyles.smallRegular,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),

@@ -13,9 +13,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
   final AddressModel addressModel;
 
   AddAddressBloc(
-      {this.profileRepository,
-      this.addressListBloc,
-      this.addressModel})
+      {this.profileRepository, this.addressListBloc, this.addressModel})
       : super(AddAddressState()) {
     if (addressModel != null) {
       setAddress();
@@ -72,7 +70,7 @@ class AddAddressBloc extends Bloc<AddAddressEvent, AddAddressState> {
           address2: state.address2,
           landmark: state.landmark,
         );
-          addressListBloc.add(NewAddressAdded());
+        addressListBloc.add(NewAddressAdded());
 
         yield state.copyWith(formStatus: SubmissionSuccess());
       } catch (e) {

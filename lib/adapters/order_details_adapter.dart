@@ -1,36 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oogie/constants/styles.dart';
 import 'package:oogie/constants/styles.dart';
 
 class OrderDetailsAdapter extends StatefulWidget {
+  String status, productName, date, seller, price;
 
-  String status,productName,date,seller,price;
-  OrderDetailsAdapter(this.status,this.productName,this.date,this.seller,this.price);
+  OrderDetailsAdapter(
+      this.status, this.productName, this.date, this.seller, this.price);
 
   @override
   _OrderDetailsAdapterState createState() => _OrderDetailsAdapterState();
 }
 
 class _OrderDetailsAdapterState extends State<OrderDetailsAdapter> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-
       padding: edgePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
                 Text(
                   widget.productName,
                   style: TextStyles.smallRegular,
@@ -47,9 +41,11 @@ class _OrderDetailsAdapterState extends State<OrderDetailsAdapter> {
                   style: TextStyles.smallRegular,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 8,),
+                SizedBox(
+                  height: 8,
+                ),
                 Text(
-                  rupeesString+'10030',
+                  rupeesString + '10030',
                   style: TextStyles.smallMedium,
                   overflow: TextOverflow.ellipsis,
                 ),

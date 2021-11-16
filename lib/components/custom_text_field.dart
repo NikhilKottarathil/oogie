@@ -86,7 +86,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
         autocorrect: widget.textInputType == TextInputType.visiblePassword
             ? false
             : true,
-
         style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,

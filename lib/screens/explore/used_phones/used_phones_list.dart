@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/adapters/product_portrait_adapter_2.dart';
 import 'package:oogie/components/app_bar/secondary_app_bar.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:oogie/screens/explore/product_filter/filter_and_sort.dart';
+import 'package:oogie/screens/common/products/product_filter/filter_and_sort.dart';
 import 'package:oogie/screens/explore/used_phones/sell_a_phone_step1.dart';
 
 class UsedPhonesList extends StatefulWidget {
@@ -29,7 +29,7 @@ class _UsedPhonesListState extends State<UsedPhonesList> {
                   style: TextStyles.displayMedium,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     filterAndSort(buildContext: context);
                   },
                   child: Container(
@@ -110,7 +110,8 @@ class _UsedPhonesListState extends State<UsedPhonesList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>SellAPhoneStep1()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SellAPhoneStep1()));
         },
         child: Icon(Icons.add),
       ),

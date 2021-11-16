@@ -1,8 +1,8 @@
-
 import 'package:oogie/constants/form_submitting_status.dart';
 
 class EditProfileState {
   String userName;
+
   String get userNameValidationText {
     //
     if (userName.trim().length == 0) {
@@ -15,6 +15,7 @@ class EditProfileState {
   }
 
   String phoneNumber;
+
   String get phoneNumberValidationText {
     //
     if (phoneNumber.trim().length == 0) {
@@ -25,7 +26,6 @@ class EditProfileState {
       return null;
     }
   }
-
 
   final FormSubmissionStatus formStatus;
 
@@ -39,7 +39,6 @@ class EditProfileState {
     String userName,
     String phoneNumber,
     FormSubmissionStatus formStatus,
-
   }) {
     return EditProfileState(
       userName: userName ?? this.userName,

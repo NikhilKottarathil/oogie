@@ -11,7 +11,10 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
   String parentPage;
   CheckoutBloc checkoutBloc;
 
-  AddressListBloc({@required this.profileRepository, @required this.parentPage,this.checkoutBloc})
+  AddressListBloc(
+      {@required this.profileRepository,
+      @required this.parentPage,
+      this.checkoutBloc})
       : super(AddressListState(addressModels: [])) {
     state.parentPage = parentPage;
     getAddresses();
@@ -36,8 +39,8 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
       getAddresses();
     } else if (event is ChooseDefaultAddress) {
       await profileRepository.makeSelectedAddressDefault(event.id);
-       getAddresses();
-      if(checkoutBloc!=null){
+      getAddresses();
+      if (checkoutBloc != null) {
         print('addreess chnag call');
         print(checkoutBloc.state.total);
         checkoutBloc.add(GetDefaultAddress());

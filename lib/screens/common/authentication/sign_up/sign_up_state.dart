@@ -1,0 +1,76 @@
+import 'package:oogie/constants/form_submitting_status.dart';
+
+class SignUpState {
+  final String userName;
+  final String generatedOTP;
+  final String verificationId;
+  final int resendToken;
+
+  String get userNameValidationText {
+    //
+    if (userName.trim().length == 0) {
+      return 'Please enter name';
+    } else if (userName.trim().length < 4) {
+      return 'Username is too short!  at least 4 characters';
+    } else {
+      return null;
+    }
+  }
+
+  final String phoneNumber;
+
+  String get phoneNumberValidationText {
+    //
+    if (phoneNumber.trim().length == 0) {
+      return 'Please enter phone number';
+    } else if (phoneNumber.trim().length != 10) {
+      return 'Enter a valid  phone number';
+    } else {
+      return null;
+    }
+  }
+
+  final String password;
+
+  String get passwordValidationText {
+    if (password.trim().length == 0) {
+      return 'Please enter password';
+    } else if (password.trim().length < 6) {
+      return 'Your password must contain at least 6 characters';
+    } else {
+      return null;
+    }
+  }
+
+  final FormSubmissionStatus formStatus;
+
+  SignUpState({
+    this.userName = '',
+    this.phoneNumber = '',
+    this.generatedOTP = '',
+    this.password = '',
+    this.resendToken,
+    this.verificationId = '',
+    this.formStatus = const InitialFormStatus(),
+  });
+
+  SignUpState copyWith({
+    String userName,
+    String phoneNumber,
+    String password,
+    String generatedOTP,
+    String verificationId,
+    int resendToken,
+    FormSubmissionStatus formStatus,
+  }) {
+    return SignUpState(
+      userName: userName ?? this.userName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      password: password ?? this.password,
+      generatedOTP: generatedOTP ?? this.generatedOTP,
+      verificationId: verificationId ?? this.verificationId,
+      resendToken: resendToken ?? this.resendToken,
+      formStatus: formStatus ?? this.formStatus,
+    );
+  }
+}

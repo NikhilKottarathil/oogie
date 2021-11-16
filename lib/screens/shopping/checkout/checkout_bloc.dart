@@ -16,7 +16,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   List<String> productIds;
   String orderId;
 
-
   CheckoutBloc(
       {@required this.productRepository,
       this.parentPage,
@@ -24,7 +23,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       @required this.profileRepository,
       @required this.productIds})
       : super(CheckoutState(
-    paymentTypeState: PaymentTypeState.none,
+            paymentTypeState: PaymentTypeState.none,
             productModels: [],
             orderStatus: OrderStatus.InitialStatus,
             isLoading: true,
@@ -33,12 +32,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             subTotal: 0.0,
             deliveryCharge: 0.0,
             expectedDeliveryDate: DateTime.now().add(Duration(days: 7)))) {
-
     print('productIds ${productIds.length}');
     getCheckoutProducts();
     getDefaultAddress();
-
-
   }
 
   getCheckoutProducts() async {
@@ -47,7 +43,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       productModels
           .add(await productRepository.getDetailsOfSelectedProduct(element));
     });
-    state.productModels=productModels;
+    state.productModels = productModels;
     qtyChangedUpdateList();
   }
 
@@ -64,16 +60,16 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     add(DefaultAddressChanged(addressModel: defaultAddress));
   }
 
-  qtyChangedUpdateList(){
-
-    state.subTotal=0.0;
-    state.deliveryCharge=20.0;
+  qtyChangedUpdateList() {
+    state.subTotal = 0.0;
+    state.deliveryCharge = 20.0;
     state.productModels.forEach((element) {
-      element.totalPrice =
-          double.parse(element.qty.toString()) * double.parse(element.unitPrice.toString());
-      state.subTotal+= double.parse(element.qty.toString()) * double.parse(element.unitPrice.toString());
+      element.totalPrice = double.parse(element.qty.toString()) *
+          double.parse(element.unitPrice.toString());
+      state.subTotal += double.parse(element.qty.toString()) *
+          double.parse(element.unitPrice.toString());
     });
-    state.total=state.subTotal+state.deliveryCharge;
+    state.total = state.subTotal + state.deliveryCharge;
     add(UpdateProductModels(productModels: state.productModels));
   }
 
@@ -89,28 +85,21 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       await getDefaultAddress();
     } else if (event is UpdateProductModels) {
       yield state.copyWith(productModels: event.productModels);
-    }else if (event is PaymentMethodChanged) {
+    } else if (event is PaymentMethodChanged) {
       yield state.copyWith(paymentTypeState: event.paymentTypeState);
-    }else if (event is QtyUpdated) {
+    } else if (event is QtyUpdated) {
       print('qtyChhnged');
       qtyChangedUpdateList();
-    }else if (event is OrderStatusChanged) {
-      if(event.orderStatus == OrderStatus.OrderCreating) {
+    } else if (event is OrderStatusChanged) {
+      if (event.orderStatus == OrderStatus.OrderCreating) {
         try {
-        orderId=await   orderRepository.createAnOrder(deliveryCharge: state.deliveryCharge,
+          orderId = await orderRepository.createAnOrder(
+              deliveryCharge: state.deliveryCharge,
               total: state.total,
               productModels: state.productModels,
               addressId: state.addressModel.id);
-        }catch(e){
-
-        }
-      }
-     else if(event.orderStatus == OrderStatus.PaymentSuccess) {
-      }
+        } catch (e) {}
+      } else if (event.orderStatus == OrderStatus.PaymentSuccess) {}
     }
   }
-
-
-
-
 }

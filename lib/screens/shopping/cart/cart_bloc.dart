@@ -10,9 +10,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   CartBloc({@required this.productRepository, this.parentPage})
       : super(CartState(
-      newProductModels: [], usedProductModels: [], currentPageIndex: 0)) {
+            newProductModels: [], usedProductModels: [], currentPageIndex: 0)) {
     state.parentPage = parentPage;
-
 
     getCartProducts();
   }
@@ -38,17 +37,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } else if (event is UpdateUsedProductModels) {
       yield state.copyWith(usedProductModels: event.productModels);
     } else if (event is MoveProductToWishList) {
-      print('move to wishlist ${event.index} t ${event.cartType}' );
+      print('move to wishlist ${event.index} t ${event.cartType}');
       try {
-
-      String productId = '';
+        String productId = '';
         if (event.cartType == 'new') {
           productId = state.newProductModels[event.index].id;
         } else {
           productId = state.usedProductModels[event.index].id;
         }
 
-      String cartId = '';
+        String cartId = '';
         if (event.cartType == 'new') {
           cartId = state.newProductModels[event.index].cartId;
         } else {
@@ -58,7 +56,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         await productRepository.deleteProductFromCart(cartID: cartId);
         await productRepository.addProductToWishList(productId: productId);
 
-       await  getCartProducts();
+        await getCartProducts();
       } catch (e) {
         yield state.copyWith(actionErrorMessage: e);
       }
@@ -71,7 +69,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           cartId = state.usedProductModels[event.index].cartId;
         }
         await productRepository.deleteProductFromCart(cartID: cartId);
-       await  getCartProducts();
+        await getCartProducts();
       } catch (e) {
         yield state.copyWith(actionErrorMessage: e);
       }

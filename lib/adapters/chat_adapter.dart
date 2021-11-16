@@ -7,21 +7,19 @@ class ChatAdapter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatingPage()));
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ChatingPage()));
       },
       child: Container(
-        padding:EdgeInsets.all(20) ,
+        padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-
-          color: AppColors.White,
-          boxShadow:AppShadows.shadowTiny
-        ),
+            color: AppColors.White, boxShadow: AppShadows.shadowTiny),
         child: Row(
           children: [
             Container(
-              height:40,
-              width:40,
+              height: 40,
+              width: 40,
               // color: Colors.green,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -32,17 +30,23 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatingPage()));
                 ),
               ),
             ),
-            SizedBox(width: 8,),
-            Expanded(child: Text('Sergio Greenfelder',style: TextStyles.smallMedium,)),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+                child: Text(
+              'Sergio Greenfelder',
+              style: TextStyles.smallMedium,
+            )),
             Container(
-
-              padding: EdgeInsets.only(left: 11,top: 6,right: 11,bottom: 6),
+              padding: EdgeInsets.only(left: 11, top: 6, right: 11, bottom: 6),
               // color: Colors.green,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-               color: AppColors.PrimaryLightest
+                  shape: BoxShape.circle, color: AppColors.PrimaryLightest),
+              child: Text(
+                '2',
+                style: TextStyles.mediumMediumPrimaryLight,
               ),
-              child: Text('2',style: TextStyles.mediumMediumPrimaryLight,),
             ),
           ],
         ),

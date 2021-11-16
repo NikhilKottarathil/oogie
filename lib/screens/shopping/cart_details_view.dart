@@ -70,7 +70,7 @@ class _CartDetailsViewState extends State<CartDetailsView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20.0, top: 20, right: 20,bottom: 20),
+                            left: 20.0, top: 20, right: 20, bottom: 20),
                         child: Column(
                           children: [
                             Row(

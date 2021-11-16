@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
-
 import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/special_components/stepper_horizontal.dart';
-
-
 
 class CheckoutReviewView extends StatefulWidget {
   @override
