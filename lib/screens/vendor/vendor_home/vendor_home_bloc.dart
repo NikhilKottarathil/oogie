@@ -3,7 +3,7 @@ import 'package:oogie/screens/vendor/vendor_home/vendor_home_events.dart';
 import 'package:oogie/screens/vendor/vendor_home/vendor_home_state.dart';
 
 class VendorHomeBloc extends Bloc<VendorHomeEvent, VendorHomeState> {
-  VendorHomeBloc() : super(VendorHomeState());
+  VendorHomeBloc() : super(VendorHomeState(tabIndex: 1));
 
   @override
   Stream<VendorHomeState> mapEventToState(VendorHomeEvent event) async* {

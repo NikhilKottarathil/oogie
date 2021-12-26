@@ -123,10 +123,17 @@ String getTimeDifferenceFromNowString(String date) {
   }
 }
 
-getDateTimeFromNowStringFormat(String date){
+getDateTimeFromStringFormat(String date){
   DateTime dateTime = DateFormat('EEE, dd MMM yyyy hh:mm:ss')
       .parse(date.substring(0, date.length - 3));
   final f = new DateFormat('dd-MM-yyyy hh:mm a');
+  String time = f.format(dateTime);
+
+  return time;
+}getDateFromStringFormat(String date){
+  DateTime dateTime = DateFormat('EEE, dd MMM yyyy hh:mm:ss')
+      .parse(date.substring(0, date.length - 3));
+  final f = new DateFormat('dd-MM-yyyy');
   String time = f.format(dateTime);
 
   return time;

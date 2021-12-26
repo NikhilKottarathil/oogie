@@ -3,6 +3,7 @@ import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/models/category_model.dart';
 import 'package:oogie/models/filter_model.dart';
 import 'package:oogie/models/product_model.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ProductFilterState {
   List<ProductModel> productModels = [];
@@ -21,20 +22,21 @@ class ProductFilterState {
 
   String searchString;
   bool isSearching;
-  String minimumPrice, maximumPrice;
+  // String minimumPrice, maximumPrice;
+  SfRangeValues sfRangeValues;
   FormSubmissionStatus formSubmissionStatus;
   bool iPriceValid;
 
-  String get priceValidator {
-    if (minimumPrice.isEmpty || maximumPrice.isEmpty) {
-      return null;
-    } else if (int.parse(minimumPrice.trim()) >
-        int.parse(maximumPrice.trim())) {
-      return '';
-    } else {
-      return null;
-    }
-  }
+  // String get priceValidator {
+  //   if (minimumPrice.isEmpty || maximumPrice.isEmpty) {
+  //     return null;
+  //   } else if (int.parse(minimumPrice.trim()) >
+  //       int.parse(maximumPrice.trim())) {
+  //     return '';
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   ProductFilterState({
     this.productModels,
@@ -52,10 +54,11 @@ class ProductFilterState {
     this.sortFilter,
     this.searchString,
     this.isSearching,
-    this.maximumPrice,
-    this.minimumPrice,
+    // this.maximumPrice,
+    // this.minimumPrice,
     this.iPriceValid,
     this.formSubmissionStatus,
+    this.sfRangeValues
   });
 
   ProductFilterState copyWith({
@@ -78,6 +81,7 @@ class ProductFilterState {
     maximumPrice,
     bool iPriceValid,
     FormSubmissionStatus formSubmissionStatus,
+    SfRangeValues sfRangeValues,
   }) {
     return ProductFilterState(
       productModels: productModels ?? this.productModels,
@@ -95,10 +99,11 @@ class ProductFilterState {
       actionErrorMessage: actionErrorMessage ?? this.actionErrorMessage,
       searchString: searchString ?? this.searchString,
       isSearching: isSearching ?? this.isSearching,
-      maximumPrice: maximumPrice ?? this.maximumPrice,
-      minimumPrice: minimumPrice ?? this.minimumPrice,
+      // maximumPrice: maximumPrice ?? this.maximumPrice,
+      // minimumPrice: minimumPrice ?? this.minimumPrice,
       iPriceValid: iPriceValid ?? this.iPriceValid,
       formSubmissionStatus: formSubmissionStatus ?? this.formSubmissionStatus,
+      sfRangeValues: sfRangeValues ?? this.sfRangeValues,
     );
   }
 }

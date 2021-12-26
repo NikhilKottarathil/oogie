@@ -58,9 +58,28 @@ class ProductDetails extends StatelessWidget {
                         productModel.brandName,
                         style: TextStyles.smallRegularSubdued,
                       ),
-                      Text(
-                        rupeesString + productModel.unitPrice,
-                        style: TextStyles.smallMedium,
+                     productModel.offerPrice==null?Text(
+                       rupeesString + productModel.unitPrice,
+                       style: TextStyles.smallMedium,
+                     ): Row(
+                        children: [
+                          Text(
+                            productModel.unitPrice,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.TextSubdued,
+                                height: 1.43,
+                                fontFamily: 'DMSans',
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(width: 8,),
+                          Text(
+                            rupeesString + productModel.offerPrice,
+                            style: TextStyles.smallMedium,
+                          ),
+
+                        ],
                       ),
                     ],
                   ),

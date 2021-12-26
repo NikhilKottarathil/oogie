@@ -3,6 +3,7 @@ import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/flavour_config.dart';
 import 'package:oogie/functions/api_calls.dart';
+import 'package:oogie/oogie_notifications.dart';
 import 'package:oogie/screens/common/authentication/auth_credentials.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,7 +49,6 @@ class AuthRepository {
             'firebase_token', body['firebase_token'].toString());
         return AuthCredentials(
             phoneNumber: phoneNumber,
-            generatedOTP: body['otp'].toString(),
             firebaseToken: body['firebase_token'].toString(),
             token: body['token'].toString());
       } else {
@@ -194,6 +194,25 @@ class AuthRepository {
           address: FlavorConfig().flavorValue + '/reset/password',
           myBody: myBody);
       if (body['message'] == 'Password Successfully Changed !!') {
+      } else {
+        if (body['message'] != null) {
+          throw Exception(body['message']);
+        } else {
+          throw Exception('Please retry');
+        }
+      }
+    } catch (e) {
+      throw Exception('Please retry');
+    }
+  }
+  Future<void> updateFirebaseDeviceToken({String password, token, mobile}) async {
+    try {
+      String deviceToken=await getFirebaseMessagingToken();
+      dynamic myBody={'device_token':deviceToken};
+      var body = await patchDataRequest(
+          address: FlavorConfig().flavorValue + '/profile',
+          myBody: myBody);
+      if (body['message'] == 'Successfully Updated') {
       } else {
         if (body['message'] != null) {
           throw Exception(body['message']);

@@ -49,7 +49,7 @@ class ProductListByCreatorBloc
         page: state.page,
         rowsPerPage: 10,
         parentPage: parentPage,
-        isUsedProduct: 'False');
+        isUsedProduct: parentPage=='usedProductsHome'?'True':'False');
     add(UpdatedList(productModels: productModels));
   }
 
@@ -59,7 +59,7 @@ class ProductListByCreatorBloc
         page: state.page,
         rowsPerPage: 10,
         parentPage: parentPage,
-        isUsedProduct: 'False');
+        isUsedProduct: parentPage=='usedProductsHome'?'True':'False');
     add(UpdatedList(productModels: productModels));
   }
 

@@ -62,7 +62,7 @@ class AddProductView2 extends StatelessWidget {
                                                       .trim()
                                                       .length ==
                                                   0
-                                              ? 'false'
+                                              ? 'Please fill'
                                               : null;
                                         },
                                         text: state.name,
@@ -80,16 +80,34 @@ class AddProductView2 extends StatelessWidget {
                                                       .trim()
                                                       .length ==
                                                   0
-                                              ? 'false'
+                                              ? 'Please fill'
                                               : null;
                                         },
                                         text: state.unitPrice,
                                         onChange: (value) {
                                           context.read<AddProductBloc>().add(
-                                                PriceChanged(value: value),
+                                                UnitPriceChanged(value: value),
                                               );
                                         },
                                         textInputType: TextInputType.number),
+                                    Visibility(child: CustomTextField(
+                                        hintText: 'Offer Price (optional)',
+                                        validator: (value) {
+                                          return value
+                                              .toString()
+                                              .trim()
+                                              .length ==
+                                              0
+                                              ? null
+                                              : double.parse(state.offerPrice)<double.parse(state.unitPrice)?null:'Offer price is greater than Unit Price';
+                                        },
+                                        text: state.offerPrice,
+                                        onChange: (value) {
+                                          context.read<AddProductBloc>().add(
+                                            OfferPriceChanged(value: value),
+                                          );
+                                        },
+                                        textInputType: TextInputType.number),),
                                     CustomTextField(
                                         hintText: 'Quantity Available',
                                         validator: (value) {
@@ -98,7 +116,7 @@ class AddProductView2 extends StatelessWidget {
                                                       .trim()
                                                       .length ==
                                                   0
-                                              ? 'false'
+                                              ? 'Please fill'
                                               : null;
                                         },
                                         text: state.qtyAvailable,
@@ -116,7 +134,7 @@ class AddProductView2 extends StatelessWidget {
                                                       .trim()
                                                       .length ==
                                                   0
-                                              ? 'false'
+                                              ? 'Please fill'
                                               : null;
                                         },
                                         text: state.description,

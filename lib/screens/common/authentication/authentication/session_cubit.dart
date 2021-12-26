@@ -19,7 +19,6 @@ class SessionCubit extends Cubit<SessionState> {
     print('try Authenticated');
     try {
       List data = await authRepository.attemptAutoLogin();
-      await Future.delayed(Duration(seconds: 2));
       if (data[1] != null && data[1]) {
         emit(SessionState.Authenticated);
       } else {

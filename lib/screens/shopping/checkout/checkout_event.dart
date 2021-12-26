@@ -40,6 +40,9 @@ class OrderStatusChanged extends CheckoutEvent {
 
 class CreateOrder extends CheckoutEvent {}
 
-class ProcessPayment extends CheckoutEvent {}
+class CreateInvoice extends CheckoutEvent {
+  String transactionId;
+  CreateInvoice({this.transactionId});
+}
 
 class ConfirmOrder extends CheckoutEvent {}

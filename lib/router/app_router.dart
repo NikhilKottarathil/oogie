@@ -19,10 +19,16 @@ import 'package:oogie/screens/common/authentication/reset_password/reset_passwor
 import 'package:oogie/screens/common/authentication/reset_password/reset_password_view.dart';
 import 'package:oogie/screens/common/authentication/sign_up/sign_up_bloc.dart';
 import 'package:oogie/screens/common/authentication/sign_up/sign_up_view.dart';
+import 'package:oogie/screens/common/order_details/order_details_cubit.dart';
+import 'package:oogie/screens/common/order_details/order_details_view.dart';
+import 'package:oogie/screens/common/original_order/orginal_order_cubit.dart';
+import 'package:oogie/screens/common/original_order/orginal_order_view.dart';
 import 'package:oogie/screens/common/products/add_product/add_product_bloc.dart';
 import 'package:oogie/screens/common/products/add_product/add_product_view_0.dart';
 import 'package:oogie/screens/common/products/add_product/add_product_view_1.dart';
 import 'package:oogie/screens/common/products/add_product/add_product_view_4.dart';
+import 'package:oogie/screens/delivery_partner/delivery_partner_home/delivery_partner_home_bloc.dart';
+import 'package:oogie/screens/delivery_partner/delivery_partner_home/delivery_partner_home_view.dart';
 import 'package:oogie/screens/distributor/connection_agents_list/connection_agents_list_bloc.dart';
 import 'package:oogie/screens/distributor/distributor_home/distributor_home_bloc.dart';
 import 'package:oogie/screens/distributor/distributor_home/distributor_home_view.dart';
@@ -36,6 +42,8 @@ import 'package:oogie/screens/common/products/product_list/product_list_bloc.dar
 import 'package:oogie/screens/common/products/product_list/product_list_view.dart';
 import 'package:oogie/screens/explore/review/review_list/review_list_bloc.dart';
 import 'package:oogie/screens/explore/review/review_list/review_list_view.dart';
+import 'package:oogie/screens/user/orders/my_orders/my_orders_cubit.dart';
+import 'package:oogie/screens/user/orders/my_orders/my_orders_view.dart';
 import 'package:oogie/screens/profile/address/address_list/address_list_bloc.dart';
 import 'package:oogie/screens/profile/address/address_list/address_list_view.dart';
 import 'package:oogie/screens/profile/my_location/my_location_bloc.dart';
@@ -46,6 +54,8 @@ import 'package:oogie/screens/shopping/cart/cart_bloc.dart';
 import 'package:oogie/screens/shopping/cart/cart_view.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_bloc.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_shipping_view.dart';
+import 'package:oogie/screens/user/used_phones/used_phone_home/used_phone_home_bloc.dart';
+import 'package:oogie/screens/user/used_phones/used_phone_home/used_phone_home_view.dart';
 import 'package:oogie/screens/vendor/vendor_home/vendor_home_bloc.dart';
 import 'package:oogie/screens/vendor/vendor_home/vendor_home_view.dart';
 import 'package:oogie/screens/vendor_old/add_product.dart';
@@ -59,6 +69,10 @@ OrderRepository orderRepository = OrderRepository();
 DistributorRepository distributorRepository = DistributorRepository();
 VendorRepository vendorRepository = VendorRepository();
 WholeSaleRepository wholeSaleRepository = WholeSaleRepository();
+
+CartBloc cartBloc = CartBloc(
+  productRepository: productRepository,
+);
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -162,10 +176,29 @@ class AppRouter {
                     ],
                     child: VendorHomeView(),
                   ));
+        }if (FlavorConfig().flavorName == 'delivery_partner') {
+          return MaterialPageRoute(
+              builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => DeliveryPartnerHomeBloc(),
+                      ),
+                    ],
+                    child: DeliveryPartnerHomeView(),
+                  ));
+        }
+        if(FlavorConfig().flavorName=='user'){
+          return MaterialPageRoute(
+              builder: (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => UsedPhoneHomeBloc(),
+                  ),
+                ],
+                child: UsedPhoneHomeView(),
+              ));
         }
         return null;
-
-
 
       case '/productList':
         return MaterialPageRoute(
@@ -192,6 +225,8 @@ class AppRouter {
             create: (context) => ProductFilterBloc(
                 parentCategoryId: arguments['categoryId'] != null
                     ? arguments['categoryId']
+                    : null, parentAdvertisementId: arguments['parentAdvertisementId'] != null
+                    ? arguments['parentAdvertisementId']
                     : null,
                 productRepository: productRepository,
                 parentPage: arguments['parentPage'].toString()),
@@ -212,9 +247,7 @@ class AppRouter {
         if (AppData().isUser) {
           return MaterialPageRoute(
             builder: (_) => BlocProvider(
-              create: (context) => CartBloc(
-                productRepository: productRepository,
-              ),
+              create: (context) => cartBloc,
               child: CartView(),
             ),
           );
@@ -251,6 +284,15 @@ class AppRouter {
             child: AddressListView(),
           ),
         );
+      case '/myOrders':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => MyOrdersCubit(
+                parentPage: arguments['parentPage'].toString(),
+                orderRepository: orderRepository),
+            child: MyOrdersView(),
+          ),
+        );
       case '/checkout':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -262,6 +304,27 @@ class AppRouter {
               productRepository: productRepository,
             ),
             child: CheckoutShippingView(),
+          ),
+        );
+        case '/orderDetails':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => OrderDetailsCubit(
+              parentPage: arguments['parentPage'].toString(),
+              deliveryOrderId: arguments['deliveryOrderId'].toString(),
+              orderRepository: orderRepository,
+            ),
+            child: OrderDetailsView(),
+          ),
+        );case '/originalOrder':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => OriginalOrderCubit(
+              parentPage: arguments['parentPage'].toString(),
+              orderId: arguments['orderId'].toString(),
+              orderRepository: orderRepository,
+            ),
+            child: OriginalOrderView(),
           ),
         );
 

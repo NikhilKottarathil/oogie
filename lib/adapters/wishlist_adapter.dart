@@ -63,7 +63,7 @@ class WishlistAdapter extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  rupeesString + productModel.unitPrice,
+                  rupeesString + productModel.price,
                   style: TextStyles.smallMedium,
                 ),
                 SizedBox(

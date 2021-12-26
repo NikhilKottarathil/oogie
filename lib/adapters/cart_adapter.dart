@@ -125,7 +125,7 @@ class _CartAdapterState extends State<CartAdapter> {
                                                 double.parse(productModel.qty
                                                         .toString()) *
                                                     double.parse(productModel
-                                                        .unitPrice
+                                                        .price
                                                         .toString());
                                             // if(widget.checkoutBloc!=null){
                                             //   widget.checkoutBloc.add(QtyUpdated());
@@ -151,7 +151,7 @@ class _CartAdapterState extends State<CartAdapter> {
                                               .totalPrice = double.parse(
                                                   productModel.qty.toString()) *
                                               double.parse(productModel
-                                                  .unitPrice
+                                                  .price
                                                   .toString());
                                           if (widget.checkoutBloc != null) {
                                             widget.checkoutBloc

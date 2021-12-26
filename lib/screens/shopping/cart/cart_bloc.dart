@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oogie/models/product_model.dart';
 import 'package:oogie/repository/product_repository.dart';
 import 'package:oogie/screens/shopping/cart/cart_event.dart';
 import 'package:oogie/screens/shopping/cart/cart_state.dart';
@@ -27,6 +28,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     add(UpdateUsedProductModels(productModels: data[1]));
   }
 
+  deleteAllCartItems({List<String> productIds}) async {
+
+    await Future.forEach(state.newProductModels, (ProductModel product) async {
+      if(productIds.contains(product.id)) {
+        await productRepository.deleteProductFromCart(cartID: product.cartId);
+      }
+    });
+    await Future.forEach(state.usedProductModels, (ProductModel product) async {
+      if(productIds.contains(product.id)) {
+        await productRepository.deleteProductFromCart(cartID: product.cartId);
+      }
+    });
+    getCartProducts();
+  }
   @override
   Stream<CartState> mapEventToState(CartEvent event) async* {
     if (event is FetchInitialData) {

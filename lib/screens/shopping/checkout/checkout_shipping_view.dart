@@ -6,7 +6,7 @@ import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/screens/shopping/cart_details_view.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_bloc.dart';
-import 'package:oogie/screens/shopping/checkout/checkout_payment_view.dart';
+import 'package:oogie/screens/shopping/checkout/checkout_payment_selection_view.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_state.dart';
 import 'package:oogie/special_components/stepper_horizontal.dart';
 
@@ -122,7 +122,7 @@ class CheckoutShippingView extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (_) => BlocProvider.value(
                                 value: context.read<CheckoutBloc>(),
-                                child: CheckoutPaymentView(),
+                                child: CheckoutPaymentSelectionView(),
                               ),
                             ),
                           );

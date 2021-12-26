@@ -5,15 +5,22 @@ import 'package:oogie/models/product_model.dart';
 enum PaymentTypeState { cod, online, none }
 enum OrderStatus {
   InitialStatus,
+
   OrderCreating,
   OrderCreationSuccess,
   OrderCreationFailed,
+
   PaymentProcessing,
   PaymentSuccess,
   PaymentFailed,
+
   InvoiceCreating,
   InvoiceFailed,
-  OrderCompleted
+  InvoiceSuccess,
+
+  OrderConfirming,
+  OrderConfirmFailed,
+  OrderConfirmCompleted
 }
 
 class CheckoutState {

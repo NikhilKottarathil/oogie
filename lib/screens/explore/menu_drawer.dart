@@ -7,7 +7,7 @@ import 'package:oogie/constants/styles.dart';
 import 'package:oogie/flavour_config.dart';
 import 'package:oogie/repository/auth_repo.dart';
 import 'package:oogie/repository/profile_repository.dart';
-import 'package:oogie/screens/orders/order_list.dart';
+import 'package:oogie/screens/user/orders/order_list.dart';
 import 'package:oogie/screens/profile/profile/profile_bloc.dart';
 import 'package:oogie/screens/profile/profile/profile_state.dart';
 
@@ -112,24 +112,34 @@ class MenuDrawer extends StatelessWidget {
                     child: Column(
                       children: [
                         IconTextButton(
-                            iconUrl: 'icons/order.svg',
-                            text: 'Orders',
-                            action: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => OrderList()));
-                            }),
+                          iconUrl: 'icons/order.svg',
+                          text: 'Orders',
+                          action: () {
+                            Navigator.of(context).pushNamed('/myOrders',
+                                arguments: {'parentPage': 'menuDrawer'});
+                          },
+                        ),
                         IconTextButton(
-                            iconUrl: 'icons/favourite.svg',
-                            text: 'Wishlist',
-                            action: () {
-                              Navigator.of(context).pushNamed('/wishlist');
-                            }),
+                          iconUrl: 'icons/favourite.svg',
+                          text: 'Wishlist',
+                          action: () {
+                            Navigator.of(context).pushNamed('/wishlist');
+                          },
+                        ),
                         IconTextButton(
-                            iconUrl: 'icons/location.svg',
-                            text: 'Stores',
-                            action: () {
-                              Navigator.pushNamed(context, '/myLocation');
-                            }),
+                          iconUrl: 'icons/location.svg',
+                          text: 'Stores',
+                          action: () {
+                            Navigator.pushNamed(context, '/myLocation');
+                          },
+                        ),
+                        IconTextButton(
+                          iconUrl: 'icons/smartphone.svg',
+                          text: 'Used Phones',
+                          action: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
+                        ),
                       ],
                     )),
                 IconTextButton(

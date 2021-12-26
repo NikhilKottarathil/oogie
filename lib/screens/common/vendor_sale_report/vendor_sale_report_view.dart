@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,19 +37,42 @@ class _VendorSaleReportViewState extends State<VendorSaleReportView> {
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
-      appBar:context.read<VendorSaleReportBloc>().parentPage=='vendorHome'?null: defaultAppBarWhite(
-        context: context,
-        text: 'Sale Report',
+      appBar: context.read<VendorSaleReportBloc>().parentPage == 'vendorHome'
+          ? null
+          : defaultAppBarWhite(
+              context: context,
+              text: 'Sale Report',
+            ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.picture_as_pdf),
+        backgroundColor: AppColors.PrimaryBase,
+        onPressed: () {
 
+          print('button Pressed');
+          if(context.read<VendorSaleReportBloc>().state.displayModels.isNotEmpty) {
+            PDF pdf = PDF();
+            pdf.generateSalesReport(
+                orderModels:
+                context
+                    .read<VendorSaleReportBloc>()
+                    .state
+                    .displayModels,
+                fromDate: context
+                    .read<VendorSaleReportBloc>()
+                    .state
+                    .fromDate,
+                toDate: context
+                    .read<VendorSaleReportBloc>()
+                    .state
+                    .toDate,
+                userModel: context
+                    .read<VendorSaleReportBloc>()
+                    .userModel);
+          }else{
+            showSnackBar(context, Exception('You have no orders'));
+          }
+        },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.picture_as_pdf),
-      //   backgroundColor: AppColors.PrimaryBase,
-      //   onPressed: (){
-      //     PDF pdf=PDF();
-      //     pdf.generate(context.read<VendorSaleReportBloc>().state.displayModels);
-      //   },
-      // ),
       body: BlocListener<VendorSaleReportBloc, VendorSaleReportState>(
         listener: (context, state) async {
           if (state.pageScrollStatus is ScrollToTopStatus) {
@@ -96,7 +118,8 @@ class _VendorSaleReportViewState extends State<VendorSaleReportView> {
                     children: [
                       Expanded(
                           child: Text(
-                             'From\t'+ getDateString(state
+                              'From\t' +
+                                  getDateString(state
                                       .fromDate.millisecondsSinceEpoch
                                       .toString()) +
                                   '\t to\t' +

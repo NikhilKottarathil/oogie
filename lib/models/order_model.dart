@@ -4,8 +4,9 @@ class OrderModel {
   String id, name, date;
   double total;
   List<ProductModel>products;
-  String state;
+  String deliveryState;
   String deliveryType;
 
-  OrderModel({this.name, this.id, this.date, this.total,this.products,this.state,this.deliveryType});
+
+  OrderModel({this.name, this.id, this.date, this.total,this.products,this.deliveryState,this.deliveryType});
 }

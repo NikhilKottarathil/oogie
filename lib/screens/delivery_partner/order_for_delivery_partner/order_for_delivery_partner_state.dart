@@ -2,7 +2,7 @@ import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/models/order_model.dart';
 import 'package:oogie/models/product_model.dart';
 
-class OrderByCreatorState {
+class OrderByDeliveryPartnerState {
   List<OrderModel> orderModels = [];
   List<OrderModel> returnOrderModels = [];
   PageScrollStatus pageScrollStatus;
@@ -13,7 +13,7 @@ class OrderByCreatorState {
   DateTime orderFromDate, orderToDate,returnFromDate,returnToDate;
 
 
-  OrderByCreatorState(
+  OrderByDeliveryPartnerState(
       {this.orderModels,
       this.returnOrderModels,
       this.pageScrollStatus = const InitialScrollStatus(),
@@ -23,7 +23,7 @@ class OrderByCreatorState {
         this.orderFromDate,this.orderToDate,this.isLoading,
         this.returnFromDate,this.returnToDate});
 
-  OrderByCreatorState copyWith({
+  OrderByDeliveryPartnerState copyWith({
     var orderModels,
     var returnOrderModels,
     var productIDs,
@@ -34,7 +34,7 @@ class OrderByCreatorState {
     int currentPageIndex,
     DateTime orderFromDate, orderToDate,returnFromDate,returnToDate,
   }) {
-    return OrderByCreatorState(
+    return OrderByDeliveryPartnerState(
       orderModels: orderModels ?? this.orderModels,
       returnOrderModels: returnOrderModels ?? this.returnOrderModels,
       pageScrollStatus: pageScrollStatus ?? this.pageScrollStatus,

@@ -24,6 +24,13 @@ showSearchAppBar({BuildContext buildContext}) async {
           }
           return AppBar(
             backgroundColor: Colors.transparent,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: (){
+                FocusScope.of(context).unfocus();
+                Navigator.of(context).pop();
+              },
+            ),
             title: Padding(
               padding: const EdgeInsets.only(top: 6.0, bottom: 6),
               child: Material(
@@ -37,6 +44,7 @@ showSearchAppBar({BuildContext buildContext}) async {
                     Navigator.pop(context);
                     print('saved $value');
                   },
+                  autofocus: true,
                   controller: textEditingController,
                   onChanged: (text) {
                     context

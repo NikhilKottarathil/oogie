@@ -12,6 +12,7 @@ import 'package:oogie/screens/common/products/product_filter/filter_and_sort.dar
 import 'package:oogie/screens/common/products/product_filter/product_filter_bloc.dart';
 import 'package:oogie/screens/common/products/product_filter/product_filter_event.dart';
 import 'package:oogie/screens/common/products/product_filter/product_filter_state.dart';
+import 'package:oogie/screens/common/products/product_filter/search_app_bar.dart';
 
 class ProductFilterView extends StatefulWidget {
   @override
@@ -24,26 +25,33 @@ class _ProductFilterViewState extends State<ProductFilterView> {
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
+        print('inside condition');
         context.read<ProductFilterBloc>().add(FetchMoreData());
       }
     });
-    // if( context.read<ProductFilterBloc>().state.titleText=='search'){
-    //   showSearchAppBar(buildContext: context);
-    // }
+    Future.delayed(Duration(milliseconds: 1)).then((value) {
+      if( context.read<ProductFilterBloc>().state.parentPage=='search'){
+        showSearchAppBar(buildContext: context);
+      }
+
+    });
+    // showSearchAppBar(buildContext: context);
+
   }
 
   @override
-  Widget build(BuildContext buildContext) {
+  Widget build(BuildContext context) {
     print('flilter buildinggg 111');
 
     return Scaffold(
       appBar: teritiaryAppBar(
           buildContext: context,
-          title: context.read<ProductFilterBloc>().state.titleText),
+          title: ''),
       body: BlocListener<ProductFilterBloc, ProductFilterState>(
         listener: (context, state) async {
           if (state.pageScrollStatus is ScrollToTopStatus) {
@@ -63,56 +71,57 @@ class _ProductFilterViewState extends State<ProductFilterView> {
             builder: (context, state) {
           print(state.productModels.length);
 
-          return SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12, bottom: 12, left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Search Results:',
-                        style: TextStyles.displayMedium,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          filterAndSort(buildContext: context);
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 16, right: 16, top: 8, bottom: 8),
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: AppColors.BorderDefault),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset('icons/filter.svg'),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Filter',
-                                style: TextStyles.smallMedium,
-                              )
-                            ],
-                          ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 12, bottom: 12, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    context.read<ProductFilterBloc>().state.titleText!=''?Text(
+                      context.read<ProductFilterBloc>().state.titleText+" :",
+                      style: TextStyles.displayMedium,
+                    ):Container(),
+                    InkWell(
+                      onTap: () {
+                        filterAndSort(buildContext: context);
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 16, right: 16, top: 8, bottom: 8),
+                        decoration: BoxDecoration(
+                            border:
+                            Border.all(color: AppColors.BorderDefault),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset('icons/filter.svg'),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'Filter',
+                              style: TextStyles.smallMedium,
+                            )
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                GridView.builder(
-                  // physics: NeverScrollableScrollPhysics(),
+              ),
+
+              Flexible(
+                child: GridView.builder(
+                  controller: scrollController,
+
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.7,
@@ -120,20 +129,20 @@ class _ProductFilterViewState extends State<ProductFilterView> {
                       mainAxisSpacing: 15),
                   shrinkWrap: true,
                   padding: EdgeInsets.all(20),
-                  physics: NeverScrollableScrollPhysics(),
+                  // physics: NeverScrollableScrollPhysics(),
                   itemCount: state.productModels.length,
                   itemBuilder: (BuildContext context, int index) {
                     return VerticalProductAdapter(state.productModels[index]);
                   },
                 ),
-                state.isLoading
-                    ? Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: CustomProgressIndicator(),
-                      )
-                    : Container(),
-              ],
-            ),
+              ),
+              state.isLoading
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: CustomProgressIndicator(),
+                    )
+                  : Container(),
+            ],
           );
         }),
       ),

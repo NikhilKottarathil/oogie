@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/constants/app_data.dart';
+import 'package:oogie/flavour_config.dart';
 import 'package:oogie/models/product_model.dart';
 import 'package:oogie/repository/product_repository.dart';
 import 'package:oogie/screens/common/products/product/product_event.dart';
@@ -23,8 +24,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     getProductData(productId);
   }
 
-  getRelatedProducts() async {
-    var relatedProducts = await productRepository.getProducts(1, 4, 'home');
+  getRelatedProducts({String categoryId}) async {
+    var relatedProducts = await productRepository.getProductsByFilter(categoryId: categoryId,page: 1,rowsPerPage: 4);
     add(UpdateRelatedProducts(productModels: relatedProducts));
   }
 
@@ -38,8 +39,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     print('inter');
     ProductModel productModel =
         await productRepository.getDetailsOfSelectedProduct(id);
-    add(UpdateProductData(productModel: productModel));
-    getRelatedProducts();
+    bool isViewOnly=!(FlavorConfig().flavorValue=='user' && productModel.creatorId!=AppData().userId);
+    add(UpdateProductData(productModel: productModel,isViewOnly: isViewOnly));
+    getRelatedProducts(categoryId:productModel.categoryId);
     getProductReviews();
   }
 
@@ -78,6 +80,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           productModel: event.productModel,
           isLoading: false,
           variantProductId: event.productModel.id,
+          // isViewOnly: event.isViewOnly,
+          isViewOnly: false,
           variantProductName: event.productModel.displayName);
     } else if (event is CheckProductVariant) {
       print('step 0');
@@ -107,8 +111,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     } else if (event is AddProductToCart) {
       if (AppData().isUser) {
         try {
+          print('product is used ${state.productModel.isUsedProduct}');
           await productRepository.addNewProductToCart(
-              cartType: 'new', noOfItem: 1, productId: event.id);
+              cartType: state.productModel.isUsedProduct?'used':'new', noOfItem: 1, productId: event.id);
           state.productModel.isAddedToCart = true;
           yield state.copyWith();
         } catch (e) {

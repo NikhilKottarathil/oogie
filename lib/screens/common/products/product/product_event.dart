@@ -16,8 +16,9 @@ class CheckProductVariant extends ProductEvent {
 
 class UpdateProductData extends ProductEvent {
   ProductModel productModel;
+  bool isViewOnly;
 
-  UpdateProductData({this.productModel});
+  UpdateProductData({this.productModel,this.isViewOnly});
 }
 
 class UpdateRelatedProducts extends ProductEvent {

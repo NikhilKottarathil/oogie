@@ -1,0 +1,25 @@
+import 'package:oogie/constants/home_status.dart';
+
+class UsedPhoneHomeState {
+  int notificationCount;
+  int tabIndex;
+  final HomeStatus homeStatus;
+
+  UsedPhoneHomeState({
+    this.notificationCount = 0,
+    this.tabIndex = 0,
+    this.homeStatus = const InitialStatus(index: 0),
+  });
+
+  UsedPhoneHomeState copyWith({
+    int notificationCount,
+    int tabIndex,
+    HomeStatus homeStatus,
+  }) {
+    return UsedPhoneHomeState(
+      notificationCount: notificationCount ?? this.notificationCount,
+      tabIndex: tabIndex ?? this.tabIndex,
+      homeStatus: homeStatus ?? this.homeStatus,
+    );
+  }
+}

@@ -6,19 +6,19 @@ import 'package:oogie/constants/styles.dart';
 import 'package:oogie/flavour_config.dart';
 import 'package:oogie/models/user_model.dart';
 import 'package:oogie/router/app_router.dart';
+import 'package:oogie/screens/common/order/delivery_orders/delivery_orders_bloc.dart';
+import 'package:oogie/screens/common/order/delivery_orders/delivery_orders_view.dart';
 import 'package:oogie/screens/common/vendor_sale_report/vendor_sale_report_bloc.dart';
 import 'package:oogie/screens/common/vendor_sale_report/vendor_sale_report_view.dart';
 
 import 'package:oogie/screens/explore/menu_drawer.dart';
-import 'package:oogie/screens/vendor/order_by_creator/order_by_creator_bloc.dart';
-import 'package:oogie/screens/vendor/order_by_creator/order_by_creator_view.dart';
+
 import 'package:oogie/screens/vendor/product_list_by_creator/product_list_by_creator_bloc.dart';
 import 'package:oogie/screens/vendor/product_list_by_creator/product_list_by_creator_view.dart';
 import 'package:oogie/screens/vendor/vendor_home/vendor_home_bloc.dart';
 import 'package:oogie/screens/vendor/vendor_home/vendor_home_events.dart';
 import 'package:oogie/screens/vendor/vendor_home/vendor_home_state.dart';
 
-import 'package:oogie/router/app_router.dart';
 class VendorHomeView extends StatefulWidget {
   @override
   _VendorHomeViewState createState() => _VendorHomeViewState();
@@ -39,16 +39,16 @@ class _VendorHomeViewState extends State<VendorHomeView>
         create: (context) => ProductListByCreatorBloc(
             productRepository: productRepository, parentPage: 'vendorHome')),
       BlocProvider(
-        create: (context) => OrderByCreatorBloc(
-            orderRepository: orderRepository),
-        child: OrderByCreatorView(),
+        create: (context) => DeliveryOrdersBloc(
+            orderRepository: orderRepository,parentPage: 'vendorOrders'),
+        child: DeliveryOrdersView(),
       ),
        BlocProvider(
               create: (context) => VendorSaleReportBloc(
                   distributorRepository: distributorRepository,
                   parentPage: 'vendorHome',
                  orderRepository: orderRepository,
-                  userModel: UserModel(id: AppData().userId,userType: FlavorConfig().flavorValue)),
+                  userModel: UserModel(id: AppData().userId,userType: FlavorConfig().flavorValue,name: AppData().userName)),
               child: VendorSaleReportView(),
             ),
 

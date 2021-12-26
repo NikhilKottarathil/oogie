@@ -12,6 +12,7 @@ class ProductState {
   String variantProductId;
   String variantProductName;
   Exception actionErrorMessage;
+  bool isViewOnly;
 
   ProductState({
     this.productModel,
@@ -23,6 +24,7 @@ class ProductState {
     this.variantProductId,
     this.variantProductName,
     this.actionErrorMessage,
+    this.isViewOnly=false,
     this.isLoading = false,
   });
 
@@ -38,6 +40,7 @@ class ProductState {
     String variantProductName,
     Exception actionErrorMessage,
     bool isProductAddedToCart,
+    bool isViewOnly,
   }) {
     return ProductState(
       productModel: productModel ?? this.productModel,
@@ -50,6 +53,7 @@ class ProductState {
       variantProductId: variantProductId ?? this.variantProductId,
       variantProductName: variantProductName ?? this.variantProductName,
       actionErrorMessage: actionErrorMessage ?? this.actionErrorMessage,
+      isViewOnly: isViewOnly ?? this.isViewOnly,
     );
   }
 }

@@ -14,8 +14,9 @@ class _BuyAndSellViewState extends State<BuyAndSellView> {
     var height = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => UsedPhonesList()));
+        Navigator.pushNamed(
+            context, '/productFilter', arguments: {
+          'parentPage': 'usedProduct',});
       },
       child: Container(
         height: height * .35,

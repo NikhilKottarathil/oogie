@@ -83,13 +83,15 @@ class ProductByCreatorAdapter extends StatelessWidget {
                         MaterialPageRoute(
                         builder: (_) => BlocProvider(
                       create: (_) => AddProductBloc(
-                          productId: productModel.id,
+                          productIdOld: productModel.id,
                           productListByCreatorBloc: context
                               .read<ProductListByCreatorBloc>(),
                           productRepository: context
                               .read<ProductListByCreatorBloc>()
                               .productRepository,
-                          parentPage: 'productListByCreator'),
+                          parentPage:context
+                              .read<ProductListByCreatorBloc>()
+                              .parentPage),
                       child: AddProductView1(),
                     ),
                     ));

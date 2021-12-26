@@ -142,9 +142,10 @@ class ProfileRepository {
     try {
       var body =
           await getDataRequest(address: 'vendors/by_location/$locationId');
-      if (body['Vendors'] != null) {
+      print(body);
+      if (body['Vendor'] != null) {
         shopModels.clear();
-        body['Vendors'].forEach((element) {
+        body['Vendor'].forEach((element) {
           shopModels.add(
               ShopModel(id: element['id'].toString(), name: element['name']));
         });
@@ -153,7 +154,8 @@ class ProfileRepository {
         throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
-      throw AppExceptions().serverException;
+      print(e);
+      throw e;
     }
   }
 
@@ -279,10 +281,14 @@ class ProfileRepository {
         }
         return addressModels;
       } else {
-        throw AppExceptions().somethingWentWrong;
+        if (body['message'] != null) {
+          throw Exception(body['message']);
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
       }
     } catch (e) {
-      throw AppExceptions().serverException;
+      throw e;
     }
   }
 }

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/category_adapter.dart';
 import 'package:oogie/adapters/horizontal_product_view.dart';
 import 'package:oogie/adapters/vertical_product_view.dart';
+import 'package:oogie/components/advertisement_view.dart';
 import 'package:oogie/components/app_bar/main_appbar.dart';
 import 'package:oogie/screens/explore/explore/explore_bloc.dart';
 import 'package:oogie/screens/explore/explore/explore_state.dart';
 import 'package:oogie/screens/explore/menu_drawer.dart';
 import 'package:oogie/special_components/image_slider.dart';
+import 'package:oogie/views/buy_and_sell_view.dart';
 
 class ExploreView extends StatelessWidget {
   @override
@@ -31,6 +33,7 @@ class ExploreView extends StatelessWidget {
                     height: 92,
                     child: BlocBuilder<ExploreBloc, ExploreState>(
                       builder: (context, state) {
+
                         return ListView.builder(
                             itemCount: state.categoryModels.length,
                             scrollDirection: Axis.horizontal,
@@ -39,7 +42,7 @@ class ExploreView extends StatelessWidget {
                                 onTap: () {
                                   Navigator.pushNamed(
                                       context, '/productFilter', arguments: {
-                                    'parentPage': 'exploreCategory',
+                                    'parentPage': 'category',
                                     'categoryId': state.categoryModels[index].id
                                   });
                                 },
@@ -53,30 +56,43 @@ class ExploreView extends StatelessWidget {
                   ),
                 ),
                 // BuyAndSellView(),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: CarouselWithIndicatorDemo(),
-                ),
+                BlocBuilder<ExploreBloc, ExploreState>(
+                    builder: (context, state) {
+                  return Visibility(
+                    visible: state.advertisementModels.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: AdvertisementView(
+                          advertisementModels: state.advertisementModels),
+                    ),
+                  );
+                }),
+                BuyAndSellView(),
                 BlocBuilder<ExploreBloc, ExploreState>(
                   builder: (context, state) {
                     return VerticalProductView(
                         title: 'New Arrivals',
                         productModels: state.newArrivedProductModels,
                         viewAllAction: () {
-                          Navigator.pushNamed(context, '/productList',
-                              arguments: {'parentPage': 'New Arrivals'});
+                          Navigator.pushNamed(
+                              context, '/productFilter', arguments: {
+                            'parentPage': 'newlyArrivedProducts',
+                          });
                         });
                   },
                 ),
                 BlocBuilder<ExploreBloc, ExploreState>(
                   builder: (context, state) {
                     return HorizontalProductView(
-                        title: 'Featured Phones',
-                        productModels: state.featuredProductModels,
-                        viewAllAction: () {
-                          Navigator.pushNamed(context, '/productList',
-                              arguments: {'parentPage': 'Featured Phones'});
+                      title: 'Featured Phones',
+                      productModels: state.featuredProductModels,
+                      viewAllAction: () {
+                        Navigator.pushNamed(
+                            context, '/productFilter', arguments: {
+                          'parentPage': 'featuredProducts',
                         });
+                      },
+                    );
                   },
                 ),
               ],

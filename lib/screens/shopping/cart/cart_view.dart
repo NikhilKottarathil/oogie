@@ -60,83 +60,102 @@ class CartView extends StatelessWidget {
                 ),
                 body: TabBarView(
                   children: [
-                    state.newProductModels.length == 0
-                        ? Center(
-                            child: Text(
-                            'Your cart is empty',
-                            style: TextStyles.mediumMediumSubdued,
-                          ))
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: state.newProductModels.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CartAdapter(
-                                productModel: state.newProductModels[index],
-                                deleteAction: () {
-                                  removeFromCart(
-                                      buildContext: context,
-                                      productModel:
-                                          state.newProductModels[index],
-                                      index: index,
-                                      cartType: 'new');
-                                },
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                height: 20,
-                              );
-                            },
-                          ),
-                    state.usedProductModels.length == 0
-                        ? Center(
-                            child: Text(
-                            'Your cart is empty',
-                            style: TextStyles.mediumMediumSubdued,
-                          ))
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: state.usedProductModels.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CartAdapter(
-                                productModel: state.usedProductModels[index],
-                                deleteAction: () {
-                                  removeFromCart(
-                                      buildContext: context,
-                                      productModel:
-                                          state.usedProductModels[index],
-                                      index: index,
-                                      cartType: 'used');
-                                },
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                height: 20,
-                              );
-                            },
-                          ),
+                    Scaffold(
+                      body: state.newProductModels.length == 0
+                          ? Center(
+                              child: Text(
+                              'Your cart is empty',
+                              style: TextStyles.mediumMediumSubdued,
+                            ))
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.newProductModels.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CartAdapter(
+                                  productModel: state.newProductModels[index],
+                                  deleteAction: () {
+                                    removeFromCart(
+                                        buildContext: context,
+                                        productModel:
+                                            state.newProductModels[index],
+                                        index: index,
+                                        cartType: 'new');
+                                  },
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 20,
+                                );
+                              },
+                            ),
+                        bottomNavigationBar: state.newProductModels.length != 0
+                            ? DefaultButton(
+                          text: 'Proceed to Checkout',
+                          action: () {
+                            List<String> productIds = [];
+                            state.newProductModels.forEach((element) {
+                              productIds.add(element.id.toString());
+                            });
+                            Navigator.pushNamed(context, '/checkout', arguments: {
+                              'parenPage': 'cart',
+                              'productIds': productIds
+                            });
+                          },
+                        )
+                            : null
+                    ),
+                    Scaffold(
+                      body: state.usedProductModels.length == 0
+                          ? Center(
+                              child: Text(
+                              'Your cart is empty',
+                              style: TextStyles.mediumMediumSubdued,
+                            ))
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: state.usedProductModels.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CartAdapter(
+                                  productModel: state.usedProductModels[index],
+                                  deleteAction: () {
+                                    removeFromCart(
+                                        buildContext: context,
+                                        productModel:
+                                            state.usedProductModels[index],
+                                        index: index,
+                                        cartType: 'used');
+                                  },
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 20,
+                                );
+                              },
+                            ),
+                        bottomNavigationBar: state.usedProductModels.length != 0
+                            ? DefaultButton(
+                          text: 'Proceed to Checkout',
+                          action: () {
+                            List<String> productIds = [];
+                            state.usedProductModels.forEach((element) {
+                              productIds.add(element.id.toString());
+                            });
+                            Navigator.pushNamed(context, '/checkout', arguments: {
+                              'parenPage': 'cart',
+                              'productIds': productIds
+                            });
+                          },
+                        ):Container(),
+                    ),
                   ],
                 ),
-                bottomNavigationBar: state.newProductModels.length != 0
-                    ? DefaultButton(
-                        text: 'Proceed to Checkout',
-                        action: () {
-                          List<String> productIds = [];
-                          state.newProductModels.forEach((element) {
-                            productIds.add(element.id.toString());
-                          });
-                          Navigator.pushNamed(context, '/checkout', arguments: {
-                            'parenPage': 'cart',
-                            'productIds': productIds
-                          });
-                        },
-                      )
-                    : null,
+
               ),
             ),
           );

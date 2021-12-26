@@ -118,6 +118,8 @@ class OTPLoginBloc extends Bloc<OTPLoginEvent, OTPLoginState> {
         // await firebaseAuth.signInWithCustomToken(
         //     authCredentials.firebaseToken);
         AppData appData = AppData();
+        await authRepo.updateFirebaseDeviceToken();
+
         await appData.setUserDetails();
         yield state.copyWith(formStatus: SubmissionSuccess());
       } catch (e) {

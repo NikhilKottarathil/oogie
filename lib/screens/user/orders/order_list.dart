@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oogie/adapters/order_agent_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
 import 'package:oogie/components/radio_buttons.dart';
-import 'package:oogie/screens/orders/order_details.dart';
+import 'package:oogie/screens/user/orders/order_details.dart';
 
 class OrderList extends StatefulWidget {
   @override

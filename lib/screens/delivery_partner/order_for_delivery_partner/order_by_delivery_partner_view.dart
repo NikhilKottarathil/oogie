@@ -12,23 +12,22 @@ import 'package:oogie/functions/date_conversion.dart';
 import 'package:oogie/functions/date_picker_from_and_to.dart';
 import 'package:oogie/functions/show_snack_bar.dart';
 import 'package:oogie/models/product_model.dart';
-import 'package:oogie/screens/vendor/order_by_creator/order_by_creator_bloc.dart';
-import 'package:oogie/screens/vendor/order_by_creator/order_by_creator_state.dart';
-import 'package:oogie/screens/vendor/order_by_creator/order_by_creator_event.dart';
-import 'package:oogie/screens/vendor/order_by_creator/order_details_by_creator_view.dart';
+import 'package:oogie/screens/delivery_partner/order_for_delivery_partner/order_by_delivery_partner_bloc.dart';
+import 'package:oogie/screens/delivery_partner/order_for_delivery_partner/order_by_delivery_partner_event.dart';
+import 'package:oogie/screens/delivery_partner/order_for_delivery_partner/order_for_delivery_partner_state.dart';
 
-class OrderByCreatorView extends StatelessWidget {
+class OrderByDeliveryPartnerView extends StatelessWidget {
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
-      body: BlocListener<OrderByCreatorBloc, OrderByCreatorState>(
+      body: BlocListener<OrderByDeliveryPartnerBloc, OrderByDeliveryPartnerState>(
         listener: (context, state) async {
           Exception e = state.actionErrorMessage;
           if (e != null && e.toString().length != 0) {
             showSnackBar(context, e);
           }
         },
-        child: BlocBuilder<OrderByCreatorBloc, OrderByCreatorState>(
+        child: BlocBuilder<OrderByDeliveryPartnerBloc, OrderByDeliveryPartnerState>(
             builder: (context, state) {
           return Container(
             child: DefaultTabController(
@@ -95,7 +94,7 @@ class OrderByCreatorView extends StatelessWidget {
                                           context: context,
                                           fromDate: state.orderFromDate,
                                           toDate: state.orderToDate);
-                                      context.read<OrderByCreatorBloc>().add(
+                                      context.read<OrderByDeliveryPartnerBloc>().add(
                                           OrderDateSelected(
                                               fromDate: data[0],
                                               toDate: data[1]));
@@ -122,14 +121,8 @@ class OrderByCreatorView extends StatelessWidget {
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OrderDetailsByCreatorView(
-                                                      orderModel: state
-                                                          .orderModels[index],
-                                                    )));
+                                        Navigator.pushNamed(context, '/orderDetails',arguments: {'parentPage':'deliveryPartnerOrders','deliveryOrderId':state.orderModels[index].products[0].deliveryOrderId});
+
                                       },
                                       child: OrderAgentAdapter(
                                         orderModel: state.orderModels[index],
@@ -176,7 +169,7 @@ class OrderByCreatorView extends StatelessWidget {
                                           context: context,
                                           fromDate: state.returnFromDate,
                                           toDate: state.returnToDate);
-                                      context.read<OrderByCreatorBloc>().add(
+                                      context.read<OrderByDeliveryPartnerBloc>().add(
                                           OrderDateSelected(
                                               fromDate: data[0],
                                               toDate: data[1]));
@@ -203,15 +196,8 @@ class OrderByCreatorView extends StatelessWidget {
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OrderDetailsByCreatorView(
-                                                      orderModel: state
-                                                              .returnOrderModels[
-                                                          index],
-                                                    )));
+                                        Navigator.pushNamed(context, '/orderDetails',arguments: {'parentPage':'deliveryPartnerOrders','deliveryOrderId':state.returnOrderModels[index].products[0].deliveryOrderId});
+
                                       },
                                       child: OrderAgentAdapter(
                                         orderModel:
@@ -238,128 +224,4 @@ class OrderByCreatorView extends StatelessWidget {
       ),
     );
   }
-}
-
-removeFromCart(
-    {BuildContext buildContext,
-    ProductModel productModel,
-    int index,
-    String cartType}) async {
-  await showModalBottomSheet(
-      context: buildContext,
-      enableDrag: false,
-      useRootNavigator: true,
-      isScrollControlled: false,
-      // constraints: BoxConstraints(
-      //   maxHeight: MediaQuery.of(buildContext).size.height - 30,
-      // ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-      ),
-      builder: (builder) {
-        return BlocProvider.value(
-          value: buildContext.read<OrderByCreatorBloc>(),
-          child: BlocBuilder<OrderByCreatorBloc, OrderByCreatorState>(
-              builder: (context, state) {
-            return Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 64,
-                        height: 64,
-                        child: Center(
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(3.0),
-                              child: productModel.imageUrl != null
-                                  ? Image.network(productModel.imageUrl,
-                                      fit: BoxFit.scaleDown)
-                                  : SvgPicture.asset(Urls().productImage,
-                                      fit: BoxFit.scaleDown)),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Remove from cart ?',
-                            style: TextStyles.largeRegular,
-                          ),
-                          Text(
-                            productModel.displayName,
-                            style: TextStyles.smallRegularSubdued,
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Icon(
-                          Icons.close,
-                          color: AppColors.TextDefault,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              width: 1.0,
-                              color: AppColors.BorderDefault,
-                              style: BorderStyle.solid,
-                            ),
-                          ),
-                          onPressed: () {
-                            buildContext.read<OrderByCreatorBloc>().add(
-                                RemoveProductFromCart(
-                                    cartType: cartType, index: index));
-                            Navigator.of(context).pop();
-                          },
-                          child: Padding(
-                              padding: EdgeInsets.all(14),
-                              child: Text(' Delete ',
-                                  style: TextStyles.smallMedium))),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: AppColors.PrimaryBase),
-                          child: Padding(
-                              padding: EdgeInsets.all(14),
-                              child: Text(
-                                'Move to Wishlist',
-                                style: TextStyles.smallMediumWhite,
-                              )),
-                          onPressed: () {
-                            buildContext.read<OrderByCreatorBloc>().add(
-                                MoveProductToWishList(
-                                    cartType: cartType, index: index));
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            );
-          }),
-        );
-      });
 }

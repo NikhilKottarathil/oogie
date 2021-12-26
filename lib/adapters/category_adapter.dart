@@ -14,17 +14,18 @@ class CategoryAdapter extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 8, top: 8, bottom: 8),
       height: 92,
-      width: 75,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 22,
-            backgroundColor: AppColors.White,
-            child: categoryModel.imageUrl != null
-                ? Image.network(categoryModel.imageUrl)
-                : SvgPicture.asset(Urls().categoryImage),
+          ClipOval(
+            child: CircleAvatar(
+              radius: 22,
+              backgroundColor: AppColors.White,
+              child: categoryModel.imageUrl != null
+                  ? Image.network(categoryModel.imageUrl)
+                  : SvgPicture.asset(Urls().categoryImage),
+            ),
           ),
           SizedBox(
             height: 5,

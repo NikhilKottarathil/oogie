@@ -1,6 +1,7 @@
 import 'package:oogie/models/category_model.dart';
 import 'package:oogie/models/filter_model.dart';
 import 'package:oogie/models/product_model.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ProductFilterEvent {}
 
@@ -56,6 +57,10 @@ class MaximumPriceChanged extends ProductFilterEvent {
 }
 
 class FetchMoreData extends ProductFilterEvent {}
+class PriceRangeValuesChanged extends ProductFilterEvent {
+  SfRangeValues sfRangeValues;
+  PriceRangeValuesChanged({this.sfRangeValues});
+}
 
 class LikeAndUnLikeProduct extends ProductFilterEvent {
   int index;

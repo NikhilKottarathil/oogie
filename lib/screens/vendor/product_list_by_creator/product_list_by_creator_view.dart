@@ -99,13 +99,13 @@ class _ProductListByCreatorViewState extends State<ProductListByCreatorView> {
             MaterialPageRoute(
               builder: (_) => BlocProvider(
                 create: (_) => AddProductBloc(
-                    productId: null,
+                    productIdOld: null,
                     productListByCreatorBloc: context
                         .read<ProductListByCreatorBloc>(),
                     productRepository: context
                         .read<ProductListByCreatorBloc>()
                         .productRepository,
-                    parentPage: 'productListByCreator'),
+                    parentPage: context.read<ProductListByCreatorBloc>().parentPage),
                 child: AddProductView0(),
               ),
             ),

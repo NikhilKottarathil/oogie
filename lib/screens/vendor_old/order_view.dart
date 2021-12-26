@@ -52,7 +52,7 @@ class _OrderViewState extends State<OrderView> {
                         dividerDefault,
                         SizedBox(
                           child: StepperVertical(
-                            index: 0,
+
                             isEditable: true,
                           ),
                           height: 400,

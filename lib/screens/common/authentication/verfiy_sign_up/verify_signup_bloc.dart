@@ -101,6 +101,7 @@ class VerifySignUpBloc extends Bloc<VerifySignUpEvent, VerifySignUpState> {
             phoneNumber: authCredentials.phoneNumber);
 
         firebaseAuth.signInWithCustomToken(signupCredentials.firebaseToken);
+        await authRepo.updateFirebaseDeviceToken();
 
         yield state.copyWith(formStatus: SubmissionSuccess());
       } catch (e) {

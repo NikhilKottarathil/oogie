@@ -633,7 +633,7 @@ class _OogieStepperState extends State<OogieStepper>
               child: SizedBox(
                 width: _isLast(index) ? 0.0 : 1.0,
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: AppColors.PrimaryLighter,
                 ),
               ),
             ),

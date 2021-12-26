@@ -6,15 +6,19 @@ import 'package:oogie/models/key_value_radio_model.dart';
 import 'package:oogie/repository/product_repository.dart';
 import 'package:oogie/screens/common/products/product_filter/product_filter_event.dart';
 import 'package:oogie/screens/common/products/product_filter/product_filter_state.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ProductFilterBloc extends Bloc<ProductFilterEvent, ProductFilterState> {
   ProductRepository productRepository;
   String parentPage;
   String parentCategoryId;
+  bool isUsedProduct=false;
+  String parentAdvertisementId;
+  String advertisementId;
 
   ProductFilterBloc(
       {@required this.productRepository,
-      @required this.parentPage,
+      @required this.parentPage,this.parentAdvertisementId,
       this.parentCategoryId})
       : super(ProductFilterState(
             productModels: [],
@@ -23,26 +27,53 @@ class ProductFilterBloc extends Bloc<ProductFilterEvent, ProductFilterState> {
             categoryModels: [],
             titleText: '',
             searchString: '',
-            minimumPrice: '',
-            maximumPrice: '',
+            // minimumPrice: '0',
+            // maximumPrice: '1000',
             sortFilter: sortingFilterDefault,
-            ratingFilter: ratingFilterDefault)) {
+            ratingFilter: ratingFilterDefault,
+  sfRangeValues: SfRangeValues(0.0,100000.0))) {
+    //parent pages= category,search,usedProducts,searchThen,featuredProducts,newlyArrivedProducts,advertisement
     state.parentPage = parentPage;
-    if (parentPage == 'search') {
-      state.titleText = parentPage;
-    }
     getAllCategories();
 
-    if (parentPage == 'exploreCategory') {
+    if (state.parentPage == 'search') {
+      state.titleText = 'Search Results';
+    }
+    if (state.parentPage == 'category') {
       state.selectedCategoryId = parentCategoryId;
-      getProducts();
+      getInitialProducts();
+
+    }
+    if(state.parentPage=='usedProduct'){
+      isUsedProduct=true;
+      state.titleText = 'Used Phones';
+      getInitialProducts();
+
+    }
+    if(state.parentPage=='newlyArrivedProducts'){
+      state.titleText = 'Newly Arrived';
+      state.sortFilter.values.every((element) => element.isSelected=false);
+      state.sortFilter.values[0].isSelected=true;
+      getInitialProducts();
+    }
+    if(state.parentPage=='featuredProducts'){
+      state.titleText = 'Featured Products';
+      state.sortFilter.values.every((element) => element.isSelected=false);
+
+      state.sortFilter.values[1].isSelected=true;
+      getInitialProducts();
+    }
+    if(state.parentPage=='advertisement'){
+      state.titleText = 'Offers';
+      advertisementId=parentAdvertisementId;
+      getInitialProducts();
     }
   }
 
   getAllCategories() async {
     List<CategoryModel> categoryModels =
         await productRepository.getCategories();
-    if (parentPage == 'exploreCategory') {
+    if (state.parentPage == 'category') {
       String titleText = categoryModels
           .singleWhere((element) => element.id == parentCategoryId)
           .name;
@@ -54,7 +85,7 @@ class ProductFilterBloc extends Bloc<ProductFilterEvent, ProductFilterState> {
     }
   }
 
-  getFilters({String categoryId}) async {
+  getFiltersOfSelectedCategory({String categoryId}) async {
     state.filterModels.clear();
     List<FilterModel> filterModels = await productRepository
         .getFiltersOfSelectedCategory(categoryId: categoryId);
@@ -65,31 +96,40 @@ class ProductFilterBloc extends Bloc<ProductFilterEvent, ProductFilterState> {
     add(UpdatedFilters(filterModels: filterModels));
   }
 
-  getProducts() async {
+  getInitialProducts() async {
     state.productModels.clear();
     state.productIDs.clear();
+
     state.page = 1;
-    var productModels = await productRepository.getProductsByFilter(
-        categoryId: state.selectedCategoryId);
-    add(UpdatedList(productModels: productModels));
+    if(state.parentPage=='search'|| state.parentPage=='searchThen'){
+      state.filterModels.clear();
+      state.selectedCategoryId = null;
+      getSearchProducts();
+    }else{
+      getFilterProducts();
+    }
   }
 
   getMoreProducts() async {
-    state.page = state.page + 1;
-    var productModels =
-        await productRepository.getProducts(state.page, 10, parentPage);
-    add(UpdatedList(productModels: productModels));
+    state.page=state.page+1;
+    if(state.parentPage=='search'|| state.parentPage=='searchThen'){
+      getSearchProducts();
+    }else{
+      getFilterProducts();
+    }
   }
 
   getFilterProducts() async {
-    state.page = 0;
-    String rating = state.ratingFilter.values
-        .singleWhere((element) => element.isSelected,
-            orElse: () => state.ratingFilter.values[3])
-        .value;
+    String rating ;
+    if(state.ratingFilter.values.any((element) => element.isSelected)){
+     rating= state.ratingFilter.values
+          .singleWhere((element) => element.isSelected,
+          orElse: () => state.ratingFilter.values[state.ratingFilter.values.length-1])
+          .value;
+    }
     String sort = state.sortFilter.values
         .singleWhere((element) => element.isSelected,
-            orElse: () => state.ratingFilter.values[0])
+            orElse: () => state.sortFilter.values[0])
         .value;
     List<Map<String, String>> filters = [];
     state.filterModels.forEach((filterModel) {
@@ -103,83 +143,84 @@ class ProductFilterBloc extends Bloc<ProductFilterEvent, ProductFilterState> {
           }
         }
       });
-      filters.add({'product_attribute_id': filterModel.id, 'value': values});
+      if(values.isNotEmpty){
+        filters.add({'product_attribute_id': filterModel.id, 'value': values});
+      }
     });
-    // print('fjkdgh ');
-    // print(state.page);
-    // print(rating);
-    // print(sort);
+
     print(filters);
-    // print(state.selectedCategoryId);
-    // print(state.minimumPrice.isNotEmpty ? state.minimumPrice : null);
-    //
+
 
     var productModels = await productRepository.getProductsByFilter(
       page: state.page,
-      rowsPerPage: 10,
+      rowsPerPage: 6,
       rating: rating,
       sort: sort,
       filters: filters,
       categoryId: state.selectedCategoryId,
-      minPrice: state.minimumPrice.isNotEmpty ? state.minimumPrice : null,
-      maxPrice: state.maximumPrice.isNotEmpty ? state.maximumPrice : null,
+      minPrice: state.sfRangeValues.start,
+      maxPrice: state.sfRangeValues.end,
+      advertisementId: advertisementId,
+      isUsedProduct: state.parentPage=='usedProduct'
     );
+    add(UpdatedList(productModels: productModels));
+
   }
 
   getSearchProducts() async {
+    advertisementId=null;
     var data = await productRepository.getProductBySearch(
-        searchString: state.searchString, page: state.page, rowsPerPage: 10);
-    state.filterModels.clear();
-    state.selectedCategoryId = null;
-    state.productModels.clear();
+        searchString: state.searchString, page: state.page, rowsPerPage: 6);
+
     add(UpdatedList(productModels: data[1]));
   }
 
   @override
   Stream<ProductFilterState> mapEventToState(ProductFilterEvent event) async* {
-    print('event came');
     if (event is UpdatedList) {
-      print('1111111');
 
       yield state.copyWith(
-          productModels: state.productModels + event.productModels);
+          productModels: state.productModels + event.productModels,isLoading: false);
     } else if (event is UpdatedCategories) {
-      print('11111112');
 
       yield state.copyWith(
           categoryModels: event.categoryModels, titleText: event.titleText);
     } else if (event is CategorySelected) {
-      print('11111113');
 
       String categoryName = state.categoryModels
           .singleWhere((element) => element.id == event.categoryId)
           .name;
-      getFilters(categoryId: event.categoryId);
+      getFiltersOfSelectedCategory(categoryId: event.categoryId);
       yield state.copyWith(
           selectedCategoryId: event.categoryId, titleText: categoryName);
     } else if (event is UpdatedFilters) {
-      print('11111114');
 
       yield state.copyWith(filterModels: event.filterModels);
     } else if (event is FilterApplied) {
-      print('11111115');
 
-      getFilterProducts();
+      getInitialProducts();
     } else if (event is MinimumPriceChanged) {
-      print('minimuum price changed');
       yield state.copyWith(minimumPrice: event.minimumPrice);
     } else if (event is MaximumPriceChanged) {
-      print('111111126');
+
 
       yield state.copyWith(maximumPrice: event.maximumPrice);
+    } else if (event is FetchMoreData) {
+
+      yield state.copyWith(isLoading: true);
+
+     getMoreProducts();
     } else if (event is SearchTextChanged) {
-      print('11111117');
 
       yield state.copyWith(searchString: event.searchString);
     } else if (event is SearchSubmitted) {
-      print('11111118');
 
-      getSearchProducts();
+
+      getInitialProducts();
+      yield state.copyWith(titleText: 'Search Results');
+    } else if (event is PriceRangeValuesChanged) {
+      yield state.copyWith(sfRangeValues: event.sfRangeValues);
+
     }
   }
 }
@@ -212,6 +253,10 @@ FilterModel sortingFilterDefault =
   KeyValueRadioModel(
     key: 'Newest First',
     value: 'newest_first',
+    isSelected: false,
+  ),KeyValueRadioModel(
+    key: 'Featured',
+    value: 'featured_product',
     isSelected: false,
   ),
   KeyValueRadioModel(

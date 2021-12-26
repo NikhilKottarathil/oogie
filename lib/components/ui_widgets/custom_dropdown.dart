@@ -8,12 +8,14 @@ class CustomDropdown extends StatefulWidget {
   final items;
   final titleText;
   final StringCallback callback;
+  var action;
 
   CustomDropdown({
     Key key,
     this.selected,
     this.titleText,
     this.callback,
+    this.action,
     this.items,
   }) : super(key: key);
 
@@ -69,11 +71,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
                   color: Colors.transparent,
                 ),
                 onChanged: (String newValue) {
-                  setState(() {
-                    widget.selected = newValue;
-                    widget.callback(newValue);
-                  });
-                },
+
+                        setState(() {
+                          widget.selected = newValue;
+                          widget.action != null
+                              ? widget.action(newValue)
+                              : widget.callback(newValue);
+                        });
+                      },
                 items:
                     widget.items.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(

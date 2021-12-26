@@ -427,15 +427,29 @@ class TextStyles {
       height: 1.33,
       fontFamily: 'DMSerifDisplay',
       fontWeight: FontWeight.w400);
+
+  static const TextStyle mediumRegularCriticalBase = const TextStyle(
+      fontSize: 18,
+      color: AppColors.CriticalBase,
+      height: 1,
+      fontFamily: 'DMSans',
+      fontWeight: FontWeight.w400);
+  static const TextStyle mediumRegularGreenBase = const TextStyle(
+      fontSize: 18,
+      color: AppColors.GreenBase,
+      height: 1,
+      fontFamily: 'DMSans',
+      fontWeight: FontWeight.w400);
 }
 
 const edgePadding = const EdgeInsets.all(20);
 const dividerDefault = const Divider(
   thickness: 1,
   color: AppColors.DividerBase,
-);const dividerDefault2 = const Divider(
+);
+const dividerDefault2 = const Divider(
   thickness: 0.1,
-  color:  AppColors.InkLighter,
+  color: AppColors.InkLighter,
 );
 const rupeesString = '\u{20B9}';
 

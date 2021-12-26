@@ -1,22 +1,27 @@
 import 'package:oogie/models/attribute_model.dart';
 import 'package:oogie/models/key_value_radio_model.dart';
+import 'package:oogie/models/order_model.dart';
 
 class ProductModel {
   String id,
       name,
       unitPrice,
+      offerPrice,
+      price,
       discountedPrice,
       discountPercentage,
       brandName,
       brandId,
       description,
       imageUrl,
-  modelId,
-  unitOfMeasureId,
+      modelId,
+      unitOfMeasureId,
       displayName,
       rating,
       ratingCount,
-      reviewCount,categoryId;
+      reviewCount,
+      categoryId,
+      creatorId;
   bool isAddedToCart;
   bool isInWishList;
   List<String> medias = [];
@@ -28,20 +33,31 @@ class ProductModel {
   List<SpecificationModel> specificationModels = [];
   List<String> highlights;
   List<KeyValueRadioModel> attributeLines;
+  String deliveryState;
+  String deliveryOrderId;
+  bool isUsedProduct;
 
-  int       qtyAvailable;
-      ProductModel(
+  int qtyAvailable;
+  String userRole;
+
+  ProductModel(
       {this.medias,
       this.highlights,
+      this.creatorId,
+      this.deliveryState,
+      this.offerPrice,
+      this.price,
+      this.deliveryOrderId,
+      this.isUsedProduct,
       this.totalPrice,
-        this.categoryId,
-        this.unitOfMeasureId,
-        this.modelId,
+      this.categoryId,
+      this.unitOfMeasureId,
+      this.modelId,
       this.cartId,
       this.wishListId,
-        this.attributeLines,
+      this.attributeLines,
       this.isInWishList,
-        this.qtyAvailable,
+      this.qtyAvailable,
       this.qty,
       this.specificationModels,
       this.variants,
@@ -59,6 +75,7 @@ class ProductModel {
       this.reviewCount,
       this.isAddedToCart,
       this.ratingCount,
+        this.userRole,
       this.rating});
 }
 

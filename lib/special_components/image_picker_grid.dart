@@ -7,68 +7,69 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/special_components/image_picking.dart';
 
-class ImagePickerGrid extends StatefulWidget {
-  @override
-  _ImagePickerGridState createState() => _ImagePickerGridState();
-}
-
-class _ImagePickerGridState extends State<ImagePickerGrid> {
+class ImagePickerGrid extends StatelessWidget {
   List<File> imageFiles = [];
-  var image2AspectRatio;
+  var action;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    image2AspectRatio = Platform.isAndroid
-        ? [
-            CropAspectRatioPreset.square,
-          ]
-        : [CropAspectRatioPreset.square];
+  ImagePickerGrid({this.imageFiles,this.action});
 
-    File file;
-    for (int i = 0; i < 3; i++) {
-      imageFiles.add(file);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        itemCount: 3,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8),
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () async {
-              imageFiles[index] = await pickImage(
-                  context: context,
-                  aspectRatios: image2AspectRatio,
-                  imageFile: imageFiles[index]);
-              setState(() {});
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  border: imageFiles[index] == null
-                      ? Border.all(color: AppColors.BorderDefault)
-                      : null,
-                  borderRadius: BorderRadius.circular(8)),
-              child: Center(
-                child: imageFiles[index] == null
-                    ? SvgPicture.asset(
-                        'icons/aperture.svg',
-                        height: 28,
-                        width: 28,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.file(
-                        imageFiles[index],
-                        fit: BoxFit.cover,
-                      ),
+    return Wrap(
+      children: [
+        Wrap(
+          children: List.generate(imageFiles.length, (index) {
+            return InkWell(
+              onTap: () async {
+                action(index);
+              },
+              child: Container(
+                height: 100,
+                  width: 100,
+                margin: EdgeInsets.only(right: 6),
+                decoration: BoxDecoration(
+                    border: imageFiles[index] == null
+                        ? Border.all(color: AppColors.BorderDefault)
+                        : null,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Center(
+                  child: imageFiles[index] == null
+                      ? SvgPicture.asset(
+                          'icons/aperture.svg',
+                          height: 28,
+                          width: 28,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.file(
+                          imageFiles[index],
+                          fit: BoxFit.cover,
+                        ),
+                ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+        ),
+        InkWell(
+          onTap: (){
+            action(-1);
+          },
+          child: Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+                border: Border.all(color: AppColors.BorderDefault),
+                borderRadius: BorderRadius.circular(8)),
+            child: Center(
+                child: SvgPicture.asset(
+              'icons/aperture.svg',
+              height: 28,
+              width: 28,
+              fit: BoxFit.cover,
+            )),
+          ),
+        ),
+      ],
+    );
   }
 }

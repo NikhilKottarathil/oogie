@@ -71,10 +71,15 @@ class NameChanged extends AddProductEvent {
   NameChanged({this.value});
 }
 
-class PriceChanged extends AddProductEvent {
+class UnitPriceChanged extends AddProductEvent {
   String value;
 
-  PriceChanged({this.value});
+  UnitPriceChanged({this.value});
+}
+class OfferPriceChanged extends AddProductEvent {
+  String value;
+
+  OfferPriceChanged({this.value});
 }
 
 class DescriptionChanged extends AddProductEvent {

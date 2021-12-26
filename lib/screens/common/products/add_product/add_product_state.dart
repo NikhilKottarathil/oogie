@@ -8,7 +8,7 @@ import 'package:oogie/models/product_model.dart';
 import 'package:oogie/models/review_model.dart';
 
 class AddProductState {
-  String name, unitPrice, description, qtyAvailable;
+  String name, unitPrice,offerPrice, description, qtyAvailable;
 
   bool isUsedProduct, isLoading;
   Exception actionErrorMessage;
@@ -37,12 +37,14 @@ class AddProductState {
       this.specificationModels,
       this.unitMeasures,
       this.unitPrice,
+        this.offerPrice,
         this.images,
       this.formSubmissionStatus = const InitialFormStatus()});
 
   AddProductState copyWith(
       {String name,
       unitPrice,
+        offerPrice,
       description,
       qtyAvailable,
       bool isUsedProduct,
@@ -60,6 +62,7 @@ class AddProductState {
     return AddProductState(
       name: name ?? this.name,
       unitPrice: unitPrice ?? this.unitPrice,
+      offerPrice: offerPrice ?? this.offerPrice,
       description: description ?? this.description,
       isUsedProduct: isUsedProduct ?? this.isUsedProduct,
       isLoading: isLoading ?? this.isLoading,

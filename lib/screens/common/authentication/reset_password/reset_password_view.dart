@@ -45,7 +45,9 @@ class ResetPasswordView extends StatelessWidget {
               } else {
                 print('reverse buttn submit');
 
-                buildContext.read<ResetPasswordBloc>().add(ReverseButtonSubmitted());
+                buildContext
+                    .read<ResetPasswordBloc>()
+                    .add(ReverseButtonSubmitted());
               }
             }),
         body: Form(

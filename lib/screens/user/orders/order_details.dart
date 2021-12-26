@@ -5,7 +5,7 @@ import 'package:oogie/components/app_bar/default_appbar_white.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/components/ui_widgets/custom_text_button_3.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:oogie/screens/orders/request_return.dart';
+import 'package:oogie/screens/user/orders/request_return.dart';
 import 'package:oogie/special_components/stepper_vertical.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -56,7 +56,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             '10030'),
                         dividerDefault,
                         SizedBox(
-                          child: StepperVertical(index: widget.step),
+                          child: StepperVertical(),
                           height: 300,
                         ),
                         Visibility(
@@ -224,3 +224,4 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 }
+

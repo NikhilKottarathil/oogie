@@ -1,5 +1,7 @@
-class AdvertisementModel {
-  String id, name, imageUrl;
+class AdvertisementModel{
 
-  AdvertisementModel({this.name, this.id, this.imageUrl});
+  String  description,title,advertisementType,id;
+  List<String> medias;
+  String imageUrl;
+  AdvertisementModel({this.id,this.description,this.title,this.advertisementType,this.medias,this.imageUrl});
 }

@@ -5,6 +5,7 @@ import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/flavour_config.dart';
 import 'package:oogie/functions/api_calls.dart';
 import 'package:oogie/functions/date_conversion.dart';
+import 'package:oogie/models/advertisement_model.dart';
 import 'package:oogie/models/attribute_model.dart';
 import 'package:oogie/models/category_model.dart';
 import 'package:oogie/models/filter_model.dart';
@@ -23,7 +24,7 @@ List<ProductModel> wishListProducts = [];
 
 class ProductRepository {
   ProductRepository() {
-    if (FlavorConfig().flavorName=='user'&& AppData().isUser) {
+    if (FlavorConfig().flavorName == 'user' && AppData().isUser) {
       setProductsInCart();
       setProductInWishlist();
     }
@@ -36,10 +37,25 @@ class ProductRepository {
       if (body['Product Category'] != null) {
         categoryModels.clear();
         body['Product Category'].forEach((category) {
+          List<AttributeModel> attributeModels = [];
+          category['filters'].forEach((element) {
+            List values = element['values'].toString().split(',');
+            List<RadioModel> subModels = [];
+
+            values.forEach((subElement) {
+              subModels.add(RadioModel(false, subElement));
+            });
+
+            attributeModels.add(AttributeModel(
+                id: element['id'].toString(),
+                name: element['name'],
+                values: subModels));
+          });
           List<CategoryModel> subCategories = [];
           categoryModels.add(CategoryModel(
             name: category['display_name'].toString(),
             isSelected: false,
+            attributeModels: attributeModels,
             imageUrl: category['media'] != null
                 ? Urls().serverAddress + category['media'].toString()
                 : null,
@@ -193,14 +209,18 @@ class ProductRepository {
   }
 
   Future<String> addProduct(
-      {AddProductState state, String parentPage, String isUsedProduct}) async {
+      {AddProductState state,
+      String parentPage,
+      String isUsedProduct,
+      String productId}) async {
     try {
+      print('add product pressed');
       String highLights = '';
       state.highlights.forEach((element) {
         if (highLights.isEmpty) {
           highLights = element;
         } else {
-          highLights = highLights+','+ element;
+          highLights = highLights + ',' + element;
         }
       });
       List<Map<String, Map<String, String>>> specifications = [];
@@ -225,6 +245,7 @@ class ProductRepository {
         'name': state.name,
         // 'media': state.media,
         'unit_price': state.unitPrice,
+        'vendor_price': state.unitPrice,
         'description': state.description,
         'category_id': state.categories
             .singleWhere((element) => element.isSelected == true)
@@ -245,29 +266,48 @@ class ProductRepository {
         'is_used_product': isUsedProduct,
         'highlights': highLights
       };
+      if (state.offerPrice.toString().trim().length != 0) {
+        requestBody.addAll({'offer_price': state.offerPrice});
+      }
       print(requestBody);
-      var body = await postDataRequest(address: 'product', myBody: requestBody);
-      if (body['id'] != null) {
-        try {
-          Map<String,String>imageBody={};
-          await patchMediaDataRequest(
-              address: 'product/${body['id'].toString()}',
-              myBody:imageBody ,
-              imageAddress: 'images',
-              imageFiles: state.images);
-          return body['id'].toString();
-        } catch (e) {
-          throw Exception(body['Image Upload failed! product created']);
+      if (productId == null) {
+        var body =
+            await postDataRequest(address: 'product', myBody: requestBody);
+
+        if (body['id'] != null) {
+          try {
+            Map<String, String> imageBody = {};
+            await patchMediaDataRequest(
+                address: 'product/${body['id'].toString()}',
+                myBody: imageBody,
+                imageAddress: 'images',
+                imageFiles: state.images);
+            return body['id'].toString();
+          } catch (e) {
+            throw Exception(body['Image Upload failed! product created']);
+          }
+        } else {
+          if (body['message'] != null) {
+            throw Exception(body['Message']);
+          } else {
+            throw AppExceptions().somethingWentWrong;
+          }
         }
       } else {
-        if (body['message'] != null) {
-          throw Exception(body['Message']);
+        var body = await patchDataRequest(
+            address: 'product/$productId', myBody: requestBody);
+        if (body['message'] == 'Successfully Updated') {
+          return productId;
         } else {
-          throw AppExceptions().somethingWentWrong;
+          if (body['message'] != null) {
+            throw Exception(body['Message']);
+          } else {
+            throw AppExceptions().somethingWentWrong;
+          }
         }
       }
     } catch (e) {
-      print(e);
+      print('Error add Product' + e);
       throw e;
     }
   }
@@ -308,9 +348,20 @@ class ProductRepository {
                 ? product['product_brand']['id'].toString()
                 : null,
             description: product['description'],
-            discountedPrice: product['unit_price'].toString(),
-            discountPercentage: '',
+            isUsedProduct: product['is_used_product'] != null
+                ? product['is_used_product']
+                : false,
             unitPrice: product['unit_price'].toString(),
+            offerPrice: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : null,
+            price: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : product['unit_price'].toString(),
+            discountPercentage: product['discount_percentage'] != null
+                ? product['discount_percentage'].toStringAsFixed(1)
+                : '0.0',
+            userRole: product['user_role'].toString(),
           ));
         });
 
@@ -328,7 +379,7 @@ class ProductRepository {
     }
   }
 
-  //PRODUCT
+  // PRODUCT
   Future<List> getProducts(int page, rowsPerPage, parentPage) async {
     try {
       print('page $page rowsPerPage $rowsPerPage');
@@ -361,9 +412,13 @@ class ProductRepository {
                 ? product['product_brand']['id'].toString()
                 : null,
             description: product['description'],
-            discountedPrice: product['unit_price'].toString(),
-            discountPercentage: '',
+            isUsedProduct: product['is_used_product']!=null?product['is_used_product']:false,
             unitPrice: product['unit_price'].toString(),
+            offerPrice: product['offer_price']!=null?product['offer_price'].toString():null,
+            price: product['offer_price']!=null?product['offer_price'].toString():product['unit_price'].toString(),
+            discountPercentage: product['discount_percentage']!=null?product['discount_percentage'].toStringAsFixed(1):'0.0',
+            userRole: product['user_role'].toString(),
+
           ));
         });
 
@@ -418,10 +473,21 @@ class ProductRepository {
             brandId: product['product_brand'] != null
                 ? product['product_brand']['id'].toString()
                 : null,
+            isUsedProduct: product['is_used_product'] != null
+                ? product['is_used_product']
+                : false,
             description: product['description'],
-            discountedPrice: product['unit_price'].toString(),
-            discountPercentage: '',
             unitPrice: product['unit_price'].toString(),
+            offerPrice: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : null,
+            price: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : product['unit_price'].toString(),
+            discountPercentage: product['discount_percentage'] != null
+                ? product['discount_percentage'].toStringAsFixed(1)
+                : '0.0',
+            userRole: product['user_role'].toString(),
           ));
         });
       }
@@ -443,6 +509,7 @@ class ProductRepository {
       minPrice,
       maxPrice,
       rating,
+      advertisementId,
       sort,
       isUsedProduct}) async {
     try {
@@ -450,17 +517,64 @@ class ProductRepository {
       var requestBody = {
         'rows_per_page': rowsPerPage,
         'page': page,
-        'fields': fields,
-        'filters': filters,
-        'product_brand_id': productBrandId,
-        'category_id': categoryId,
-        'product_model_id': productModelId,
-        'min_price': minPrice,
-        'max_price': maxPrice,
-        'rating': rating,
-        'sort': sort,
-        'is_used_product': isUsedProduct
+
       };
+      if (isUsedProduct != null) {
+        requestBody.addAll({
+          'is_used_product': isUsedProduct ? 'True' : 'False'
+        });
+      }
+      if (minPrice != null) {
+        requestBody.addAll({
+          'min_price': minPrice,
+        });
+      }
+      if (maxPrice != null) {
+        requestBody.addAll({
+          'max_price': maxPrice,
+        });
+      }
+      if (sort != null) {
+        requestBody.addAll({
+          'sort': sort,
+        });
+      }
+      if (rating != null) {
+        requestBody.addAll({
+          'rating': rating,
+        });
+      }
+      if (advertisementId != null) {
+        requestBody.addAll({
+          'advertisment_id': advertisementId,
+        });
+      }
+      if (productBrandId != null) {
+        requestBody.addAll({
+          'product_brand_id': productBrandId,
+        });
+      }
+      if (productModelId != null) {
+        requestBody.addAll({
+          'product_model_id': productModelId,
+        });
+      }
+      if (categoryId != null) {
+        requestBody.addAll({
+          'category_id': categoryId,
+        });
+      }
+      if (filters != null && filters.isNotEmpty) {
+        requestBody.addAll({
+          'filters': filters,
+        });
+      }
+      if (fields != null && fields.isNotEmpty) {
+        requestBody.addAll({
+          'fields': fields,
+        });
+      }
+      print('filter requestBody');
       print(requestBody);
       var body =
           await postDataRequest(address: 'product/filter', myBody: requestBody);
@@ -486,10 +600,21 @@ class ProductRepository {
             brandId: product['product_brand'] != null
                 ? product['product_brand']['id'].toString()
                 : null,
+            isUsedProduct: product['is_used_product'] != null
+                ? product['is_used_product']
+                : false,
             description: product['description'],
-            discountedPrice: product['unit_price'].toString(),
-            discountPercentage: '',
             unitPrice: product['unit_price'].toString(),
+            offerPrice: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : null,
+            price: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : product['unit_price'].toString(),
+            discountPercentage: product['discount_percentage'] != null
+                ? product['discount_percentage'].toStringAsFixed(1)
+                : '0.0',
+            userRole: product['user_role'].toString(),
           ));
         });
         print('productModels');
@@ -619,10 +744,22 @@ class ProductRepository {
                 ? product['unit_of_measure']['id'].toString()
                 : null,
             description: product['description'],
-            discountedPrice: product['unit_price'].toString(),
-            discountPercentage: '',
             unitPrice: product['unit_price'].toString(),
+            offerPrice: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : null,
+            price: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : product['unit_price'].toString(),
+            discountPercentage: product['discount_percentage'] != null
+                ? product['discount_percentage'].toStringAsFixed(1)
+                : '0.0',
+            userRole: product['user_role'].toString(),
             rating: product['rating'].toString(),
+            creatorId: product['user_id'].toString(),
+            isUsedProduct: product['is_used_product'] != null
+                ? product['is_used_product']
+                : false,
             qtyAvailable: product['qty_available'],
             ratingCount: double.parse(product['total_rating'].toString())
                 .toStringAsFixed(0),
@@ -768,8 +905,20 @@ class ProductRepository {
                 totalPrice: double.parse(product['no_of_item'].toString()) *
                     double.parse(product['unit_price'].toString()),
                 brandName: product['product_brand'].toString(),
-                discountedPrice: product['unit_price'].toString(),
+                isUsedProduct: product['is_used_product'] != null
+                    ? product['is_used_product']
+                    : false,
                 unitPrice: product['unit_price'].toString(),
+                offerPrice: product['offer_price'] != null
+                    ? product['offer_price'].toString()
+                    : null,
+                price: product['offer_price'] != null
+                    ? product['offer_price'].toString()
+                    : product['unit_price'].toString(),
+                discountPercentage: product['discount_percentage'] != null
+                    ? product['discount_percentage'].toStringAsFixed(1)
+                    : '0.0',
+                userRole: product['user_role'].toString(),
               ));
             });
           }
@@ -797,9 +946,21 @@ class ProductRepository {
                     double.parse(product['unit_price'].toString()),
                 name: product['product_name'],
                 displayName: product['display_name'],
+                isUsedProduct: product['is_used_product'] != null
+                    ? product['is_used_product']
+                    : false,
                 brandName: product['product_brand'].toString(),
-                discountedPrice: product['unit_price'].toString(),
                 unitPrice: product['unit_price'].toString(),
+                offerPrice: product['offer_price'] != null
+                    ? product['offer_price'].toString()
+                    : null,
+                price: product['offer_price'] != null
+                    ? product['offer_price'].toString()
+                    : product['unit_price'].toString(),
+                discountPercentage: product['discount_percentage'] != null
+                    ? product['discount_percentage'].toStringAsFixed(1)
+                    : '0.0',
+                userRole: product['user_role'].toString(),
               ));
             });
           }
@@ -880,14 +1041,63 @@ class ProductRepository {
             rating:
                 product['rating'] != null ? product['rating'].toString() : '1',
             name: product['name'],
+            isUsedProduct: product['is_used_product'] != null
+                ? product['is_used_product']
+                : false,
             displayName: product['display_name'],
             brandName: product['product_brand'] != null
                 ? product['product_brand']
                 : '',
-            discountedPrice: product['unit_price'].toString(),
             unitPrice: product['unit_price'].toString(),
+            offerPrice: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : null,
+            price: product['offer_price'] != null
+                ? product['offer_price'].toString()
+                : product['unit_price'].toString(),
+            discountPercentage: product['discount_percentage'] != null
+                ? product['discount_percentage'].toStringAsFixed(1)
+                : '0.0',
+            userRole: product['user_role'].toString(),
           ));
         });
+      } else {
+        throw Exception('Please retry');
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<List<AdvertisementModel>> getAdvertisements() async {
+    try {
+      var body = await getDataRequest(address: 'advertisment/list');
+      List<AdvertisementModel> advertisementModels = [];
+
+      if (body['Advertisments'] != null) {
+        body['Advertisments'].forEach((product) {
+          String imageUrl;
+          List<String> medias = [];
+          int i = 0;
+          if (product['media'] != null) {
+            product['media'].forEach((media) {
+              if (i == 0) {
+                imageUrl = Urls().serverAddress + media['url'];
+                i++;
+              }
+            });
+          }
+
+          advertisementModels.add(new AdvertisementModel(
+            id: product['id'].toString(),
+            imageUrl: imageUrl,
+            description: product['description'].toString(),
+            title: product['title'].toString(),
+            medias: medias,
+          ));
+        });
+        return advertisementModels;
       } else {
         throw Exception('Please retry');
       }

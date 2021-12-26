@@ -22,7 +22,7 @@ import 'package:oogie/screens/common/products/product/select_varient.dart';
 class ProductView extends StatelessWidget {
   int _current = 0;
   final CarouselController _controller = CarouselController();
-
+bool isViewOnly=false;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -170,14 +170,32 @@ class ProductView extends StatelessWidget {
                                           style: TextStyles.largeRegular,
                                         ),
                                         SizedBox(height: 8),
-                                        FlavorConfig().flavorValue=='user'? Row(
+                                        !state.isViewOnly? Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              rupeesString +
-                                                  state.productModel.unitPrice,
+                                            state.productModel.offerPrice==null?Text(
+                                              rupeesString + state.productModel.unitPrice,
                                               style: TextStyles.largeMedium,
+                                            ): Row(
+                                              children: [
+                                                Text(
+                                                  state.productModel.unitPrice,
+                                                  style: TextStyle(
+                                                      fontSize: 24,
+                                                      color: AppColors.TextSubdued,
+                                                      height: 1.43,
+                                                      fontFamily: 'DMSans',
+                                                      decoration: TextDecoration.lineThrough,
+                                                      fontWeight: FontWeight.w500),
+                                                ),
+                                                SizedBox(width: 8,),
+                                                Text(
+                                                  rupeesString + state.productModel.offerPrice,
+                                                  style: TextStyles.largeMedium,
+                                                ),
+
+                                              ],
                                             ),
                                             SvgPicture.asset(
                                               'icons/share.svg',
@@ -209,6 +227,8 @@ class ProductView extends StatelessWidget {
                                                   .smallRegularSubdued,
                                               overflow: TextOverflow.ellipsis,
                                             ),
+                                            SizedBox(width: 10,),
+                                            state.productModel.userRole=='super_admin'?SvgPicture.asset('assets/assured.svg',height: 18,fit: BoxFit.scaleDown,):Container(),
                                           ],
                                         ),
                                         SizedBox(height: 16),
@@ -222,7 +242,7 @@ class ProductView extends StatelessWidget {
                                               state.productModel.highlights,
                                         )
                                       : Container(),
-                                  FlavorConfig().flavorValue=='user'?
+                                  !state.isViewOnly?
                                   Padding(
                                     // padding: const EdgeInsets.only(left: 20,right: 20),
                                     padding: const EdgeInsets.all(20),
@@ -367,7 +387,7 @@ class ProductView extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  FlavorConfig().flavorValue=='user'? Container(
+                                  !state.isViewOnly? Container(
                                     color: AppColors.SurfaceDisabled,
                                     child: HorizontalProductView(
                                       title: 'Featured Phones',
