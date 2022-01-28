@@ -32,7 +32,10 @@ class AddProductView4 extends StatelessWidget {
         if (formStatus is SubmissionFailed) {
           showSnackBar(context, formStatus.exception);
         } else if (formStatus is SubmissionSuccess) {
-          Navigator.pop(context);
+          if(context.read<AddProductBloc>().productIdOld==null){
+            Navigator.pop(context);
+
+          }
           Navigator.pop(context);
           Navigator.pop(context);
           Navigator.pop(context);

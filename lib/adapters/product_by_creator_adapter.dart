@@ -57,7 +57,7 @@ class ProductByCreatorAdapter extends StatelessWidget {
                     maxLines: 2,
                   ),
                   Text(
-                    productModel.brandName,
+                    productModel.brandName!=null?productModel.brandName:'',
                     style: TextStyles.smallMedium,
                   ),
                 ],

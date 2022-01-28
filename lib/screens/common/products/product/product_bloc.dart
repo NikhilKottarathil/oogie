@@ -80,8 +80,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           productModel: event.productModel,
           isLoading: false,
           variantProductId: event.productModel.id,
-          // isViewOnly: event.isViewOnly,
-          isViewOnly: false,
+          isViewOnly: event.isViewOnly,
+          // isViewOnly: false,
           variantProductName: event.productModel.displayName);
     } else if (event is CheckProductVariant) {
       print('step 0');

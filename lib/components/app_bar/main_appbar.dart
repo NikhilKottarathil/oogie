@@ -18,40 +18,40 @@ Widget mainAppBar({BuildContext context}) {
       fit: BoxFit.scaleDown,
     ),
     actions: [
-      IconButton(
-        icon: SvgPicture.asset(
-          'icons/notification_white.svg',
-          height: 24,
-          width: 24,
-          fit: BoxFit.scaleDown,
-        ),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Notifications()));
-        },
-        padding: EdgeInsets.zero,
-        constraints: BoxConstraints(),
-        splashRadius: 24,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-      ),
-      IconButton(
-        icon: SvgPicture.asset(
-          'icons/chat_white.svg',
-          height: 24,
-          width: 24,
-          fit: BoxFit.scaleDown,
-        ),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Chats()));
-        },
-        padding: EdgeInsets.only(left: 16),
-        constraints: BoxConstraints(),
-        splashRadius: 24,
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-      ),
+      // IconButton(
+      //   icon: SvgPicture.asset(
+      //     'icons/notification_white.svg',
+      //     height: 24,
+      //     width: 24,
+      //     fit: BoxFit.scaleDown,
+      //   ),
+      //   onPressed: () {
+      //     Navigator.push(context,
+      //         MaterialPageRoute(builder: (context) => Notifications()));
+      //   },
+      //   padding: EdgeInsets.zero,
+      //   constraints: BoxConstraints(),
+      //   splashRadius: 24,
+      //   splashColor: Colors.transparent,
+      //   highlightColor: Colors.transparent,
+      // ),
+      // IconButton(
+      //   icon: SvgPicture.asset(
+      //     'icons/chat_white.svg',
+      //     height: 24,
+      //     width: 24,
+      //     fit: BoxFit.scaleDown,
+      //   ),
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (context) => Chats()));
+      //   },
+      //   padding: EdgeInsets.only(left: 16),
+      //   constraints: BoxConstraints(),
+      //   splashRadius: 24,
+      //   splashColor: Colors.transparent,
+      //   highlightColor: Colors.transparent,
+      // ),
       FlavorConfig().flavorName == 'user'
           ? IconButton(
               icon: SvgPicture.asset(

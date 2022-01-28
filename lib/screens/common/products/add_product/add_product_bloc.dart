@@ -157,7 +157,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
             state: state,
             parentPage: 'addProduct',
             isUsedProduct: parentPage == 'usedProductsHome' ? 'True' : 'False');
-        productListByCreatorBloc.add(NewProductAdded(productId: productIdOld));
+        if(productIdOld==null) {
+          productListByCreatorBloc.add(NewProductAdded(productId: productId));
+        }
 
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
         yield state.copyWith(formSubmissionStatus: InitialFormStatus());
