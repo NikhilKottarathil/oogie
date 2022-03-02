@@ -100,41 +100,42 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: AppColors.PrimaryBase,
         statusBarIconBrightness: Brightness.light));
-    return FutureBuilder(
-      future: Firebase.initializeApp(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const MaterialApp(
-
-            debugShowCheckedModeBanner: false,
-            home: Scaffold(
-              backgroundColor: Colors.grey,
-              body: Center(child: Text("Error")),
-            ),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          return WillPopScope(
-            onWillPop: () {
-              return appExitAlert(context);
-            },
-            child: MaterialApp(
-              navigatorKey: MyApp.navigatorKey,
-
-              title: widget.flavorConfig.appTitle,
-              onGenerateRoute:  _appRouter.onGenerateRoute,
-              debugShowCheckedModeBanner: false,
-            ),
-          );
-        }
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: CustomProgressIndicator(),
-          ),
-        );
+    return WillPopScope(
+      onWillPop: () {
+        return appExitAlert(context);
       },
+      child: MaterialApp(
+        navigatorKey: MyApp.navigatorKey,
+
+        title: widget.flavorConfig.appTitle,
+        onGenerateRoute:  _appRouter.onGenerateRoute,
+        debugShowCheckedModeBanner: false,
+      ),
     );
+    // return FutureBuilder(
+    //   future: Firebase.initializeApp(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasError) {
+    //       return const MaterialApp(
+    //
+    //         debugShowCheckedModeBanner: false,
+    //         home: Scaffold(
+    //           backgroundColor: Colors.grey,
+    //           body: Center(child: Text("Error")),
+    //         ),
+    //       );
+    //     }
+    //     if (snapshot.connectionState == ConnectionState.done) {
+    //
+    //     }
+    //     return MaterialApp(
+    //       debugShowCheckedModeBanner: false,
+    //       home: Scaffold(
+    //         body: CustomProgressIndicator(),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
 }

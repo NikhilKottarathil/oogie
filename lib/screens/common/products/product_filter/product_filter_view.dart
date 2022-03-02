@@ -35,13 +35,11 @@ class _ProductFilterViewState extends State<ProductFilterView> {
       }
     });
     Future.delayed(Duration(milliseconds: 1)).then((value) {
-      if( context.read<ProductFilterBloc>().state.parentPage=='search'){
+      if (context.read<ProductFilterBloc>().state.parentPage == 'search') {
         showSearchAppBar(buildContext: context);
       }
-
     });
     // showSearchAppBar(buildContext: context);
-
   }
 
   @override
@@ -49,9 +47,7 @@ class _ProductFilterViewState extends State<ProductFilterView> {
     print('flilter buildinggg 111');
 
     return Scaffold(
-      appBar: teritiaryAppBar(
-          buildContext: context,
-          title: ''),
+      appBar: teritiaryAppBar(buildContext: context, title: ''),
       body: BlocListener<ProductFilterBloc, ProductFilterState>(
         listener: (context, state) async {
           if (state.pageScrollStatus is ScrollToTopStatus) {
@@ -81,10 +77,13 @@ class _ProductFilterViewState extends State<ProductFilterView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    context.read<ProductFilterBloc>().state.titleText!=''?Text(
-                      context.read<ProductFilterBloc>().state.titleText+" :",
-                      style: TextStyles.displayMedium,
-                    ):Container(),
+                    context.read<ProductFilterBloc>().state.titleText != ''
+                        ? Text(
+                            context.read<ProductFilterBloc>().state.titleText +
+                                " :",
+                            style: TextStyles.displayMedium,
+                          )
+                        : Container(),
                     InkWell(
                       onTap: () {
                         filterAndSort(buildContext: context);
@@ -97,8 +96,7 @@ class _ProductFilterViewState extends State<ProductFilterView> {
                         padding: EdgeInsets.only(
                             left: 16, right: 16, top: 8, bottom: 8),
                         decoration: BoxDecoration(
-                            border:
-                            Border.all(color: AppColors.BorderDefault),
+                            border: Border.all(color: AppColors.BorderDefault),
                             borderRadius: BorderRadius.circular(8)),
                         child: Row(
                           children: [
@@ -117,7 +115,6 @@ class _ProductFilterViewState extends State<ProductFilterView> {
                   ],
                 ),
               ),
-
               Flexible(
                 child: GridView.builder(
                   controller: scrollController,
@@ -146,6 +143,12 @@ class _ProductFilterViewState extends State<ProductFilterView> {
           );
         }),
       ),
+      floatingActionButton: context.read<ProductFilterBloc>().parentPage=='usedProduct'?FloatingActionButton.extended(
+        backgroundColor: AppColors.PrimaryBase,
+          onPressed: () {
+            Navigator.pushNamed(context, '/home');
+          },
+          label: Text('My Used Phones',style: TextStyles.smallRegularWhite,)):null,
     );
   }
 }

@@ -126,17 +126,18 @@ class MenuDrawer extends StatelessWidget {
                             Navigator.of(context).pushNamed('/wishlist');
                           },
                         ),
-                        IconTextButton(
-                          iconUrl: 'icons/location.svg',
-                          text: 'Stores',
-                          action: () {
-                            Navigator.pushNamed(context, '/myLocation');
-                          },
-                        ),
+                        // IconTextButton(
+                        //   iconUrl: 'icons/location.svg',
+                        //   text: 'Stores',
+                        //   action: () {
+                        //     Navigator.pushNamed(context, '/myLocation');
+                        //   },
+                        // ),
                         IconTextButton(
                           iconUrl: 'icons/smartphone.svg',
-                          text: 'Used Phones',
+                          text: 'My Used Phones',
                           action: () {
+                            // nonUsers Homepage is used Used Phones Section
                             Navigator.pushNamed(context, '/home');
                           },
                         ),
@@ -160,7 +161,7 @@ class MenuDrawer extends StatelessWidget {
                       AuthRepository authRepo = AuthRepository();
                       await authRepo.logOut();
                       Navigator.pop(context);
-                      Navigator.pushReplacementNamed(context, '/');
+                      Navigator.pushReplacementNamed(context, '/login');
                     }),
                 SizedBox(
                   height: 20,

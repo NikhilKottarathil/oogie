@@ -6,10 +6,11 @@ import 'package:oogie/screens/profile/my_location/my_location_state.dart';
 
 class MyLocationBloc extends Bloc<MyLocationEvent, MyLocationState> {
   final ProfileRepository profileRepository;
+  String parentPage;
 
   // final ProfileBloc profileBloc;
 
-  MyLocationBloc({this.profileRepository})
+  MyLocationBloc({this.profileRepository,this.parentPage})
       : super(MyLocationState(locationModels: [])) {
     getLocations();
   }

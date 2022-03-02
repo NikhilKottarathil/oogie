@@ -7,6 +7,7 @@ import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/flavour_config.dart';
@@ -30,7 +31,12 @@ class LoginView extends StatelessWidget {
             showSnackBar(context, formStatus.exception);
           } else if (formStatus is SubmissionSuccess) {
             if (FlavorConfig().flavorName == 'user') {
-              Navigator.pushReplacementNamed(context, '/myLocation');
+              print('selectedLocationId ${appDataModel.selectedLocationId}');
+              if (appDataModel.selectedLocationId != null) {
+                Navigator.pushReplacementNamed(context, '/explore');
+              } else {
+                Navigator.pushReplacementNamed(context, '/myLocation');
+              }
             } else {
               Navigator.pushReplacementNamed(context, '/home');
             }
@@ -46,10 +52,51 @@ class LoginView extends StatelessWidget {
                     height: height * .35,
                     color: AppColors.PrimaryBase,
                     child: Center(
-                      child: SvgPicture.asset(
-                        'assets/app_logo.svg',
-                        fit: BoxFit.cover,
-                        height: height * .08,
+                      // child: SvgPicture.asset(
+                      //   'assets/app_logo.svg',
+                      //   fit: BoxFit.cover,
+                      //   height: height * .08,
+                      // ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (FlavorConfig().flavorName == 'user')
+                            SvgPicture.asset(
+                              'assets/app_logo.svg',
+                              fit: BoxFit.cover,
+                              height: height * .08,
+                            ),
+                          if (FlavorConfig().flavorName == 'vendor')
+                            Image.asset(
+                              'assets/vendor_white.png',
+                              fit: BoxFit.cover,
+                              height: height * .08,
+                            ),
+                          if (FlavorConfig().flavorName == 'wholesale_dealer')
+                            Image.asset(
+                              'assets/wholesale_white.png',
+                              fit: BoxFit.cover,
+                              height: height * .08,
+                            ),
+                          if (FlavorConfig().flavorName == 'distributor')
+                            Image.asset(
+                              'assets/distributor_white.png',
+                              fit: BoxFit.cover,
+                              height: height * .08,
+                            ),
+                          if (FlavorConfig().flavorName == 'sales_executive')
+                            Image.asset(
+                              'assets/sales_executive_white.png',
+                              fit: BoxFit.cover,
+                              height: height * .08,
+                            ),
+                          if (FlavorConfig().flavorName == 'delivery_partner')
+                            Image.asset(
+                              'assets/delivery_partner_white.png',
+                              fit: BoxFit.cover,
+                              height: height * .08,
+                            ),
+                        ],
                       ),
                     ),
                   ),

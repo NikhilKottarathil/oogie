@@ -5,6 +5,7 @@ import 'package:oogie/components/custom_text_button.dart';
 import 'package:oogie/components/custom_text_field.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/flavour_config.dart';
@@ -35,8 +36,14 @@ class OTPLoginView extends StatelessWidget {
             } else if (formStatus is SubmissionSuccess) {
               Navigator.of(context).pop();
               print(FlavorConfig().flavorName);
+
               if (FlavorConfig().flavorName == 'user') {
-                Navigator.pushReplacementNamed(context, '/myLocation');
+                print('selectedLocationId ${appDataModel.selectedLocationId}');
+                if (appDataModel.selectedLocationId != null) {
+                  Navigator.pushReplacementNamed(context, '/explore');
+                } else {
+                  Navigator.pushReplacementNamed(context, '/myLocation');
+                }
               } else {
                 Navigator.pushReplacementNamed(context, '/home');
               }

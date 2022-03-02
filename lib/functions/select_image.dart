@@ -91,7 +91,8 @@ getImageFromCamera() async {
 }
 
 Future cropImage({File image, var aspectRatios}) async {
-  File croppedFile = await ImageCropper.cropImage(
+
+  File croppedFile = await ImageCropper().cropImage(
       sourcePath: image.path,
       compressQuality: 30,
       aspectRatioPresets: aspectRatios == null

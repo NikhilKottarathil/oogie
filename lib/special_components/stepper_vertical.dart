@@ -25,8 +25,7 @@ class StepperVertical extends StatefulWidget {
       this.deliveryStatuses,
       this.deliveryState,
       this.parentPage,
-
-        this.reviewId,
+      this.reviewId,
       this.reviewAction});
 
   @override
@@ -76,10 +75,25 @@ class _StepperVerticalState extends State<StepperVertical> {
           index = index;
         });
       },
+      // controlsBuilder: widget.isEditable
+      //     ? null
+      //     : (BuildContext context,
+      //         {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+      //         return Row(
+      //           children: <Widget>[
+      //             Container(
+      //               child: null,
+      //             ),
+      //             Container(
+      //               child: null,
+      //             ),
+      //           ],
+      //         );
+      //       },
+
       controlsBuilder: widget.isEditable
           ? null
-          : (BuildContext context,
-              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+          : (BuildContext context, details) {
               return Row(
                 children: <Widget>[
                   Container(
@@ -136,7 +150,8 @@ class _StepperVerticalState extends State<StepperVertical> {
                             widget.parentPage == 'myOrders' &&
                             (widget.deliveryState == 'Fulfilled' ||
                                 widget.deliveryState == 'Return Initiated' ||
-                                widget.deliveryState == 'Return Completed')&& widget.reviewId==null
+                                widget.deliveryState == 'Return Completed') &&
+                            widget.reviewId == null
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

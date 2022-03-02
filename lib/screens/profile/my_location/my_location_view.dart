@@ -30,7 +30,7 @@ class MyLocationView extends StatelessWidget {
                   create: (_) => SelectShopBloc(
                       profileRepository:
                           context.read<MyLocationBloc>().profileRepository,
-                      locationModel: state.selectedLocation),
+                      locationModel: state.selectedLocation,parentPage: context.read<MyLocationBloc>().parentPage),
                   child: SelectShopView(),
                 ),
               ),
@@ -56,18 +56,18 @@ class MyLocationView extends StatelessWidget {
                 'Select a region to showcase shops around it.',
                 style: TextStyles.smallRegularSubdued,
               ),
-              Row(
-                children: [
-                  Text(
-                    'If your region is not listed.',
-                    style: TextStyles.smallRegularSubdued,
-                  ),
-                  CustomTextButton2(
-                    text: 'Explore',
-                    action: () {},
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       'If your region is not listed.',
+              //       style: TextStyles.smallRegularSubdued,
+              //     ),
+              //     CustomTextButton2(
+              //       text: 'Explore',
+              //       action: () {},
+              //     ),
+              //   ],
+              // ),
               BlocBuilder<MyLocationBloc, MyLocationState>(
                   builder: (context, state) {
                 return CustomTextField2(

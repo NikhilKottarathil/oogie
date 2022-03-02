@@ -5,7 +5,7 @@ class Urls {
   String apiAddress = 'https://api.oogieshopee.com/api/';
   String categoryImage = 'icons/category.svg';
   String productImage = 'icons/phone.svg';
-  String razorPayApiKry = 'rzp_test_ggroFiTdfl4T5I';
+  String razorPayApiKry = 'rzp_test_gtyFMrQ4yx0fiF';
 
   String getImageUrl(String imageUrl) {
     return serverAddress + imageUrl;

@@ -11,6 +11,7 @@ class FormSubmitting extends FormSubmissionStatus {}
 class SubmissionSuccess extends FormSubmissionStatus {
   String id;
 
+
   SubmissionSuccess({this.id});
 }
 

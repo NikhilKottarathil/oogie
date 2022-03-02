@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/category_adapter.dart';
@@ -8,7 +10,6 @@ import 'package:oogie/components/app_bar/main_appbar.dart';
 import 'package:oogie/screens/explore/explore/explore_bloc.dart';
 import 'package:oogie/screens/explore/explore/explore_state.dart';
 import 'package:oogie/screens/explore/menu_drawer.dart';
-import 'package:oogie/special_components/image_slider.dart';
 import 'package:oogie/views/buy_and_sell_view.dart';
 
 class ExploreView extends StatelessWidget {
@@ -17,9 +18,8 @@ class ExploreView extends StatelessWidget {
     return BlocListener<ExploreBloc, ExploreState>(
       listener: (context, state) {},
       child: Scaffold(
-        // appBar:             AppBar(title: mainAppBar(context: context)),
-        drawer: MenuDrawer(),
-
+        drawer: Platform.isAndroid ? MenuDrawer() : null,
+        endDrawer: Platform.isIOS ? MenuDrawer() : null,
         body: NestedScrollView(
           headerSliverBuilder: (context, value) {
             return [mainAppBar(context: context)];
@@ -33,7 +33,6 @@ class ExploreView extends StatelessWidget {
                     height: 92,
                     child: BlocBuilder<ExploreBloc, ExploreState>(
                       builder: (context, state) {
-
                         return ListView.builder(
                             itemCount: state.categoryModels.length,
                             scrollDirection: Axis.horizontal,
@@ -55,7 +54,6 @@ class ExploreView extends StatelessWidget {
                     ),
                   ),
                 ),
-                // BuyAndSellView(),
                 BlocBuilder<ExploreBloc, ExploreState>(
                     builder: (context, state) {
                   return Visibility(
@@ -67,17 +65,24 @@ class ExploreView extends StatelessWidget {
                     ),
                   );
                 }),
-                BuyAndSellView(),
+                InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/productFilter',
+                          arguments: {
+                            'parentPage': 'usedProduct',
+                          });
+                    },
+                    child: BuyAndSellView()),
                 BlocBuilder<ExploreBloc, ExploreState>(
                   builder: (context, state) {
                     return VerticalProductView(
                         title: 'New Arrivals',
                         productModels: state.newArrivedProductModels,
                         viewAllAction: () {
-                          Navigator.pushNamed(
-                              context, '/productFilter', arguments: {
-                            'parentPage': 'newlyArrivedProducts',
-                          });
+                          Navigator.pushNamed(context, '/productFilter',
+                              arguments: {
+                                'parentPage': 'newlyArrivedProducts',
+                              });
                         });
                   },
                 ),
@@ -87,10 +92,10 @@ class ExploreView extends StatelessWidget {
                       title: 'Featured Phones',
                       productModels: state.featuredProductModels,
                       viewAllAction: () {
-                        Navigator.pushNamed(
-                            context, '/productFilter', arguments: {
-                          'parentPage': 'featuredProducts',
-                        });
+                        Navigator.pushNamed(context, '/productFilter',
+                            arguments: {
+                              'parentPage': 'featuredProducts',
+                            });
                       },
                     );
                   },

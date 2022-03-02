@@ -10,8 +10,7 @@ class StepperHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     return OogieStepper(
       currentStep: index,
-      controlsBuilder: (BuildContext context,
-          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+      controlsBuilder:  (BuildContext context, details) {
         return Row(
           children: <Widget>[
             Container(

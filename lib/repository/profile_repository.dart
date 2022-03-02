@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fuzzy/fuzzy.dart';
 import 'package:http/http.dart' as http;
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/flavour_config.dart';
 import 'package:oogie/functions/api_calls.dart';
@@ -150,6 +151,54 @@ class ProfileRepository {
               ShopModel(id: element['id'].toString(), name: element['name']));
         });
         return shopModels;
+      } else {
+        throw AppExceptions().somethingWentWrong;
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+  Future<String> getSelectedShopAndLocation() async {
+    try {
+      if(appDataModel.selectedLocationId!=null) {
+        var locationBody =
+        await getDataRequest(
+            address: 'location/${appDataModel.selectedLocationId}');
+        print(locationBody);
+        if (locationBody['Location'] != null) {
+          if (appDataModel.selectedShopId != null) {
+            var shopBody = await getDataRequest(
+                address: 'vendor/${appDataModel.selectedShopId}');
+            print(shopBody);
+            if (shopBody['Vendor'] != null) {
+              return shopBody['Vendor']['name'] + ' ' +
+                  locationBody['Location']['name'];;
+            } else {
+              return locationBody['Location']['name'];
+            }
+          } else {
+            return locationBody['Location']['name'];
+          }
+        } else {
+          throw AppExceptions().somethingWentWrong;
+        }
+      }else{
+        throw Exception(['This only for user']);
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+  Future<String> getNameFromShopId(String shopId) async {
+    try {
+      var body =
+          await getDataRequest(address: 'vendor/$shopId');
+      print(body);
+      if (body['Vendor'] != null) {
+
+        return body['Vendor']['name'];
       } else {
         throw AppExceptions().somethingWentWrong;
       }

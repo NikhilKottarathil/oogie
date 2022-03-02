@@ -19,12 +19,13 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
             itemsInCartCount: 0,
             notificationCount: 0)) {
     getInitialData();
-    getAdvertisements();
     print('FlavorConfig().appTitle');
     print(FlavorConfig().flavorName);
   }
 
   Future getInitialData() async {
+    getAdvertisements();
+
     await productRepository.setCategories();
     var categoryModels = await productRepository.getCategories();
     var newArrivedProductModels = await productRepository.getProductsByFilter(

@@ -11,16 +11,20 @@ class SplashScreen extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return BlocListener<SessionCubit, SessionState>(
       listener: (context, state) {
-        if (state == SessionState.Authenticated) {
-          if (FlavorConfig().flavorName == 'user') {
+        if (FlavorConfig().flavorName == 'user') {
+          if (state == SessionState.Authenticated) {
             Navigator.pushReplacementNamed(context, '/explore');
-          } else {
-            Navigator.pushReplacementNamed(context, '/home');
+          } else if (state == SessionState.UnAuthenticated) {
+            Navigator.pushReplacementNamed(context, '/myLocation');
+          } else if (state == SessionState.SelectLocationAndShop) {
+            Navigator.pushReplacementNamed(context, '/myLocation');
           }
-        } else if (state == SessionState.UnAuthenticated) {
-          Navigator.pushReplacementNamed(context, '/login');
-        } else if (state == SessionState.SelectLocationAndShop) {
-          Navigator.pushReplacementNamed(context, '/myLocation');
+        } else {
+          if (state == SessionState.Authenticated) {
+            Navigator.pushReplacementNamed(context, '/home');
+          } else {
+            Navigator.pushReplacementNamed(context, '/login');
+          }
         }
       },
       child: Container(
@@ -29,11 +33,42 @@ class SplashScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/app_logo.svg',
-                fit: BoxFit.cover,
-                height: height * .08,
-              ),
+              if (FlavorConfig().flavorName == 'user')
+                SvgPicture.asset(
+                  'assets/app_logo.svg',
+                  fit: BoxFit.cover,
+                  height: height * .08,
+                ),
+              if (FlavorConfig().flavorName == 'vendor')
+                Image.asset(
+                  'assets/vendor_white.png',
+                  fit: BoxFit.cover,
+                  height: height * .08,
+                ),
+              if (FlavorConfig().flavorName == 'wholesale_dealer')
+                Image.asset(
+                  'assets/wholesale_white.png',
+                  fit: BoxFit.cover,
+                  height: height * .08,
+                ),
+              if (FlavorConfig().flavorName == 'distributor')
+                Image.asset(
+                  'assets/distributor_white.png',
+                  fit: BoxFit.cover,
+                  height: height * .08,
+                ),
+              if (FlavorConfig().flavorName == 'sales_executive')
+                Image.asset(
+                  'assets/sales_executive_white.png',
+                  fit: BoxFit.cover,
+                  height: height * .08,
+                ),
+              if (FlavorConfig().flavorName == 'delivery_partner')
+                Image.asset(
+                  'assets/delivery_partner_white.png',
+                  fit: BoxFit.cover,
+                  height: height * .08,
+                ),
               SizedBox(
                 height: height * .08,
               )

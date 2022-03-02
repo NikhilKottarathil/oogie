@@ -16,6 +16,7 @@ class ShopsUpdated extends SelectShopEvent {
 
 class ShopSelected extends SelectShopEvent {
   ShopModel shop;
+  bool isUsedPhonesSelected;
 
-  ShopSelected({this.shop});
+  ShopSelected({this.shop,this.isUsedPhonesSelected});
 }

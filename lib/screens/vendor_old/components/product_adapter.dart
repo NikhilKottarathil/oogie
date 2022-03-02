@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/constants/styles.dart';
 // import 'package:oogie/screens/common/products/product_description.dart';
 import 'package:oogie/screens/vendor_old/add_product.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'delete_product.dart';
 

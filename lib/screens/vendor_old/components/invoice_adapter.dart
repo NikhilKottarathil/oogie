@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class InvoiceAdapter extends StatelessWidget {
   @override

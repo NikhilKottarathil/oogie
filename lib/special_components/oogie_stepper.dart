@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:oogie/constants/styles.dart';
 
 // TODO(dragostis): Missing functionality:
@@ -452,9 +451,7 @@ class _OogieStepperState extends State<OogieStepper>
 
   Widget _buildVerticalControls() {
     if (widget.controlsBuilder != null)
-      return widget.controlsBuilder(context,
-          onStepContinue: widget.onStepContinue,
-          onStepCancel: widget.onStepCancel);
+      return widget.controlsBuilder(context,ControlsDetails(onStepContinue: widget.onStepContinue,onStepCancel:widget.onStepCancel));
 
     Color cancelColor;
     switch (Theme.of(context).brightness) {

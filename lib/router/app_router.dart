@@ -73,6 +73,9 @@ WholeSaleRepository wholeSaleRepository = WholeSaleRepository();
 CartBloc cartBloc = CartBloc(
   productRepository: productRepository,
 );
+ExploreBloc exploreBloc = ExploreBloc(
+  productRepository: productRepository,
+);
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -117,7 +120,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) =>
-                MyLocationBloc(profileRepository: profileRepository),
+                MyLocationBloc(profileRepository: profileRepository,parentPage: arguments!=null?arguments['parentPage']:null),
             child: MyLocationView(),
           ),
         );
@@ -142,8 +145,7 @@ class AppRouter {
       case '/explore':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) =>
-                ExploreBloc(productRepository: productRepository),
+            create: (context) => exploreBloc,
             child: ExploreView(),
           ),
         );
@@ -176,7 +178,8 @@ class AppRouter {
                     ],
                     child: VendorHomeView(),
                   ));
-        }if (FlavorConfig().flavorName == 'delivery_partner') {
+        }
+        if (FlavorConfig().flavorName == 'delivery_partner') {
           return MaterialPageRoute(
               builder: (_) => MultiBlocProvider(
                     providers: [
@@ -187,15 +190,23 @@ class AppRouter {
                     child: DeliveryPartnerHomeView(),
                   ));
         }
-        if(FlavorConfig().flavorName=='user'){
-          return MaterialPageRoute(
-              builder: (_) => MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => UsedPhoneHomeBloc(),
-                  ),
-                ],
-                child: UsedPhoneHomeView(),
+        if (FlavorConfig().flavorName == 'user') {
+
+          if(AppData().isUser) {
+            return MaterialPageRoute(
+                builder: (_) =>
+                    MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (context) => UsedPhoneHomeBloc(),
+                        ),
+                      ],
+                      child: UsedPhoneHomeView(),
+                    ));
+          }  return MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (context) => LoginBloc(authRepo: authRepository),
+                child: LoginView(),
               ));
         }
         return null;
@@ -225,9 +236,11 @@ class AppRouter {
             create: (context) => ProductFilterBloc(
                 parentCategoryId: arguments['categoryId'] != null
                     ? arguments['categoryId']
-                    : null, parentAdvertisementId: arguments['parentAdvertisementId'] != null
-                    ? arguments['parentAdvertisementId']
                     : null,
+                parentAdvertisementId:
+                    arguments['parentAdvertisementId'] != null
+                        ? arguments['parentAdvertisementId']
+                        : null,
                 productRepository: productRepository,
                 parentPage: arguments['parentPage'].toString()),
             child: ProductFilterView(),
@@ -275,38 +288,64 @@ class AppRouter {
                   child: LoginView(),
                 ));
       case '/addressList':
+        if(AppData().isUser) {
+          return MaterialPageRoute(
+            builder: (_) =>
+                BlocProvider(
+                  create: (context) =>
+                      AddressListBloc(
+                          parentPage: arguments['parentPage'].toString(),
+                          profileRepository: profileRepository,
+                          checkoutBloc: arguments['checkoutBloc']),
+                  child: AddressListView(),
+                ),
+          );
+        }
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => AddressListBloc(
-                parentPage: arguments['parentPage'].toString(),
-                profileRepository: profileRepository,
-                checkoutBloc: arguments['checkoutBloc']),
-            child: AddressListView(),
-          ),
-        );
+            builder: (_) => BlocProvider(
+              create: (context) => LoginBloc(authRepo: authRepository),
+              child: LoginView(),
+            ));
       case '/myOrders':
+
+        if(AppData().isUser) {
+          return MaterialPageRoute(
+            builder: (_) =>
+                BlocProvider(
+                  create: (context) =>
+                      MyOrdersCubit(
+                          parentPage: arguments['parentPage'].toString(),
+                          orderRepository: orderRepository),
+                  child: MyOrdersView(),
+                ),
+          );
+        }
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => MyOrdersCubit(
-                parentPage: arguments['parentPage'].toString(),
-                orderRepository: orderRepository),
-            child: MyOrdersView(),
-          ),
-        );
+            builder: (_) => BlocProvider(
+              create: (context) => LoginBloc(authRepo: authRepository),
+              child: LoginView(),
+            ));
       case '/checkout':
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => CheckoutBloc(
-              parentPage: arguments['parentPage'].toString(),
-              productIds: arguments['productIds'],
-              profileRepository: profileRepository,
-              orderRepository: orderRepository,
-              productRepository: productRepository,
+        if (AppData().isUser) {
+          return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => CheckoutBloc(
+                parentPage: arguments['parentPage'].toString(),
+                productIds: arguments['productIds'],
+                profileRepository: profileRepository,
+                orderRepository: orderRepository,
+                productRepository: productRepository,
+              ),
+              child: CheckoutShippingView(),
             ),
-            child: CheckoutShippingView(),
-          ),
-        );
-        case '/orderDetails':
+          );
+        }
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (context) => LoginBloc(authRepo: authRepository),
+              child: LoginView(),
+            ));
+      case '/orderDetails':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => OrderDetailsCubit(
@@ -316,7 +355,8 @@ class AppRouter {
             ),
             child: OrderDetailsView(),
           ),
-        );case '/originalOrder':
+        );
+      case '/originalOrder':
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => OriginalOrderCubit(
