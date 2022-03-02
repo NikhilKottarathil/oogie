@@ -39,7 +39,7 @@ class SelectShopBloc extends Bloc<SelectShopEvent, SelectShopState> {
     } else if (event is ShopSelected) {
 
       try {
-        isUsedPhonesSelected=true;
+        isUsedPhonesSelected=event.isUsedPhonesSelected;
         AppData appData = AppData();
         if (appData.isUser) {
           await profileRepository.editUserProfile(

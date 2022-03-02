@@ -62,7 +62,7 @@ class SelectShopView extends StatelessWidget {
                           shop: context
                               .read<SelectShopBloc>()
                               .state
-                              .shopModels[0]));
+                              .shopModels[0],isUsedPhonesSelected: true));
                     },
                     child: BuyAndSellView()),
               SizedBox(
@@ -105,7 +105,7 @@ class SelectShopView extends StatelessWidget {
                           return InkWell(
                             onTap: () {
                               context.read<SelectShopBloc>().add(
-                                  ShopSelected(shop: state.shopModels[index]));
+                                  ShopSelected(shop: state.shopModels[index],isUsedPhonesSelected: false));
                             },
                             child: ShopAdapter(
                               shopModel: state.shopModels[index],
