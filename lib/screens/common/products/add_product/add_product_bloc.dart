@@ -13,7 +13,6 @@ import 'package:oogie/screens/common/products/add_product/add_product_event.dart
 import 'package:oogie/screens/common/products/add_product/add_product_state.dart';
 import 'package:oogie/screens/vendor/product_list_by_creator/product_list_by_creator_bloc.dart';
 import 'package:oogie/screens/vendor/product_list_by_creator/product_list_by_creator_event.dart';
-import 'package:oogie/screens/vendor_old/components/attribute.dart';
 
 class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   ProductRepository productRepository;
@@ -72,8 +71,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         File temppfile;
         File file =
             await selectImage(imageFile: temppfile, context: event.context);
-
-        state.images.add(file);
+        if (file != null) {
+          state.images.add(file);
+        }
         yield state.copyWith();
       } catch (e) {
         print(e);
@@ -81,9 +81,12 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     } else if (event is CategorySelected) {
       state.categories.forEach((element) => element.isSelected = false);
       state.categories[event.index].isSelected = true;
-      state.attributes = state.categories
-          .singleWhere((element) => element.id == state.categories[event.index].id)
-          .attributeModels;
+      if (event.index != 0) {
+        state.attributes = state.categories
+            .singleWhere(
+                (element) => element.id == state.categories[event.index].id)
+            .attributeModels;
+      }
       // state.attributes.forEach((element) {
       //   element.values.forEach((element) {
       //     element.isSelected = false;
@@ -93,7 +96,17 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     } else if (event is BrandSelected) {
       state.brands.forEach((element) => element.isSelected = false);
       state.brands[event.index].isSelected = true;
-      yield state.copyWith(models: state.brands[event.index].subKeyValueModels);
+      if (event.index != 0) {
+        state.models = state.brands[event.index].subKeyValueModels;
+        state.models.insert(
+            0,
+            KeyValueRadioModel(
+              value: 'Select Model',
+              key: 'Select Model',
+              isSelected: !state.models.any((element) => element.isSelected),
+            ));
+      }
+      yield state.copyWith();
     } else if (event is ModelSelected) {
       state.models.forEach((element) => element.isSelected = false);
       state.models[event.index].isSelected = true;
@@ -106,7 +119,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       yield state.copyWith(name: event.value);
     } else if (event is UnitPriceChanged) {
       yield state.copyWith(unitPrice: event.value);
-    }else if (event is OfferPriceChanged) {
+    } else if (event is OfferPriceChanged) {
       yield state.copyWith(offerPrice: event.value);
     } else if (event is DescriptionChanged) {
       yield state.copyWith(description: event.value);
@@ -153,11 +166,11 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       yield state.copyWith(formSubmissionStatus: FormSubmitting());
       try {
         String productId = await productRepository.addProduct(
-          productId:productIdOld,
+            productId: productIdOld,
             state: state,
             parentPage: 'addProduct',
             isUsedProduct: parentPage == 'usedProductsHome' ? 'True' : 'False');
-        if(productIdOld==null) {
+        if (productIdOld == null) {
           productListByCreatorBloc.add(NewProductAdded(productId: productId));
         }
 
@@ -178,46 +191,52 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     List<KeyValueRadioModel> brands = await productRepository.getProductBrand();
     //all attributes
     // List<AttributeModel> attributes = await productRepository.getAttributes();
-    //attribute category  wise
+    // attribute category  wise
     List<AttributeModel> attributes = [];
     List<KeyValueRadioModel> unitOfMeasures =
         await productRepository.getUnitOfMeasures();
     List<KeyValueRadioModel> models = [];
     if (productIdOld != null) {
       // try {
-        productModel =
-        await productRepository.getDetailsOfSelectedProduct(productIdOld);
+      productModel =
+          await productRepository.getDetailsOfSelectedProduct(productIdOld);
 
-        categories
-            .singleWhere((element) => element.id == productModel.categoryId)
-            .isSelected = true;
-        attributes = categories
-            .singleWhere((element) => element.id == productModel.categoryId)
-            .attributeModels;
-        brands
-            .singleWhere((element) => element.value == productModel.brandId)
-            .isSelected = true;
-        //
-        models = brands
-            .singleWhere((element) => element.value == productModel.brandId)
-            .subKeyValueModels;
-        print(models.length);
-        models
-            .singleWhere((element) => element.value == productModel.modelId)
-            .isSelected = true;
-        unitOfMeasures
-            .singleWhere(
-                (element) => element.value == productModel.unitOfMeasureId)
-            .isSelected = true;
-        attributes.forEach((element) {
-          if (productModel.attributeLines
-              .any((lineElement) => lineElement.value == element.id)) {
-            element.values
-                .singleWhere((valueElement) => productModel.attributeLines
-                    .any((lineElement) => lineElement.key == valueElement.text))
-                .isSelected = true;
-          }
-        });
+      categories
+          .singleWhere((element) => element.id == productModel.categoryId)
+          .isSelected = true;
+      attributes = categories
+          .singleWhere((element) => element.id == productModel.categoryId)
+          .attributeModels;
+      brands
+          .singleWhere((element) => element.value == productModel.brandId)
+          .isSelected = true;
+      //
+      models = brands
+          .singleWhere((element) => element.value == productModel.brandId)
+          .subKeyValueModels;
+      print(models.length);
+      models
+          .singleWhere((element) => element.value == productModel.modelId)
+          .isSelected = true;
+      unitOfMeasures
+          .singleWhere(
+              (element) => element.value == productModel.unitOfMeasureId)
+          .isSelected = true;
+      attributes.forEach((element) {
+        if (productModel.attributeLines
+            .any((lineElement) => lineElement.value == element.id)) {
+          element.values
+              .singleWhere((valueElement) => productModel.attributeLines
+                  .any((lineElement) => lineElement.key == valueElement.text))
+              .isSelected = true;
+        }
+        //for dropdown
+      });
+
+      // unitOfMeasures.insert(0, KeyValueRadioModel(value: 'Select Unit',key: 'Select Unit',isSelected: !unitOfMeasures.any((element) => element.isSelected)));
+
+      // for drop down
+
       // }catch(e){
       //   print('Add product $e');
       // }
@@ -231,6 +250,34 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       state.highlights = productModel.highlights;
       //
     }
+    categories.insert(
+        0,
+        CategoryModel(
+            id: 'Select Category',
+            name: 'Select Category',
+            isSelected: !categories.any((element) => element.isSelected)));
+    brands.insert(
+        0,
+        KeyValueRadioModel(
+          value: 'Select Brand',
+          key: 'Select Brand',
+          isSelected: !brands.any((element) => element.isSelected),
+        ));
+    models.insert(
+        0,
+        KeyValueRadioModel(
+          value: 'Select Model',
+          key: 'Select Model',
+          isSelected: !models.any((element) => element.isSelected),
+        ));
+    unitOfMeasures.insert(
+        0,
+        KeyValueRadioModel(
+          value: 'Select  Product Unit',
+          key: 'Select  Product Unit',
+          isSelected: !unitOfMeasures.any((element) => element.isSelected),
+        ));
+
     print('unit od measures ${unitOfMeasures.map((e) => e.value).toList()}');
     add(BaseDataUpdated(
         unitMeasures: unitOfMeasures,

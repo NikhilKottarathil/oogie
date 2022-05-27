@@ -33,7 +33,7 @@ class ProductRepository {
 // CATEGORY
   Future<void> setCategories() async {
     try {
-      var body = await getDataRequest(address: 'product_category/list');
+      var body = await getDataRequest(address: 'product_category/list?rows_per_page=100&page=1');
       if (body['Product Category'] != null) {
         categoryModels.clear();
         body['Product Category'].forEach((category) {
@@ -53,7 +53,7 @@ class ProductRepository {
           });
           List<CategoryModel> subCategories = [];
           categoryModels.add(CategoryModel(
-            name: category['display_name'].toString(),
+            name: category['name'].toString(),
             isSelected: false,
             attributeModels: attributeModels,
             imageUrl: category['media'] != null
@@ -63,7 +63,7 @@ class ProductRepository {
           ));
         });
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);
@@ -73,7 +73,7 @@ class ProductRepository {
 
   Future<List<KeyValueRadioModel>> getProductBrand() async {
     try {
-      var body = await getDataRequest(address: 'product_brand/list');
+      var body = await getDataRequest(address: 'product_brand/list?rows_per_page=100&page=1');
       if (body['Product Brand'] != null) {
         List<KeyValueRadioModel> models = [];
         body['Product Brand'].forEach((element) {
@@ -108,7 +108,7 @@ class ProductRepository {
 
   Future<List> getAttributes() async {
     try {
-      var body = await getDataRequest(address: 'product_attribute/list');
+      var body = await getDataRequest(address: 'product_attribute/list?rows_per_page=100&page=1');
       if (body['Product Attribute'] != null) {
         List<AttributeModel> models = [];
         body['Product Attribute'].forEach((element) {
@@ -140,7 +140,7 @@ class ProductRepository {
 
   Future<List> getUnitOfMeasures() async {
     try {
-      var body = await getDataRequest(address: 'unit_of_measure/list');
+      var body = await getDataRequest(address: 'unit_of_measure/list?rows_per_page=100&page=1');
       if (body['Unit Of Measure'] != null) {
         List<KeyValueRadioModel> models = [];
         body['Unit Of Measure'].forEach((element) {
@@ -204,7 +204,10 @@ class ProductRepository {
     }
   }
 
-  Future<List<CategoryModel>> getCategories() async {
+  Future<List<CategoryModel>>
+
+
+  getCategories() async {
     return categoryModels;
   }
 
@@ -215,22 +218,22 @@ class ProductRepository {
       String productId}) async {
     try {
       print('add product pressed');
-      String highLights = '';
-      state.highlights.forEach((element) {
-        if (highLights.isEmpty) {
-          highLights = element;
-        } else {
-          highLights = highLights + ',' + element;
-        }
-      });
-      List<Map<String, Map<String, String>>> specifications = [];
-      state.specificationModels.forEach((element) {
-        Map<String, String> subSpec = {};
-        element.values.forEach((element) {
-          subSpec.addAll({element.key: element.value});
-        });
-        specifications.add({element.heading: subSpec});
-      });
+      // String highLights = '';
+      // state.highlights.forEach((element) {
+      //   if (highLights.isEmpty) {
+      //     highLights = element;
+      //   } else {
+      //     highLights = highLights + ',' + element;
+      //   }
+      // });
+      // List<Map<String, Map<String, String>>> specifications = [];
+      // state.specificationModels.forEach((element) {
+      //   Map<String, String> subSpec = {};
+      //   element.values.forEach((element) {
+      //     subSpec.addAll({element.key: element.value});
+      //   });
+      //   specifications.add({element.heading: subSpec});
+      // });
       List<Map<String, String>> attributes = [];
       state.attributes.forEach((element) {
         Map<String, String> attribute = {'product_attribute_id': element.id};
@@ -260,11 +263,11 @@ class ProductRepository {
             .singleWhere((element) => element.isSelected == true)
             .value,
         'qty_available': state.qtyAvailable,
-        'specifications': specifications,
         'product_variants': attributes,
         'vendor_id': '',
         'is_used_product': isUsedProduct,
-        'highlights': highLights
+        // 'specifications': specifications,
+        // 'highlights': highLights
       };
       if (state.offerPrice.toString().trim().length != 0) {
         requestBody.addAll({'offer_price': state.offerPrice});
@@ -362,6 +365,7 @@ class ProductRepository {
                 ? product['discount_percentage'].toStringAsFixed(1)
                 : '0.0',
             userRole: product['user_role'].toString(),
+            productStatus: product['published']?ProductStatus.Published:ProductStatus.InReview
           ));
         });
 
@@ -424,7 +428,7 @@ class ProductRepository {
 
         return productModels;
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);
@@ -621,7 +625,7 @@ class ProductRepository {
         print(productModels.length);
         return productModels;
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);
@@ -966,7 +970,7 @@ class ProductRepository {
           }
         }
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);
@@ -1062,7 +1066,7 @@ class ProductRepository {
           ));
         });
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);
@@ -1099,7 +1103,7 @@ class ProductRepository {
         });
         return advertisementModels;
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);

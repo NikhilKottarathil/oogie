@@ -11,7 +11,12 @@ import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_e
 import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_satate.dart';
 import 'package:oogie/screens/common/products/product_filter/filter_list_adapter.dart';
 
-class AddConnectionAgentView1 extends StatelessWidget {
+class AddConnectionAgentView1 extends StatefulWidget {
+  @override
+  State<AddConnectionAgentView1> createState() => _AddConnectionAgentView1State();
+}
+
+class _AddConnectionAgentView1State extends State<AddConnectionAgentView1> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -44,9 +49,14 @@ class AddConnectionAgentView1 extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    if(context.read<AddConnectionAgentBloc>().isNew)
                                     Text('Select user type',style: TextStyles.smallRegular,),
-                                    SizedBox(height:20,),
-                                    BlocBuilder<AddConnectionAgentBloc,
+                                    if(context.read<AddConnectionAgentBloc>().isNew)
+
+                                      SizedBox(height:20,),
+                                    if(context.read<AddConnectionAgentBloc>().isNew)
+
+                                      BlocBuilder<AddConnectionAgentBloc,
                                         AddConnectionAgentState>(
                                       builder: (context, state) {
                                         return Wrap(
@@ -133,7 +143,9 @@ class AddConnectionAgentView1 extends StatelessWidget {
                                             textInputType: TextInputType.text);
                                       },
                                     ),
-                                    BlocBuilder<AddConnectionAgentBloc,
+                                    if(context.read<AddConnectionAgentBloc>().isNew)
+
+                                      BlocBuilder<AddConnectionAgentBloc,
                                         AddConnectionAgentState>(
                                       builder: (context, state) {
                                         return CustomTextField(
@@ -154,7 +166,9 @@ class AddConnectionAgentView1 extends StatelessWidget {
                                                 TextInputType.number);
                                       },
                                     ),
-                                    BlocBuilder<AddConnectionAgentBloc,
+                                    if(context.read<AddConnectionAgentBloc>().isNew)
+
+                                      BlocBuilder<AddConnectionAgentBloc,
                                         AddConnectionAgentState>(
                                       builder: (context, state) {
                                         return CustomTextField(

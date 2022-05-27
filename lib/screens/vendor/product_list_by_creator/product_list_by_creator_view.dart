@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/product_by_creator_adapter.dart';
-import 'package:oogie/adapters/vertical_product_adapter.dart';
-import 'package:oogie/components/app_bar/secondary_app_bar.dart';
 import 'package:oogie/components/popups_loaders/custom_progress_indicator.dart';
 import 'package:oogie/constants/page_scroll_status.dart';
 import 'package:oogie/constants/styles.dart';
@@ -59,33 +57,31 @@ class _ProductListByCreatorViewState extends State<ProductListByCreatorView> {
 
           return SingleChildScrollView(
             controller: scrollController,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GridView.builder(
-                    // physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.6,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 15),
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: state.productModels.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ProductByCreatorAdapter(state.productModels[index]);
-                    },
-                  ),
-                  state.isLoading
-                      ? Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: CustomProgressIndicator(),
-                        )
-                      : Container(),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GridView.builder(
+                  // physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.all(20),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.6,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: state.productModels.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductByCreatorAdapter(state.productModels[index]);
+                  },
+                ),
+                state.isLoading
+                    ? Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: CustomProgressIndicator(),
+                      )
+                    : Container(),
+              ],
             ),
           );
         }),
@@ -100,12 +96,13 @@ class _ProductListByCreatorViewState extends State<ProductListByCreatorView> {
               builder: (_) => BlocProvider(
                 create: (_) => AddProductBloc(
                     productIdOld: null,
-                    productListByCreatorBloc: context
-                        .read<ProductListByCreatorBloc>(),
+                    productListByCreatorBloc:
+                        context.read<ProductListByCreatorBloc>(),
                     productRepository: context
                         .read<ProductListByCreatorBloc>()
                         .productRepository,
-                    parentPage: context.read<ProductListByCreatorBloc>().parentPage),
+                    parentPage:
+                        context.read<ProductListByCreatorBloc>().parentPage),
                 child: AddProductView0(),
               ),
             ),

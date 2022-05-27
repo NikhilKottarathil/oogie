@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^3.1.4
   firebase_database: ^8.1.0
   firebase_messaging: ^11.2.3
+  firebase_dynamic_links: ^4.2.3
   flutter_local_notifications: 5.0.0
 
   image_picker: ^0.8.0+1
@@ -59,6 +60,7 @@ dependencies:
   share_plus: ^3.1.0
   fuzzy: ^0.3.0
   flutter_rating_bar: ^4.0.0
+
 
 
 

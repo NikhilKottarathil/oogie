@@ -192,7 +192,8 @@ class AppRouter {
         }
         if (FlavorConfig().flavorName == 'user') {
 
-          if(AppData().isUser) {
+          AppData appData=AppData();
+          if(appData.isUser) {
             return MaterialPageRoute(
                 builder: (_) =>
                     MultiBlocProvider(
@@ -203,7 +204,8 @@ class AppRouter {
                       ],
                       child: UsedPhoneHomeView(),
                     ));
-          }  return MaterialPageRoute(
+          }
+          return MaterialPageRoute(
               builder: (_) => BlocProvider(
                 create: (context) => LoginBloc(authRepo: authRepository),
                 child: LoginView(),

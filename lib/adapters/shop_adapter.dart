@@ -21,8 +21,8 @@ class ShopAdapter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           shopModel.imageUrl != null
-              ? Image.network(shopModel.imageUrl)
-              : Image.asset('refAssets/store_icon.png'),
+              ? ClipRRect(borderRadius: BorderRadius.circular(8),child: Image.network(shopModel.imageUrl,width: MediaQuery.of(context).size.width,))
+              : Expanded(child: Center(child: Image.asset('refAssets/store_icon.png'))),
           SizedBox(
             height: 14,
           ),

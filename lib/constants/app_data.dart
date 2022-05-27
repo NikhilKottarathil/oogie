@@ -73,6 +73,12 @@ class AppData {
     appDataModel.profilePic = user['profile_pic']['url'] != null
         ? 'https://143.244.132.53/' + user['profile_pic']['url']
         : Urls().personUrl;
+    if (FlavorConfig().flavorName == 'vendor' ||
+        FlavorConfig().flavorName == 'wholesale_dealer') {
+      appDataModel.selectedLocationId = user['location']['id'].toString();
+      appDataModel.selectedLocationName = user['location']['name'].toString();
+      print('selectedLocationId ${appDataModel.selectedLocationId}');
+    }
     return FlavorConfig().flavorName == 'user'
         ? user['vendor_id'] != null
         : true;

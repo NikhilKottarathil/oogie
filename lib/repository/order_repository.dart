@@ -153,7 +153,7 @@ class OrderRepository {
 
           return models;
         } else {
-          throw Exception('Please retry');
+          throw AppExceptions().somethingWentWrong;
         }
       } else {
         if (body['message'] != null) {

@@ -18,6 +18,7 @@ import 'package:oogie/screens/common/products/product/product_event.dart';
 import 'package:oogie/screens/common/products/product/product_highlights.dart';
 import 'package:oogie/screens/common/products/product/product_state.dart';
 import 'package:oogie/screens/common/products/product/select_varient.dart';
+import 'package:oogie/utils/firebase_dynamic_link.dart';
 
 class ProductView extends StatelessWidget {
   int _current = 0;
@@ -197,10 +198,15 @@ bool isViewOnly=false;
 
                                               ],
                                             ),
-                                            SvgPicture.asset(
-                                              'icons/share.svg',
-                                              height: 24,
-                                              fit: BoxFit.scaleDown,
+                                            GestureDetector(
+                                              onTap: (){
+                                                generateProductDynamicLink(id: context.read<ProductBloc>().productId);
+                                              },
+                                              child: SvgPicture.asset(
+                                                'icons/share.svg',
+                                                height: 24,
+                                                fit: BoxFit.scaleDown,
+                                              ),
                                             )
                                           ],
                                         ):Container(),

@@ -4,6 +4,7 @@ import 'package:oogie/adapters/address_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
 import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
+import 'package:oogie/functions/show_snack_bar.dart';
 import 'package:oogie/screens/shopping/cart_details_view.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_bloc.dart';
 import 'package:oogie/screens/shopping/checkout/checkout_payment_selection_view.dart';
@@ -126,6 +127,8 @@ class CheckoutShippingView extends StatelessWidget {
                               ),
                             ),
                           );
+                        }else{
+                          showSnackBar(context, Exception('Please select address to continue'));
                         }
                       },
                     );

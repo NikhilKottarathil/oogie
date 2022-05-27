@@ -1,3 +1,4 @@
+import 'package:oogie/constants/strings_and_urls.dart';
 import 'package:oogie/functions/api_calls.dart';
 import 'package:oogie/models/user_model.dart';
 
@@ -34,7 +35,7 @@ class DistributorRepository {
 
         return models;
       } else {
-        throw Exception('Please retry');
+        throw AppExceptions().somethingWentWrong;
       }
     } catch (e) {
       print(e);

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:oogie/components/default_button.dart';
 import 'package:oogie/constants/styles.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-showAlertBottomSheet(
-    {BuildContext context,
-    String heading,
-    content,
-    positiveText,
-    negativeText,
-    neutralText,
-    Function positiveAction,
-    negativeAction,
-    neutralAction}) async {
+showAlertBottomSheet({
+  BuildContext context,
+  String heading,
+  content,
+  positiveText,
+  negativeText,
+  Function positiveAction,
+  Function negativeAction,
+}) async {
   await showModalBottomSheet(
       context: context,
       enableDrag: true,
@@ -24,79 +21,49 @@ showAlertBottomSheet(
       ),
       builder: (builder) {
         return Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 35),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 35),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Visibility(
-                    visible: heading!=null,
-                    child: Text(
-                      heading!=null?heading:'',
-                      style: TextStyles.largeRegular,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      Icons.close,
-                      color: AppColors.SolidIcon,
-                    ),
-                  )
-                ],
-              ),
-              Visibility(
-                visible: content!=null,
-                child: Text(
-                  content!=null?content:'',
-                  style: TextStyles.smallRegular,
+              // if(heading != null)
+              //   Text(
+              //     heading,
+              //     style: TextStyles.largeRegular,
+              //   ),
+              // if(heading != null && content != null)
+              //   SizedBox(height: 8,),
+              if(content != null)
+                Text(
+                  content,
+                  style: TextStyles.mediumMedium,
                 ),
-              ),
-
+              SizedBox(height: 20,),
               Row(
-
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  negativeText != null
-                      ? InkWell(
-                          onTap: () {
-                            neutralAction != null
-                                ? neutralAction()
-                                : Navigator.pop(context);
-                          },
-                          child: Text(
-                              positiveText != null ? positiveText : 'Cancel'))
-                      : Container(),
-                  Card(
-
-
-                    child: InkWell(
-                        onTap: () {
+                  Expanded(
+                    child: OutlinedButton(
+                        onPressed: () {
                           negativeAction != null
                               ? negativeAction()
                               : Navigator.pop(context);
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20,10,20,10),
-                          child: Text(positiveText != null ? positiveText : 'No',style: TextStyles.mediumRegularCriticalBase),
-                        )),
+                        child: Text(
+                            negativeText != null ? negativeAction : 'Cancel',
+                            style: TextStyles.mediumRegular)),
                   ),
-                  Card(
-
-                    child: InkWell(
-                        onTap: () {
+                  SizedBox(width: 20,),
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: () {
                           positiveAction != null
                               ? positiveAction()
                               : Navigator.pop(context);
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20,10,20,10),
-                          child: Text(positiveText != null ? positiveText : 'Yes',style: TextStyles.mediumRegularGreenBase,),
+                        child: Text(
+                          positiveText != null ? positiveText : 'Yes',
+                          style: TextStyles.mediumRegularWhite,
                         )),
                   ),
                 ],

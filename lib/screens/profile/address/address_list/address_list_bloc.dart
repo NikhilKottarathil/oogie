@@ -37,6 +37,11 @@ class AddressListBloc extends Bloc<AddressListEvent, AddressListState> {
           addressModels: event.addressModels, isLoading: false);
     } else if (event is NewAddressAdded) {
       getAddresses();
+      if (checkoutBloc != null) {
+        print('addreess chnag call');
+        print(checkoutBloc.state.total);
+        checkoutBloc.add(GetDefaultAddress());
+      }
     } else if (event is ChooseDefaultAddress) {
       await profileRepository.makeSelectedAddressDefault(event.id);
       getAddresses();

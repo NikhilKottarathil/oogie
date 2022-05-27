@@ -73,7 +73,7 @@ class AuthRepository {
         'mobile': phoneNumber,
       };
       print(myBody);
-      var body = await postDataRequest(address: 'getOtp', myBody: myBody);
+      var body = await postDataRequest(address: FlavorConfig().flavorName+'/getOtp', myBody: myBody);
       if (body['token'] != null) {
         SharedPreferences sharedPreferences =
             await SharedPreferences.getInstance();
@@ -199,11 +199,11 @@ class AuthRepository {
         if (body['message'] != null) {
           throw Exception(body['message']);
         } else {
-          throw Exception('Please retry');
+          throw AppExceptions().somethingWentWrong;
         }
       }
     } catch (e) {
-      throw Exception('Please retry');
+      throw e;
     }
   }
   Future<void> updateFirebaseDeviceToken({String password, token, mobile}) async {
@@ -218,11 +218,11 @@ class AuthRepository {
         if (body['message'] != null) {
           throw Exception(body['message']);
         } else {
-          throw Exception('Please retry');
+          throw AppExceptions().somethingWentWrong;
         }
       }
     } catch (e) {
-      throw Exception('Please retry');
+      throw e;
     }
   }
 }

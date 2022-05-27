@@ -2,6 +2,7 @@ import 'package:oogie/models/attribute_model.dart';
 import 'package:oogie/models/key_value_radio_model.dart';
 import 'package:oogie/models/order_model.dart';
 
+enum ProductStatus {Published,InReview}
 class ProductModel {
   String id,
       name,
@@ -22,6 +23,8 @@ class ProductModel {
       reviewCount,
       categoryId,
       creatorId;
+  ProductStatus productStatus;
+
   bool isAddedToCart;
   bool isInWishList;
   List<String> medias = [];
@@ -76,6 +79,7 @@ class ProductModel {
       this.isAddedToCart,
       this.ratingCount,
         this.userRole,
+        this.productStatus,
       this.rating});
 }
 

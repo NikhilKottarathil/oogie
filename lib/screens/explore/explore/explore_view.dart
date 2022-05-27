@@ -10,9 +10,21 @@ import 'package:oogie/components/app_bar/main_appbar.dart';
 import 'package:oogie/screens/explore/explore/explore_bloc.dart';
 import 'package:oogie/screens/explore/explore/explore_state.dart';
 import 'package:oogie/screens/explore/menu_drawer.dart';
+import 'package:oogie/utils/firebase_dynamic_link.dart';
 import 'package:oogie/views/buy_and_sell_view.dart';
 
-class ExploreView extends StatelessWidget {
+class ExploreView extends StatefulWidget {
+  @override
+  State<ExploreView> createState() => _ExploreViewState();
+}
+
+class _ExploreViewState extends State<ExploreView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ExploreBloc, ExploreState>(

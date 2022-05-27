@@ -20,17 +20,18 @@ class ProfileRepository {
     try {
       var body = await getDataRequest(
           address: FlavorConfig().flavorValue + '/profile');
+      print('\n=======\nvendor body $body\n========= \n');
       if (body[FlavorConfig().flavorKey] != null) {
         return body[FlavorConfig().flavorKey];
       } else {
         if (body['message'] != null) {
           throw Exception(body['message']);
         } else {
-          throw Exception('Please retry');
+          throw AppExceptions().somethingWentWrong;
         }
       }
     } catch (e) {
-      throw Exception('Please retry');
+      throw e;
     }
   }
 
@@ -75,8 +76,7 @@ class ProfileRepository {
     String token = sharedPreferences.getString('token');
     Map<String, String> headers = {};
     headers['x-access-token'] = token;
-    String url =
-        "https://143.244.132.53/api/" + FlavorConfig().flavorValue + "/profile";
+    String url = Urls().apiAddress + FlavorConfig().flavorValue + "/profile";
 
     var request = http.MultipartRequest('PATCH', Uri.parse(url));
     request.headers.addAll(headers);
@@ -143,12 +143,37 @@ class ProfileRepository {
     try {
       var body =
           await getDataRequest(address: 'vendors/by_location/$locationId');
-      print(body);
       if (body['Vendor'] != null) {
         shopModels.clear();
         body['Vendor'].forEach((element) {
-          shopModels.add(
-              ShopModel(id: element['id'].toString(), name: element['name']));
+          String imageUrl;
+          print('============\n');
+          print('Shop by location $element');
+          print('============\n');
+
+          if (element['profile_pic'] != null) {
+            if (element['profile_pic']['url'] != null) {
+              imageUrl = Urls().serverAddress + element['profile_pic']['url'];
+            }
+          }
+          shopModels.add(ShopModel(
+              id: element['id'].toString(),
+              name: element['name'],
+              imageUrl: imageUrl,
+              workingDays: element['working_days'].toString(),
+              caption: element['caption'].toString(),
+              phoneNumber:
+                  element['mobile_country_code'] + ' ' + element['mobile'],
+              description: element['about_description'],
+              email: element['email'],
+              workingTime:
+                  element['openig_time'] + '-' + element['closing_time'],
+              address: element['floor_door_number'] + ', ' +
+                  element['building_name'] +', '+ element['landmark'] +', '+
+                  element['place'] +', '+
+                  element['street_name'] +', '+
+                  element['street_name'] +', '+
+                  element['province']+', '+element['zip_code']));
         });
         return shopModels;
       } else {
@@ -159,11 +184,11 @@ class ProfileRepository {
       throw e;
     }
   }
+
   Future<String> getSelectedShopAndLocation() async {
     try {
-      if(appDataModel.selectedLocationId!=null) {
-        var locationBody =
-        await getDataRequest(
+      if (appDataModel.selectedLocationId != null) {
+        var locationBody = await getDataRequest(
             address: 'location/${appDataModel.selectedLocationId}');
         print(locationBody);
         if (locationBody['Location'] != null) {
@@ -172,8 +197,10 @@ class ProfileRepository {
                 address: 'vendor/${appDataModel.selectedShopId}');
             print(shopBody);
             if (shopBody['Vendor'] != null) {
-              return shopBody['Vendor']['name'] + ' ' +
-                  locationBody['Location']['name'];;
+              return shopBody['Vendor']['name'] +
+                  ' ' +
+                  locationBody['Location']['name'];
+              ;
             } else {
               return locationBody['Location']['name'];
             }
@@ -183,7 +210,7 @@ class ProfileRepository {
         } else {
           throw AppExceptions().somethingWentWrong;
         }
-      }else{
+      } else {
         throw Exception(['This only for user']);
       }
     } catch (e) {
@@ -191,13 +218,12 @@ class ProfileRepository {
       throw e;
     }
   }
+
   Future<String> getNameFromShopId(String shopId) async {
     try {
-      var body =
-          await getDataRequest(address: 'vendor/$shopId');
+      var body = await getDataRequest(address: 'vendor/$shopId');
       print(body);
       if (body['Vendor'] != null) {
-
         return body['Vendor']['name'];
       } else {
         throw AppExceptions().somethingWentWrong;

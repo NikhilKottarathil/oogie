@@ -19,7 +19,6 @@ class CustomWebViewState extends State<CustomWebView> {
   @override
   Widget build(BuildContext context) {
     // print('pdf link');
-    // print('https://api.queschat.com/'+widget.file);
     // print(widget.file);
     return WebView(
       initialUrl: widget.file,

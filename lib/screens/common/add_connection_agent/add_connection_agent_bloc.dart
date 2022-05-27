@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/flavour_config.dart';
+import 'package:oogie/main_common.dart';
+import 'package:oogie/models/key_value_radio_model.dart';
 import 'package:oogie/models/user_model.dart';
 import 'package:oogie/repository/vendor_repository.dart';
 import 'package:oogie/repository/wholesale_repository.dart';
@@ -17,30 +20,92 @@ class AddConnectionAgentBloc
   final WholeSaleRepository wholeSaleRepository;
   final ConnectionAgentsListBloc connectionAgentsListBloc;
   UserModel userModel;
+  bool isNew = true;
 
   AddConnectionAgentBloc(
       {this.vendorRepository,
       this.wholeSaleRepository,
       this.connectionAgentsListBloc,
       this.userModel})
-      : super(AddConnectionAgentState(agentType: 'vendor', index: 0)) {
+      : super(AddConnectionAgentState(
+            agentType: 'vendor',
+            index: 0,
+            workingDays: [
+              KeyValueRadioModel(isSelected:false,key :'Sunday',value: 'Sunday'),
+              KeyValueRadioModel(isSelected:false,key :'Monday',value: 'Monday'),
+              KeyValueRadioModel(isSelected:false,key :'Tuesday',value: 'Tuesday'),
+              KeyValueRadioModel(isSelected:false,key :'Wednesday',value: 'Wednesday'),
+              KeyValueRadioModel(isSelected:false,key :'Thursday',value: 'Thursday'),
+              KeyValueRadioModel(isSelected:false,key :'Friday',value: 'Friday'),
+              KeyValueRadioModel(isSelected:false,key :'Saturday',value: 'Saturday'),
+
+            ])) {
     getLocations();
-    if (userModel != null) {
-      setUserOldData();
-    }
+
   }
 
   Future<void> getLocations() async {
     var locationModels = await profileRepository.getLocationList();
     add(LocationsUpdated(locationModels: locationModels));
+    if (userModel != null) {
+      setUserOldData();
+    }
   }
 
-  setUserOldData() {
+  setUserOldData() async {
+    var data;
+    isNew = false;
+    if (userModel.userType == 'vendor') {
+      data = await vendorRepository.getDetailsOfSelectedVendor(userModel.id);
+    } else {
+      data = await wholeSaleRepository
+          .getDetailsOfSelectedWholeSaleDealer(userModel.id);
+    }
+    if (data != null) {
+      List workingDayString=[];
+      state.name = data['name'];
+      state.email = data['email'];
+      state.mobile = data['mobile'];
+      state.password = data['password'];
+      String locationId = data['location']!=null?data['location']['id'].toString():null;
+      workingDayString = data['working_days'];
+      state.whatsappCountryCode = data['whatsapp_country_code'];
+      state.mobileCountryCode = data['mobile_country_code'];
+      state.openingTime = data['openig_time'];
+      state.closingTime = data['closing_time'];
+      state.designation = data['designation'];
+      state.floorDoorNumber = data['floor_door_number'];
+      state.contactPersonName = data['contact_person_name'];
+      state.caption = data['caption'];
+      state.aboutDescription = data['about_description'];
+      state.district = data['district'];
+      state.country = data['country'];
+      state.province = data['province'];
+      state.zipCode = data['zip_code'];
+      state.streetName = data['street_name'];
+      state.landmark = data['landmark'];
+      state.buildingName = data['building_name'];
+      if (locationId != null) {
+        if (state.locationModels
+            .map((e) => e.id)
+            .toList()
+            .contains(locationId)) {
+          state.locationModels
+              .singleWhere((element) => element.id == locationId)
+              .isSelected = true;
+        }
+      }
+      workingDayString.forEach((e) {
+        state.workingDays.singleWhere((element) => element.value == e.toString()).isSelected=true;
+      });
 
-    // state.userName = addressModel.name;
-
-    // state.address2 = addressModel.address2;
-    // state.landmark = addressModel.landmark;
+      add(PageChanged(index: 1));
+     await Future.delayed(Duration(milliseconds: 500));
+      add(PageChanged(index: 0));
+     //  MyApp.navigatorKey.currentState.setState(() {
+     //
+     //  });
+    }
   }
 
   @override
@@ -63,9 +128,12 @@ class AddConnectionAgentBloc
     } else if (event is ZipCodeChanged) {
       print('pincode changed');
       yield state.copyWith(zipCode: event.value);
-    } else if (event is WorkingDaysChanged) {
-      yield state.copyWith(workingDays: event.value);
+    } else if (event is WorkingDaysSelected) {
+      state.workingDays.singleWhere((element) => element.value==event.value).isSelected= !state.workingDays.singleWhere((element) => element.value==event.value).isSelected;
+      yield state.copyWith(workingDays:state.workingDays );
     } else if (event is OpeningTimeChanged) {
+      yield state.copyWith(openingTime: event.value);
+    } else if (event is ClosingTimeChanged) {
       yield state.copyWith(openingTime: event.value);
     } else if (event is FloorDoorNumberChanged) {
       yield state.copyWith(floorDoorNumber: event.value);
@@ -116,6 +184,7 @@ class AddConnectionAgentBloc
               whatsappCountryCode: '+91',
               mobileCountryCode: '+91',
               openingTime: state.openingTime,
+              closingTime: state.closingTime,
               designation: state.designation,
               floorDoorNumber: state.floorDoorNumber,
               contactPersonName: state.contactPersonName,
@@ -127,8 +196,10 @@ class AddConnectionAgentBloc
               zipCode: state.zipCode,
               streetName: state.streetName,
               landmark: state.landmark,
-              buildingName: state.buildingName);
-          connectionAgentsListBloc.add(FetchInitialData());
+              buildingName: state.buildingName,id: userModel!=null?userModel.id:null,isNew: userModel==null);
+          if (connectionAgentsListBloc != null) {
+            connectionAgentsListBloc.add(FetchInitialData());
+          }
 
           yield state.copyWith(formStatus: SubmissionSuccess());
         } catch (e) {
@@ -151,6 +222,7 @@ class AddConnectionAgentBloc
               whatsappCountryCode: '+91',
               mobileCountryCode: '+91',
               openingTime: state.openingTime,
+              closingTime: state.closingTime,
               designation: state.designation,
               floorDoorNumber: state.floorDoorNumber,
               contactPersonName: state.contactPersonName,
@@ -162,8 +234,10 @@ class AddConnectionAgentBloc
               zipCode: state.zipCode,
               streetName: state.streetName,
               landmark: state.landmark,
-              buildingName: state.buildingName);
-          connectionAgentsListBloc.add(FetchInitialData());
+              buildingName: state.buildingName,id: userModel!=null?userModel.id:null,isNew: userModel==null);
+          if (connectionAgentsListBloc != null) {
+            connectionAgentsListBloc.add(FetchInitialData());
+          }
 
           yield state.copyWith(formStatus: SubmissionSuccess());
           print('success');

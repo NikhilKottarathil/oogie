@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oogie/components/icon_text_button.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/flavour_config.dart';
 import 'package:oogie/repository/auth_repo.dart';
@@ -10,6 +11,7 @@ import 'package:oogie/repository/profile_repository.dart';
 import 'package:oogie/screens/user/orders/order_list.dart';
 import 'package:oogie/screens/profile/profile/profile_bloc.dart';
 import 'package:oogie/screens/profile/profile/profile_state.dart';
+import 'package:oogie/utils/firebase_dynamic_link.dart';
 
 class MenuDrawer extends StatelessWidget {
   ProfileRepository profileRepository = ProfileRepository();
@@ -149,14 +151,24 @@ class MenuDrawer extends StatelessWidget {
                     action: () {
                       Navigator.pushNamed(context, '/profile');
                     }),
+
+                if(FlavorConfig().flavorName == 'vendor')
                 IconTextButton(
-                    iconUrl: 'icons/settings.svg',
-                    text: 'Settings',
-                    action: () {}),
+                    iconUrl: 'icons/share.svg',
+                    text: 'Share My Shop',
+                    action: () {
+
+                      print('generateShopDynamicLink ${AppData().userId}  ${appDataModel.selectedLocationId}');
+                      generateShopDynamicLink(shopId: AppData().userId,locationId: appDataModel.selectedLocationId,locationName: appDataModel.selectedLocationName);
+                    }),
+                // IconTextButton(
+                //     iconUrl: 'icons/settings.svg',
+                //     text: 'Settings',
+                //     action: () {}),
                 Spacer(),
                 IconTextButton(
                     iconUrl: 'icons/logout.svg',
-                    text: 'Logout',
+                    text: AppData().isUser?'Logout':'Log in',
                     action: () async {
                       AuthRepository authRepo = AuthRepository();
                       await authRepo.logOut();

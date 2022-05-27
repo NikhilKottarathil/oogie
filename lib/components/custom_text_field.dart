@@ -96,6 +96,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           hintText: isLabelEnabled ? null : widget.hintText,
           contentPadding: const EdgeInsets.all(17.0),
           fillColor: Colors.white,
+          alignLabelWithHint: true,
           labelStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -107,6 +108,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontSize: 14,
               fontWeight: FontWeight.w400,
               fontFamily: 'DMSans',
+
               color: _focus.hasFocus
                   ? AppColors.TextDefault
                   : AppColors.TextSubdued),

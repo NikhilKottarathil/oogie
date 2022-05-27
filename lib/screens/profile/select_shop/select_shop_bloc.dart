@@ -11,18 +11,32 @@ class SelectShopBloc extends Bloc<SelectShopEvent, SelectShopState> {
   final ProfileRepository profileRepository;
   LocationModel locationModel;
   String parentPage;
+  String shopId;
+  ShopModel selectedShopModel;
 
     bool isUsedPhonesSelected=false;
 
   // final ProfileBloc profileBloc;
 
-  SelectShopBloc({this.profileRepository, this.locationModel,this.parentPage})
+  SelectShopBloc({this.profileRepository, this.locationModel,this.parentPage,this.shopId})
       : super(SelectShopState(shopModels: [])) {
-    getLocations();
+    getShops();
   }
 
-  Future<void> getLocations() async {
+  Future<void> getShops() async {
     var shopModels = await profileRepository.getShopList(locationModel.id);
+    print('shop Id $shopId');
+    if(shopId!=null){
+      print('shop if insie Id');
+
+      if(shopModels.map((e) => e.id).toList().contains(shopId)){
+        print('shop if contains');
+
+        selectedShopModel=shopModels[shopModels.map((e) => e.id).toList().indexOf(shopId)];
+      }
+    }
+    print('shop if $selectedShopModel');
+
     add(ShopsUpdated(shopModels: shopModels));
   }
 
@@ -37,6 +51,10 @@ class SelectShopBloc extends Bloc<SelectShopEvent, SelectShopState> {
       event.shopModels.insert(0, ShopModel( name: 'All Shops in ${locationModel.name}',id: '00000000'));
       yield state.copyWith(shopModels: event.shopModels);
     } else if (event is ShopSelected) {
+      selectedShopModel=event.shop;
+      print('Shop Selected ${selectedShopModel.name}');
+      yield state.copyWith();
+    }else if (event is ShopSelectedSubmitted) {
 
       try {
         isUsedPhonesSelected=event.isUsedPhonesSelected;

@@ -20,3 +20,9 @@ class ShopSelected extends SelectShopEvent {
 
   ShopSelected({this.shop,this.isUsedPhonesSelected});
 }
+class ShopSelectedSubmitted extends SelectShopEvent {
+  ShopModel shop;
+  bool isUsedPhonesSelected;
+
+  ShopSelectedSubmitted({this.shop,this.isUsedPhonesSelected});
+}

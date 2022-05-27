@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/components/custom_text_field.dart';
+import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/functions/show_snack_bar.dart';
 import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_bloc.dart';
 import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_event.dart';
 import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_satate.dart';
+import 'package:oogie/screens/common/products/product_filter/filter_list_adapter.dart';
 
 class AddConnectionAgentView2 extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -45,29 +47,47 @@ class AddConnectionAgentView2 extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    // BlocBuilder<AddConnectionAgentBloc,
+                                    //     AddConnectionAgentState>(
+                                    //   builder: (context, state) {
+                                    //     return CustomTextField(
+                                    //         hintText:
+                                    //             "Working Days  (Required)",
+                                    //         validator: (value) {
+                                    //           return value.toString().length ==
+                                    //                   0
+                                    //               ? 'Please Fill'
+                                    //               : null;
+                                    //         },
+                                    //         text: state.workingDays,
+                                    //         onChange: (value) {
+                                    //           context
+                                    //               .read<
+                                    //                   AddConnectionAgentBloc>()
+                                    //               .add(
+                                    //                 WorkingDaysChanged(
+                                    //                     value: value),
+                                    //               );
+                                    //         },
+                                    //         textInputType: TextInputType.text);
+                                    //   },
+                                    // ),
+                                    Text('Select Working Days',style: TextStyles.smallMedium,),
+                                    SizedBox(height: 10,),
                                     BlocBuilder<AddConnectionAgentBloc,
                                         AddConnectionAgentState>(
                                       builder: (context, state) {
-                                        return CustomTextField(
-                                            hintText:
-                                                "Working Days  (Required)",
-                                            validator: (value) {
-                                              return value.toString().length ==
-                                                      0
-                                                  ? 'Please Fill'
-                                                  : null;
-                                            },
-                                            text: state.workingDays,
-                                            onChange: (value) {
-                                              context
-                                                  .read<
-                                                      AddConnectionAgentBloc>()
-                                                  .add(
-                                                    WorkingDaysChanged(
-                                                        value: value),
-                                                  );
-                                            },
-                                            textInputType: TextInputType.text);
+                                        return Wrap(
+                                          children: state.workingDays.map((e) { return GestureDetector(onTap:(){
+                                            context
+                                                .read<
+                                                AddConnectionAgentBloc>()
+                                                .add(
+                                              WorkingDaysSelected(
+                                                  value: e.value),
+                                            );
+                                          },child: KeyValueRadioItem(e));}).toList()
+                                        );
                                       },
                                     ),
                                     BlocBuilder<AddConnectionAgentBloc,
@@ -75,7 +95,7 @@ class AddConnectionAgentView2 extends StatelessWidget {
                                       builder: (context, state) {
                                         return CustomTextField(
                                             hintText:
-                                                "Working Time  (Required)",
+                                                "Opening Time  (Required)",
                                             validator: (value) {
                                               return value.toString().length ==
                                                       0
@@ -89,6 +109,31 @@ class AddConnectionAgentView2 extends StatelessWidget {
                                                       AddConnectionAgentBloc>()
                                                   .add(
                                                     OpeningTimeChanged(
+                                                        value: value),
+                                                  );
+                                            },
+                                            textInputType: TextInputType.text);
+                                      },
+                                    ),
+                                    BlocBuilder<AddConnectionAgentBloc,
+                                        AddConnectionAgentState>(
+                                      builder: (context, state) {
+                                        return CustomTextField(
+                                            hintText:
+                                                "Closing Time  (Required)",
+                                            validator: (value) {
+                                              return value.toString().length ==
+                                                      0
+                                                  ? 'Please Fill'
+                                                  : null;
+                                            },
+                                            text: state.closingTime,
+                                            onChange: (value) {
+                                              context
+                                                  .read<
+                                                      AddConnectionAgentBloc>()
+                                                  .add(
+                                                    ClosingTimeChanged(
                                                         value: value),
                                                   );
                                             },

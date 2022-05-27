@@ -1,4 +1,6 @@
+import 'package:oogie/components/radio_buttons.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
+import 'package:oogie/models/key_value_radio_model.dart';
 import 'package:oogie/models/location_model.dart';
 
 class AddConnectionAgentState {
@@ -6,8 +8,9 @@ class AddConnectionAgentState {
       email,
       mobile,
       password,
-      workingDays,
+
       openingTime,
+      closingTime,
       whatsappCountryCode,
       mobileCountryCode,
       designation,
@@ -26,7 +29,7 @@ class AddConnectionAgentState {
       agentType;
   int index;
   List<LocationModel> locationModels;
-
+List<KeyValueRadioModel>workingDays=[];
   String get emailValidationText {
     if (email == null || email.trim().length == 0) {
       return 'Please email';
@@ -95,21 +98,22 @@ class AddConnectionAgentState {
       this.mobileCountryCode,
       this.name,
       this.openingTime,
+      this.closingTime,
       this.password,
       this.province,
       this.searchString,
       this.whatsappCountryCode,
       this.workingDays,
-      this.agentType,
-      this.index});
+      this.agentType='vendor',
+      this.index=0});
 
   AddConnectionAgentState copyWith({
     String name,
     email,
     mobile,
     password,
-    workingDays,
     openingTime,
+    closingTime,
     whatsappCountryCode,
     mobileCountryCode,
     designation,
@@ -127,6 +131,7 @@ class AddConnectionAgentState {
     agentType,
     searchString,
     var locationModels,
+    List<KeyValueRadioModel>workingDays,
     FormSubmissionStatus formStatus,
     int index,
   }) {
@@ -137,11 +142,13 @@ class AddConnectionAgentState {
       password: password ?? this.password,
       workingDays: workingDays ?? this.workingDays,
       openingTime: openingTime ?? this.openingTime,
+      closingTime: closingTime ?? this.closingTime,
       whatsappCountryCode: whatsappCountryCode ?? this.whatsappCountryCode,
       mobileCountryCode: mobileCountryCode ?? this.mobileCountryCode,
       designation: designation ?? this.designation,
       floorDoorNumber: floorDoorNumber ?? this.floorDoorNumber,
       contactPersonName: contactPersonName ?? this.contactPersonName,
+      buildingName: buildingName ?? this.buildingName,
       caption: caption ?? this.caption,
       aboutDescription: aboutDescription ?? this.aboutDescription,
       district: district ?? this.district,

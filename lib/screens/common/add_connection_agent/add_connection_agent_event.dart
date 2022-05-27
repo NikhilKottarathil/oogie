@@ -44,16 +44,21 @@ class LocationSelected extends AddConnectionAgentEvent {
   LocationSelected({this.index});
 }
 
-class WorkingDaysChanged extends AddConnectionAgentEvent {
+class WorkingDaysSelected extends AddConnectionAgentEvent {
   final String value;
 
-  WorkingDaysChanged({this.value});
+  WorkingDaysSelected({this.value});
 }
 
 class OpeningTimeChanged extends AddConnectionAgentEvent {
   final String value;
 
   OpeningTimeChanged({this.value});
+}
+class ClosingTimeChanged extends AddConnectionAgentEvent {
+  final String value;
+
+  ClosingTimeChanged({this.value});
 }
 
 class DesignationChanged extends AddConnectionAgentEvent {

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/components/app_bar/default_appbar_blue.dart';
 import 'package:oogie/components/ui_widgets/custom_text_button_4.dart';
+import 'package:oogie/constants/app_data.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/flavour_config.dart';
+import 'package:oogie/models/user_model.dart';
+import 'package:oogie/router/app_router.dart';
+import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_bloc.dart';
+import 'package:oogie/screens/common/add_connection_agent/add_connection_agent_view.dart';
 import 'package:oogie/screens/profile/edit_profile/edit_profile_view.dart';
 import 'package:oogie/screens/profile/profile/profile_bloc.dart';
 import 'package:oogie/screens/profile/profile/profile_events.dart';
@@ -66,6 +71,8 @@ class ProfileView extends StatelessWidget {
                         SizedBox(
                           height: 32,
                         ),
+                        // if(FlavorConfig().flavorName != 'vendor' &&
+                        //     FlavorConfig().flavorName !='wholesale_dealer')
                         CustomTextButton4(
                           text: 'Edit Profile Picture',
                           action: () {
@@ -78,14 +85,36 @@ class ProfileView extends StatelessWidget {
                         CustomTextButton4(
                           text: 'Edit Profile',
                           action: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => BlocProvider.value(
-                                  value: context.read<ProfileBloc>(),
-                                  child: EditProfileView(),
+                            if (FlavorConfig().flavorName == 'vendor' ||
+                                FlavorConfig().flavorName ==
+                                    'wholesale_dealer') {
+                              print('--${FlavorConfig().flavorName}--');
+
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider(
+                                    create: (_) => AddConnectionAgentBloc(
+                                      vendorRepository: vendorRepository,
+                                      wholeSaleRepository: wholeSaleRepository,
+                                      userModel: UserModel(
+                                          id: AppData().userId,
+                                          userType:
+                                              FlavorConfig().flavorName),
+                                    ),
+                                    child: AddConnectionAgentView(),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                    value: context.read<ProfileBloc>(),
+                                    child: EditProfileView(),
+                                  ),
+                                ),
+                              );
+                            }
                           },
                         ),
                         dividerDefault,

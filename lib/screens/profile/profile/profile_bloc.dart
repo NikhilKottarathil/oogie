@@ -20,7 +20,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       state.phoneNumber = user['mobile'] != null ? user['mobile'] : '';
       state.bio = user['about_me'] != null ? user['about_me'] : '';
       state.imageUrl = user['profile_pic']['url'] != null
-          ? 'https://api.queschat.com/' + user['profile_pic']['url']
+          ? Urls().serverAddress + user['profile_pic']['url']
           : Urls().personUrl;
       emit(state);
     } on Exception {

@@ -39,6 +39,8 @@ getDataRequest({address}) async {
   Map<String, String> headers = {};
   headers['x-access-token'] = token;
 
+  print('x-access-token $token');
+  // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJ2ZW5kb3ItNTRmYjQ5OGMtYWFjMy00MTRhLWIyNWEtYmIyZjcxMzIyNzQxLWVjb21tZXJjZSJ9.Ki8vFXiM7b1sR85cODoKaqR6TNTpbQmLRMxQXJDR71U
   if (await checkInternetIsConnected()) {
     String url = Urls().apiAddress + address;
     dynamic response = await http.Client().get(

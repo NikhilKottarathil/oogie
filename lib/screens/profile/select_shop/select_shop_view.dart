@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oogie/adapters/shop_adapter.dart';
 import 'package:oogie/components/app_bar/default_appbar_white.dart';
 import 'package:oogie/components/custom_textfield_2.dart';
+import 'package:oogie/components/popups_loaders/alert_bottom_sheet.dart';
 import 'package:oogie/constants/form_submitting_status.dart';
 import 'package:oogie/constants/styles.dart';
 import 'package:oogie/functions/show_snack_bar.dart';
@@ -11,6 +12,7 @@ import 'package:oogie/screens/explore/explore/explore_bloc.dart';
 import 'package:oogie/screens/profile/select_shop/select_shop_bloc.dart';
 import 'package:oogie/screens/profile/select_shop/select_shop_event.dart';
 import 'package:oogie/screens/profile/select_shop/select_shop_state.dart';
+import 'package:oogie/screens/profile/select_shop/shop_single_view.dart';
 import 'package:oogie/views/buy_and_sell_view.dart';
 
 class SelectShopView extends StatelessWidget {
@@ -58,7 +60,7 @@ class SelectShopView extends StatelessWidget {
               if (context.read<SelectShopBloc>().parentPage != 'explore')
                 InkWell(
                     onTap: () {
-                      context.read<SelectShopBloc>().add(ShopSelected(
+                      context.read<SelectShopBloc>().add(ShopSelectedSubmitted(
                           shop: context
                               .read<SelectShopBloc>()
                               .state
@@ -103,9 +105,35 @@ class SelectShopView extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
-                            onTap: () {
-                              context.read<SelectShopBloc>().add(
-                                  ShopSelected(shop: state.shopModels[index],isUsedPhonesSelected: false));
+                            onTap: () async {
+                              // context.read<SelectShopBloc>().add(
+                              //     ShopSelected(shop: state.shopModels[index],isUsedPhonesSelected: false));
+
+                              if(index==0){
+                                showAlertBottomSheet(
+                                    context: context,
+                                    content: 'Are sure to all shops in ${context.read<SelectShopBloc>().locationModel.name}',
+                                    positiveText: 'CONFIRM',
+                                    positiveAction: () {
+                                      context.read<SelectShopBloc>().add(ShopSelectedSubmitted(
+                                          shop:  state.shopModels[index], isUsedPhonesSelected: false));
+                                      Navigator.of(context).pop();
+                                    });
+                              }else {
+                                context.read<SelectShopBloc>().add(ShopSelected(shop: state.shopModels[index],isUsedPhonesSelected: false));
+                                await Future.delayed(Duration(milliseconds: 100));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        BlocProvider(
+                                          create: (_) =>
+                                              context.read<SelectShopBloc>(),
+                                          child: ShopSingleView(),
+                                        ),
+                                  ),
+                                );
+                              }
                             },
                             child: ShopAdapter(
                               shopModel: state.shopModels[index],

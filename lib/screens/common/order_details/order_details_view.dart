@@ -214,7 +214,7 @@ class OrderDetailsView extends StatelessWidget {
                                                   ))))
                                       : showAlertBottomSheet(
                                           context: context,
-                                          heading: 'Heading',
+                                          // heading: 'Heading',
                                           content:
                                               'Are you sure to ${context.read<OrderDetailsCubit>().buttonText} the order',
                                           positiveAction: () {

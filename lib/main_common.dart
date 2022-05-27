@@ -12,6 +12,7 @@ import 'package:oogie/flavour_config.dart';
 import 'package:oogie/oogie_notifications.dart';
 import 'package:oogie/router/app_router.dart';
 import 'package:oogie/special_components/app_exit_alert.dart';
+import 'package:oogie/utils/firebase_dynamic_link.dart';
 
 var flavorConfigProvider;
 
@@ -89,6 +90,9 @@ class _MyAppState extends State<MyApp> {
     setupInteractedMessage(context);
 
     getFirebaseMessagingToken();
+
+    listenDynamicLink(context);
+
   }
 
   final AppRouter _appRouter = AppRouter();
