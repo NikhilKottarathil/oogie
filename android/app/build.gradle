@@ -54,15 +54,15 @@ android {
         user {
             dimension "app"
             applicationId "com.hamrut.oogie.user"
-            versionCode 4
-            versionName "1.0.4"
+            versionCode 5
+            versionName "1.0.5"
         }
 
         vendor {
             dimension "app"
             applicationId "com.hamrut.oogie.vendor"
-            versionCode 2
-            versionName "1.0.2"
+            versionCode 3
+            versionName "1.0.3"
         }
         wholesale_dealer {
             dimension "app"
